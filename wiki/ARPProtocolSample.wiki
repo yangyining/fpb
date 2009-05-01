@@ -2,8 +2,8 @@ ARP协议的应用例
 
 = Introduction =
 
-使用ARP协议根据目标设备的IP地址来取得目标设备的MAC地址。用了已定义的ArpProtocol和
-EthernetProtocol来实现了Arp类，然后可以用该Arp类来执行Arp功能。
+使用ARP协议根据目标设备的IP地址来取得目标设备的MAC地址。用了已定义的ArpProtocol类型和
+EthernetProtocol类型来实现了Arp类，然后可以用该Arp类来执行Arp功能。
 
 = Details =
 
