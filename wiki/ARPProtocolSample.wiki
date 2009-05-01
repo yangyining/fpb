@@ -24,6 +24,48 @@ System.out.println(dstMac);
 
 00:16:01:15:A4:99
 
+Arp Request报文的打印例：
+{{{
+0:42  sample.EtherProtocol    
+0:6     dstAddress            "FFFFFFFFFFFF"O 
+6:6     srcAddress            "0016D41725C4"O 
+12:2    etherType             2054 ARP
+14:28   payload               
+14:28     arp                 sample.ArpProtocol
+14:28 sample.ArpProtocol      
+14:2    hwType                6 IEEE 802 Networks
+16:2    protocolType          2048 IPv4
+18:1    hlen                  6 MAC
+19:1    plen                  4 IPv4
+20:2    operation             1 ARP Request
+22:6    senderHwAddress       "0016D41725C4"O 
+28:4    senderProtocolAddress "C0A80B05"O 
+32:6    targetHwAddress       "000000000000"O 
+38:4    targetProtocolAddress "C0A80B01"O 
+42:0    fcs                   omit 
+}}}
+
+Arp Response报文的打印例：
+{{{
+0:46  sample.EtherProtocol    
+0:6     dstAddress            "0016D41725C4"O 
+6:6     srcAddress            "00160115A488"O 
+12:2    etherType             2054 ARP
+14:28   payload               
+14:28     arp                 sample.ArpProtocol
+14:28 sample.ArpProtocol      
+14:2    hwType                1 Ethernet - 10Mb
+16:2    protocolType          2048 IPv4
+18:1    hlen                  6 MAC
+19:1    plen                  4 IPv4
+20:2    operation             2 ARP Response
+22:6    senderHwAddress       "00160115A488"O 
+28:4    senderProtocolAddress "C0A80B01"O 
+32:6    targetHwAddress       "0016D41725C4"O 
+38:4    targetProtocolAddress "C0A80B05"O 
+42:4    fcs                   "00000000"O 
+}}}
+
 Arp类的源代码：
 {{{
 /**
