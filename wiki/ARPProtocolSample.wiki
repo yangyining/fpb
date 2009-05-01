@@ -1,0 +1,127 @@
+ARP协议的应用例
+
+= Introduction =
+
+使用ARP协议根据目标设备的IP地址来取得目标设备的MAC地址。用了已定义的ArpProtocol和
+EthernetProtocol来实现了Arp类，然后可以用该Arp类来执行Arp功能。
+
+= Details =
+
+Arp类的使用方法例：
+
+//生成Pcap套接字来实现链路层通信
+PcapSocketImpl socket = new PcapSocketImpl(FpbTestUtil.getInterface().name);
+//生成Arp对象
+Arp arp = new Arp(socket, "00:16:D4:17:25:CC", "192.168.1.5");
+//取得目标设备的MAC地址
+String dstMac = arp.askMac("192.168.1.1");
+//打印
+System.out.println(dstMac);
+
+上述代码的执行结果例:
+
+00:16:01:15:A4:99
+
+Arp类的源代码：
+
+/**
+ * Arp协议的实现。
+ * 使用ARP协议根据目标设备的IP地址来取得目标设备的MAC地址。
+ */
+public static class Arp {
+    private static SampleModule module = SampleModule.INSTANCE;
+    private static SampleFactory factory = SampleFactory.INSTANCE;
+    private static PValueSerializer ser = PValueSerializer.INSTANCE;
+    private String srcMac;
+    private String srcIp;
+    private PcapSocket socket;
+    private int timeout = CommonSocket.DEFAULT_TIMEOUT;
+    
+    /**
+     * 构造函数
+     * @param socket Pcap套接字。
+     * @param srcMac 源设备的MAC地址。
+     * @param srcIp 源设备的IP地址。
+     */
+    public Arp(PcapSocket socket, String srcMac, String srcIp) {
+        this.socket = socket;
+        this.srcMac = srcMac;
+        this.srcIp = srcIp;
+    }
+    /**
+     * 生成ARP请求报文。协议栈为Ehternet/Arp.
+     * @param dstIp
+     * @return
+     */
+    private EtherProtocol createArpRequest(String dstIp) {
+        //Ethernet
+        EtherProtocol etherPrtl = factory.createEtherProtocol();
+        etherPrtl.getDstAddress().setTextAs("ff:ff:ff:ff:ff:ff", PValueTextStyle.MAC_ADDRESS);
+        etherPrtl.getSrcAddress().setTextAs(srcMac, PValueTextStyle.MAC_ADDRESS);
+        etherPrtl.getEtherType().setInteger(0x0806);
+        //Arp
+        ArpProtocol arpPrtl = factory.createArpProtocol();
+        arpPrtl.getOperation().setInteger(1);
+        arpPrtl.getSenderHwAddress().setTextAs(srcMac, PValueTextStyle.MAC_ADDRESS);
+        arpPrtl.getSenderProtocolAddress().setTextAs(srcIp, PValueTextStyle.IPV4_ADDRESS);
+        arpPrtl.getTargetHwAddress().setTextAs("00:00:00:00:00:00", PValueTextStyle.MAC_ADDRESS);
+        arpPrtl.getTargetProtocolAddress().setTextAs(dstIp, PValueTextStyle.IPV4_ADDRESS);
+        etherPrtl.getPayload().pSetFieldByID(SampleModule.ETHER_PAYLOAD__ARP, arpPrtl);
+        return etherPrtl;
+    }
+    /**
+     * 根据目标设备的IP地址来取得目标设备的MAC地址。
+     * @param dstIp 目标设备的IP地址。
+     * @return 目标设备的MAC地址文本描述。
+     * @throws Exception
+     */
+    public String askMac(String dstIp) throws Exception {
+        byte[] resData = new byte[1514];
+        socket.setTimeout(timeout);
+        //打开套接字
+        socket.open();
+        try {
+            //设置Pcap套接字的过滤条件。（过滤条件的书写规则可以参考WinPcap的用户手册）
+            socket.setFilter("ether dst " + srcMac + " and arp", true);
+            //生成ARP请求报文
+            EtherProtocol arpRequest = createArpRequest(dstIp);
+            //对报文数据包内的可计算字段进行自动计算（这里是Arp协议的Hlen和Plen字段）
+            ser.calculate(arpRequest);
+            //编码
+            byte data[] = ser.encode(arpRequest, false);
+            //发送编码数据
+            socket.write(data);
+            //接收应答数据
+            int len = socket.read(resData);
+            //解码（底层协议为Ethernet所以使用EtherProtocol作为推测类型）
+            EtherProtocol arpResponse = (EtherProtocol)ser.decode(resData, 0, len, 
+                    module.getEtherProtocol());
+            //打印解码后的ARP应答报文对象
+//            PValueDumper.INSTANCE.dump(arpResponse);
+            //从EthernetProtocol的Payload字段取得ARP协议字段
+            ArpProtocol arpPrtl = arpResponse.getPayload().getArp();
+            //取得ARP协议的SenderHwAddress从而得到目标设备的MAC地址
+            return arpPrtl.getSenderHwAddress().getTextAs(PValueTextStyle.MAC_ADDRESS);
+        } finally {
+            //关闭套接字
+            socket.close();
+        }
+    }
+
+    public int getTimeout() {
+        return timeout;
+    }
+
+    public void setTimeout(int timeout) {
+        this.timeout = timeout;
+    }
+
+    public String getSrcMac() {
+        return srcMac;
+    }
+
+    public String getSrcIp() {
+        return srcIp;
+    }
+    
+}
