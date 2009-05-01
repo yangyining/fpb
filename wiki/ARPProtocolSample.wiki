@@ -8,7 +8,7 @@ EthernetProtocol来实现了Arp类，然后可以用该Arp类来执行Arp功能�
 = Details =
 
 Arp类的使用方法例：
-
+{{{
 //生成Pcap套接字来实现链路层通信
 PcapSocketImpl socket = new PcapSocketImpl(FpbTestUtil.getInterface().name);
 //生成Arp对象
@@ -17,13 +17,14 @@ Arp arp = new Arp(socket, "00:16:D4:17:25:CC", "192.168.1.5");
 String dstMac = arp.askMac("192.168.1.1");
 //打印
 System.out.println(dstMac);
+}}}
 
 上述代码的执行结果例:
 
 00:16:01:15:A4:99
 
 Arp类的源代码：
-
+{{{
 /**
  * Arp协议的实现。
  * 使用ARP协议根据目标设备的IP地址来取得目标设备的MAC地址。
@@ -125,3 +126,4 @@ public static class Arp {
     }
     
 }
+}}}
