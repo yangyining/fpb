@@ -8,7 +8,7 @@
 
 = Details =
 
-Ping类的使用方法例：
+*Ping类的使用方法例：*
 {{{
 //生成Pcap套接字来实现链路层通信
 PcapSocketImpl socket = new PcapSocketImpl(FpbTestUtil.getInterface().name);
@@ -22,14 +22,94 @@ Ping ping = new Ping(socket, LOCAL_MAC, dstMac, LOCAL_IP);
 ping.ping(3, "192.168.11.1");
 }}}
 
-上述代码的执行结果例:
+*上述代码的执行结果例:*
 {{{
 Reply from 192.168.11.1 bytes=32 time<=0.031(s) TTL=64
 Reply from 192.168.11.1 bytes=32 time<=0.0(s) TTL=64
 Reply from 192.168.11.1 bytes=32 time<=0.0(s) TTL=64
 }}}
 
-Ping类的源代码：
+*Echo Request报文的打印例：*
+{{{
+0:74  sample.EtherProtocol   
+0:6     dstAddress           "00160115A488"O 
+6:6     srcAddress           "0016D41725C4"O 
+12:2    etherType            2048 IPv4
+14:60   payload              
+14:60     ipv4               sample.Ipv4Protocol
+14:60 sample.Ipv4Protocol    
+14:20   header               
+14:1      0000----           4 version 0xF0 
+14:1      ----0000           5 headerLength 0x0F 
+15:1      typeOfService      "00000000"B 
+16:2      totalLength        60 
+18:2      identification     1 
+20:1      0---------------   0 reserved 0x8000 Must be zero
+20:1      -0--------------   0 doNotFlagFlag 0x4000 May fragment
+20:1      --0-------------   0 moreFlagsFlag 0x2000 Last fragment
+20:2      ---0000000000000   0 fragmentOffset 0x1FFF 
+22:1      timeToLive         255 
+23:1      protocol           1 ICMP: Internet Control Message Protocol
+24:2      hcs                "0000"O 
+26:4      sourceAddress      "C0A80B05"O 
+30:4      destinationAddress "C0A80B01"O 
+34:0      options            omit 
+34:40   payload              
+34:40     icmpv4             sample.Icmpv4Protocol
+34:40 sample.Icmpv4Protocol  
+34:40   echoRequest          
+34:1      type               8 
+35:1      code               0 
+36:2      checksum           "0000"O 
+38:2      identifier         56255 
+40:2      sequenceNumber     0 
+42:32     data               {} 
+      0000 00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f  ................
+      0010 10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f  ................
+74:0    fcs                  omit
+}}}
+
+*Echo Reply报文的打印例：*
+{{{
+0:74  sample.EtherProtocol   
+0:6     dstAddress           "0016D41725C4"O 
+6:6     srcAddress           "00160115A488"O 
+12:2    etherType            2048 IPv4
+14:60   payload              
+14:60     ipv4               sample.Ipv4Protocol
+14:60 sample.Ipv4Protocol    
+14:20   header               
+14:1      0000----           4 version 0xF0 
+14:1      ----0000           5 headerLength 0x0F 
+15:1      typeOfService      "00000000"B 
+16:2      totalLength        60 
+18:2      identification     25324 
+20:1      0---------------   0 reserved 0x8000 Must be zero
+20:1      -0--------------   0 doNotFlagFlag 0x4000 May fragment
+20:1      --0-------------   0 moreFlagsFlag 0x2000 Last fragment
+20:2      ---0000000000000   0 fragmentOffset 0x1FFF 
+22:1      timeToLive         64 
+23:1      protocol           1 ICMP: Internet Control Message Protocol
+24:2      hcs                "807E"O 
+26:4      sourceAddress      "C0A80B01"O 
+30:4      destinationAddress "C0A80B05"O 
+34:0      options            omit 
+34:40   payload              
+34:40     icmpv4             sample.Icmpv4Protocol
+34:40 sample.Icmpv4Protocol  
+34:40   echoReply            
+34:1      type               0 
+35:1      code               0 
+36:2      checksum           "333F"O 
+38:2      identifier         56255 
+40:2      sequenceNumber     0 
+42:32     data               {} 
+      0000 00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f  ................
+      0010 10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f  ................
+74:0    fcs                  omit 
+}}}
+
+*Ping类的源代码：*
 {{{
 /**
  * 使用ICMPv4协议实现的Ping协议。
