@@ -1,5 +1,5 @@
+#summary 使用ICMPv4协议实现的Ping应用
 #labels Phase-Support
-使用ICMPv4协议实现的Ping应用
 
 = Introduction =
 
