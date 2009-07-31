@@ -1,0 +1,52 @@
+#summary UDP协议定义模块
+#labels Phase-Implementation
+
+= Introduction =
+
+UDP协议定义模块，同时支持上位协议为IPv4和IPv6的情况。
+
+= Details =
+
+{{{
+/**
+ * UDP protocol description. 
+ * All types have been defined on the basis of RFC 768
+ */
+module UdpProtocol {
+    import from BasicTypeAndValues {
+        type UInt16,  
+            Oct2 
+    }
+    
+    import from GlobalEnumSets {
+        enumset PortNumbers
+    }
+    
+    type record UdpProtocol {
+        UdpHeader header,
+        UdpPayload payload optional
+    } with {
+        variant Protocol(true); LengthRef("+header/msgLength"); LengthMultiplier(8);
+    }
+    
+    type record UdpHeader {
+        UInt16              sourcePort,
+        UInt16              destinationPort,
+        UInt16              msgLength,                                                                                                                                                              
+        Oct2                checksum
+    } with {
+        enumref(sourcePort) PortNumbers
+        enumref(destinationPort) PortNumbers
+    }
+    
+    //TODO use DecodeResult Field to distinguish the upper protocol
+    type union UdpPayload {
+        octetstring         data
+    }
+    
+} with {
+    encode "FPB"
+    variant ByteOrder(BIG_ENDIAN)
+    runtime TypeEvFactoryJavaClass="com.fineqt.fpb.protocol.UdpTypeEVExtFactory"
+}
+}}}
