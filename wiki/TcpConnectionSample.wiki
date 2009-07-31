@@ -1,4 +1,4 @@
-#summary 模拟TCP协议连接的三向握手开始和终了。
+#summary 模拟TCP协议连接的三向握手开始和终了
 #labels Phase-Support
 
 = Introduction =
