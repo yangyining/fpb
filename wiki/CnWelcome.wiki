@@ -1,11 +1,6 @@
 #summary Wiki页向导
 
-= Introduction =
-
 页面目录
-
-
-= Details =
 
 API使用例
  # [ARPProtocolSample ARP协议的应用例]
