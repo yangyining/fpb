@@ -1,0 +1,49 @@
+module ArpProtocol {
+    import from BasicTypeAndValues {
+        type UInt16, UInt8
+    }
+    import from GlobalEnumSets {
+        enumset EtherTypes, ArpHardwareTypes
+    }
+    
+    const UInt16    c_opRequest := 1;
+    const UInt16    c_opReply := 2;
+    
+    type record ArpProtocol {
+        UInt16 hwType,
+        UInt16 protocolType,
+        UInt8 hlen,
+        UInt8 plen,
+        UInt16 operation(c_opRequest, c_opReply),
+        octetstring senderHwAddress,
+        octetstring senderProtocolAddress, 
+        octetstring targetHwAddress,
+        octetstring targetProtocolAddress 
+    } with {
+        variant Protocol(true)
+        variant(hwType) DefaultValue((6))
+        variant(protocolType) DefaultValue((0x0800))
+        variant(hlen) DefaultValue((6))
+        variant(plen) DefaultValue((4))
+        variant(senderHwAddress) LengthRef("^hlen"); LengthMultiplier(8)
+        variant(senderProtocolAddress) LengthRef("^plen"); LengthMultiplier(8)
+        variant(targetHwAddress) LengthRef("^hlen"); LengthMultiplier(8)
+        variant(targetProtocolAddress) LengthRef("^plen"); LengthMultiplier(8)
+        enumref(hwType) ArpHardwareTypes
+        enumref(protocolType) EtherTypes
+        enum(hlen) {
+            (6) "MAC"
+        }
+        enum(plen) {
+            (4) "IPv4",
+            (16) "IPv6"
+        }
+        enum(operation) {
+            (c_opRequest) "Arp Request",
+            (c_opReply) "Arp Response"
+        }
+    }
+} with {
+    encode "FPB"
+    variant ByteOrder(BIG_ENDIAN)
+}
