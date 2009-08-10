@@ -1,56 +1,10 @@
 #summary Ethernet协议定义模块
 #labels Phase-Implementation
 
-= Introduction =
+= 概要 =
 
 Ethernet协议定义模块。
 
-= Details =
+= 详细 =
 
-{{{
-module EtherProtocol {
-    import from BasicTypeAndValues {
-        type Oct6, UInt16, Oct4, MacAddress
-    }
-    import from Ipv4Protocol {
-        type Ipv4Protocol
-    }
-    import from ArpProtocol {
-        type ArpProtocol
-    }
-    import from GlobalEnumSets {
-        enumset EtherTypes
-    }
-    import from Ipv6Protocol {
-        type Ipv6Protocol
-    }
-    
-    type record EtherProtocol {
-        MacAddress dstAddress,
-        MacAddress srcAddress,
-        UInt16 etherType,
-        EtherPayload payload,
-        Oct4 fcs optional
-    } with {
-        variant Protocol(true); PushEmptyField([DECODE], "etherType")
-        variant(etherType) SetField([DECODE])
-        enumref(etherType) EtherTypes
-    }
-    
-    type union EtherPayload {
-        Ipv4Protocol ipv4,
-        ArpProtocol arp,
-        Ipv6Protocol ipv6,
-        octetstring data
-    } with {
-        variant CaseRef("-etherType", #UInt16); CaseDefault(data)
-        variant(ipv4) CaseCond(UInt16 (0x0800))
-        variant(arp) CaseCond(UInt16 (0x0806))
-        variant(ipv6) CaseCond(UInt16 (0x86DD))
-    }
-    
-} with {
-    encode "FPB"
-    variant ByteOrder(BIG_ENDIAN)
-}
-}}}
+[http://code.google.com/p/fpb/source/browse/trunk/com.fineqt.fpb.community/protocol/module/EtherProtocol.module 模块定义文件]
