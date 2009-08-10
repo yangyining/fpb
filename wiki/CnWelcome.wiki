@@ -15,6 +15,6 @@
     # [Ipv4Protocol IPv4协议]
     # [Icmpv6Protocol ICMPv6协议]
     # [Icmpv4Protocol ICMPv4协议]
-    # [http://code.google.com/p/fpb/source/browse/trunk/com.fineqt.fpb.community/protocol/module/ArpProtocol.module ARP协议]
+    # [ArpProtocol ARP协议]
     # [EtherProtocol Ethernet协议]
     
