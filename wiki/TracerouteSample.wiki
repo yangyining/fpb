@@ -3,11 +3,11 @@
 
 = Introduction =
 
-使用ICMPv4协议的Echo Request和Echo Reply报文和IPv4协议的TTL字段来实现Traceroute应用。用了已定义的EtherProtocol类型和Ipv4Protocol和Icmpv4Protocol类型来实现了TracerouteApp类，然后可以用该TracerouteApp类来执行Traceroute功能。 
+使用ICMPv4协议的Echo Request和Echo Reply报文和IPv4协议的TTL字段来实现Traceroute应用。用了已定义的EtherProtocol类型和Ipv4Protocol和Icmpv4Protocol类型来实现了!TracerouteApp类，然后可以用该!TracerouteApp类来执行Traceroute功能。 
 
 = Details =
 
-*TracerouteApp类的使用方法例：*
+*!TracerouteApp类的使用方法例：*
 {{{
 //网关IP地址
 String gatewayIp = "192.168.11.1";
@@ -53,7 +53,7 @@ Traceroute completed. 64.233.189.147 reached.
 *Echo Reply报文的打印例：*
 除了IPv4的TTL字段外，与PingSample基本相同。
 
-*TracerouteApp类的源代码：*
+*!TracerouteApp类的源代码：*
 {{{
 /**
  * 使用ICMPv4协议实现的Traceroute应用。 使用ICMPv4协议的Echo Request和Echo
