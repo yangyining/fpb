@@ -3,12 +3,12 @@
 
 = 概要 =
 
-使用HTTP协议的GET命令来取得网站的资源.通过发送HTTP Reqeust报文，然后接收HTTP Response报文，从而获得所要得资源。通过执行HttpGetSample类的doGetAction来执行例子。
+使用HTTP协议的GET命令来取得网站的资源.通过发送HTTP Reqeust报文，然后接收HTTP Response报文，从而获得所要得资源。通过执行!HttpGetSample类的doGetAction来执行例子。
 
 
 = 详细 =
 
-*HttpGetSample类的使用方法：*
+*!HttpGetSample类的使用方法：*
 
 {{{
 //目标主机地址
@@ -93,7 +93,7 @@ System.out.println(new String(bodyData));
 247:0        trailers  omit 
 }}}
 
-*HttpGetSample类源代码：*
+*!HttpGetSample类源代码：*
 {{{
 /**
  * 使用HTTP协议的GET命令来取得网站的资源.通过发送HTTP Reqeust报文，然后接收HTTP Response报文，
@@ -102,7 +102,7 @@ System.out.println(new String(bodyData));
  * @author JiangMin
  *
  */
-public class HttpGetSample {
+public class !HttpGetSample {
     private static String USER_AGENT = 
     "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; GTB6; .NET CLR 2.0.50727; .NET CLR 1.1.4322; CIBA)";
     private static IValueSerializer ser = IValueSerializer.INSTANCE;
