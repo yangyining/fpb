@@ -1,0 +1,128 @@
+module HttpProtocol {
+    type union HttpProtocol {
+        HttpResponse response,
+        HttpRequest request
+    } with {
+        variant Protocol(true); CaseRefRegion(0, 32, #charstring); CaseDefault(request);
+        variant(response) CaseCond(charstring ("HTTP"));
+    }
+    
+    type charstring HttpToken (pattern "[^()<>@,;:\\""\/\[\]?={} \t]+");
+    
+    type charstring HttpWS (pattern "[ \t]*");
+    
+    type record HttpRequest {
+        HttpRequestLine requestLine,
+        HttpMessage message
+    }
+
+    type record HttpResponse {
+        HttpResponseLine responseLine,
+        HttpMessage message
+    }
+    
+    type record HttpRequestLine {
+        HttpToken method,
+        HttpWS space1,
+        charstring uri(pattern "[\p{Alnum}\p{Punct}]+"),
+        HttpWS space2,
+        HttpVersion version,
+        octetstring crlf('0D0A'O)
+    } with {
+        variant OneLineMode(CRLF);
+        variant(space1) DefaultValue((" "));
+        variant(space2) DefaultValue((" "));
+        variant(version) RestOfData(true); LengthIncrement(-16);
+    }
+    
+    type record HttpResponseLine {
+        HttpVersion version,
+        HttpWS space1,
+        charstring status(pattern "[0-9]{3}"),
+        HttpWS space2,
+        charstring reason,
+        octetstring crlf('0D0A'O)
+    } with {
+        variant OneLineMode(CRLF);
+        variant(space1) DefaultValue((" "));
+        variant(space2) DefaultValue((" "));
+        variant(reason) RestOfData(true); LengthIncrement(-16);
+    }
+    
+    type record HttpVersion {
+        charstring prefix("HTTP/"),
+        charstring number(pattern "[0-9]+\.[0-9]+")
+    } with {
+        variant(number) DefaultValue(("1.1"))
+    }
+    
+    type record HttpMessage {
+        HttpHeaderList headers,
+        EmptyLine emptyLine,
+        HttpBody httpBody optional,
+        HttpHeaderList trailers optional
+    } with {
+        variant PushEmptyField([DECODE], "chunked") ([DECODE], "contentLength") 
+                ([DECODE], "hasBody") ([DECODE], "hasTrailers") ([DECODE], "trailerNames")   
+        variant(httpBody) SelectRef("-hasBody", #boolean); SelectCond(boolean (true));
+        variant(trailers) SelectRef("-hasTrailers", #boolean); SelectCond(boolean (true));
+    }
+    
+    type octetstring EmptyLine('0D0A'O);
+    
+    type record of HttpHeader HttpHeaderList;
+    
+    type record HttpHeader {
+        HttpToken name,
+        charstring colon(":"),
+        HttpWS space,
+        charstring value,
+        octetstring crlf('0D0A'O)
+    } with {
+        variant OneLineMode(CRLF);
+        variant(space) DefaultValue((" "));
+        variant(value) RestOfData(true); LengthIncrement(-16);
+    }
+    
+    type union HttpBody {
+        octetstring data,
+        HttpChunkList chunks
+    } with {
+        variant CaseRef("-chunked", #boolean); CaseDefault(data);
+        variant(data) CaseCond(boolean (false)); LengthRef("-contentLength", #integer); 
+                LengthMultiplier(8); RefreshLengthRef(false); 
+        variant(chunks) CaseCond(boolean (true));
+    }
+    
+    type record of HttpChunk HttpChunkList with {
+        variant PushEmptyField([DECODE], "hasChunkData") ([DECODE], "chunkLength"); 
+    }
+    
+    type record HttpChunk {
+        HttpChunkLengthLine lengthLine,
+        HttpChunkData chunkData optional
+    } with {
+        variant(chunkData) SelectRef("-hasChunkData", #boolean); SelectCond(boolean (true)); 
+                LengthRef("-chunkLength", #integer); LengthMultiplier(8); LengthIncrement(16);
+                RefreshLengthRef(false); 
+    }
+    
+    type record HttpChunkLengthLine {
+        charstring chunkLength,
+        octetstring crlf('0D0A'O)
+    } with {
+        variant OneLineMode(CRLF);
+        variant(chunkLength) RestOfData(true); LengthIncrement(-16);
+    }
+    
+    type record HttpChunkData {
+        octetstring data,
+        octetstring crlf('0D0A'O)
+    } with {
+        variant(data) RestOfData(true); LengthIncrement(-16);
+    }
+    
+} with {
+    encode "FPB"
+    runtime TypeEvFactoryJavaClass="com.fineqt.fpb.protocol.HttpTypeEVExtFactory"
+}
