@@ -3,12 +3,12 @@
 
 = Introduction =
 
-使用ICMPv4协议的Echo Request和Echo Reply报文来实现Ping应用。用了已定义的EtherProtocol类型和Ipv4Protocol和Icmpv4Protocol类型来实现了PingApp类，然后可以用该PingApp类来执行Ping功能。 
+使用ICMPv4协议的Echo Request和Echo Reply报文来实现Ping应用。用了已定义的EtherProtocol类型和Ipv4Protocol和Icmpv4Protocol类型来实现了!PingApp类，然后可以用该!PingApp类来执行Ping功能。 
 
 
 = Details =
 
-*PingApp类的使用方法例：*
+*!PingApp类的使用方法例：*
 {{{
 String dstIp = "192.168.11.1";
 //生成Pcap套接字来实现链路层通信
@@ -115,7 +115,7 @@ Reply from 192.168.11.1 bytes=32 time<=0.0(s) TTL=64
 74:0    fcs                  omit 
 }}}
 
-*PingApp类的源代码：*
+*!PingApp类的源代码：*
 {{{
 /**
  * 使用ICMPv4协议实现的Ping应用。 使用ICMPv4协议的Echo Request和Echo Reply报文来实现Ping应用。
