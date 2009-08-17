@@ -4,11 +4,11 @@
 = Introduction =
 
 使用ARP协议根据目标设备的IP地址来取得目标设备的MAC地址。用了已定义的ArpProtocol类型和
-EthernetProtocol类型来实现了ArpApp类，然后可以用该ArpApp类来执行Arp功能。
+EthernetProtocol类型来实现了!ArpApp类，然后可以用该!ArpApp类来执行Arp功能。
 
 = Details =
 
-*ArpApp类的使用方法例：*
+*!ArpApp类的使用方法例：*
 {{{
 String dstIp = "192.168.11.1";
 //生成Pcap套接字来实现链路层通信
@@ -70,7 +70,7 @@ System.out.println("Mac for " + dstIp + " is " + dstMac + ".");
 42:4    fcs                   '00000000'O 
 }}}
 
-*Arp类的源代码：*
+*!ArpApp类的源代码：*
 {{{
 /**
  * Arp协议的实现。 使用ARP协议根据目标设备的IP地址来取得目标设备的MAC地址。
