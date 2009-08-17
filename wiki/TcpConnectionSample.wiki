@@ -3,11 +3,11 @@
 
 = Introduction =
 
-模拟TCP协议连接的三向握手开始和终了。使用用EtherProtocol、IPv4Protocol和TcpProtocol类型来实现TcpConnectionSample类，然后执行该类来模拟TCP的连接。
+模拟TCP协议连接的三向握手开始和终了。使用用EtherProtocol、IPv4Protocol和TcpProtocol类型来实现!TcpConnectionSample类，然后执行该类来模拟TCP的连接。
 
 = Details =
 
-*TcpConnectionSample类的使用方法例：*
+*!TcpConnectionSample类的使用方法例：*
 {{{
 //网关IP地址
 String gatewayIp = "192.168.11.1";
@@ -87,7 +87,7 @@ conn.closeConnection();
 58:0    fcs                  omit 
 }}}
 
-*TcpConnectionSample类的源代码：*
+*!TcpConnectionSample类的源代码：*
 {{{
 /**
  * 模拟TCP协议连接的三向握手开始和终了。
