@@ -1,0 +1,333 @@
+/*
+ * Ipv6 protocol description. 
+ * Some source is copied from LibIpv6_CommonRfcs_TypesAndValues.ttcn
+ * and LibIpv6_Interface_TypesAndValues.ttcn of ETSI
+ */
+module Ipv6Protocol {
+    import from BasicTypeAndValues {
+        type UInt1, UInt2, UInt4, UInt6, UInt8, UInt13, UInt16, UInt20, UInt32,
+            Oct4, Oct16,
+            Ipv6Address
+    }
+    
+    import from Ipv4Protocol {
+        type Ipv4Protocol
+    }
+    
+    import from UdpProtocol {
+        type UdpProtocol
+    }
+    
+    import from TcpProtocol {
+        type TcpProtocol
+    }
+    
+    import from GlobalEnumSets {
+        enumset Protocols
+    }
+    
+    import from Icmpv6Protocol {
+        type Icmpv6Protocol
+    }
+    
+    const UInt8 c_maxNrHopByHopOption := 10;
+    const UInt8 c_maxIpv6ExtHdrs:= 10;  
+    const UInt8 c_maxNrIpv6Address := 10;
+    const UInt8 c_maxNrDestOption := 10;
+    //option type
+    const UInt8 c_optPad1 := 0;
+    const UInt8 c_optPadN := 1;
+    const UInt8 c_optJumboPayload := 194;
+    const UInt8 c_optRouterAlert := 5;  
+    const UInt8 c_optTunnelEncapLimit := 4;    
+    const UInt8 c_optHomeAddress := 201;    
+    //next header value
+    const UInt8 c_hopHdr := 0;
+    const UInt8 c_ipv4Hdr := 4;
+    const UInt8 c_tcpHdr := 6;
+    const UInt8 c_udpHdr := 17;
+    const UInt8 c_ipv6Hdr := 41;
+    const UInt8 c_routeHdr := 43;
+    const UInt8 c_fragHdr := 44;
+    const UInt8 c_espHdr := 50;
+    const UInt8 c_authHdr := 51;
+    const UInt8 c_icmpHdr := 58;
+    const UInt8 c_noNextHdr := 59;
+    const UInt8 c_dstHdr := 60;
+    const UInt8 c_mobileHdr := 135;
+    
+    /*
+     * Protocol type derived from RFC2460
+    */
+    type record Ipv6Protocol {
+        Ipv6Header      header,
+        Ipv6Payload     payload
+    } with {
+        variant Protocol(true); PushEmptyField([DECODE], "nextHeader") 
+            ([CALCULATE, DECODE], "payloadLength") ([ENCODE], "Ipv6Protocol.header");
+        variant(header) SetField([ENCODE], "Ipv6Protocol.header")
+    }
+    
+    type record Ipv6Payload {
+        ExtensionHeaderList extHdrList optional,
+        Ipv6Data         ipv6Data optional
+    } with {
+        variant LengthRef("-payloadLength", #integer); LengthMultiplier(8)
+    }
+    
+    type record Ipv6Header  {
+        UInt4       version(6),
+        UInt8       trafficClass,
+        UInt20      flowLabel, 
+        UInt16      payloadLength,
+        UInt8       nextHeader,
+        UInt8       hopLimit,
+        Ipv6Address sourceAddress,
+        Ipv6Address destinationAddress
+    } with {
+        variant(version) FlagType(OCTET4)
+        variant(trafficClass) FlagType(OCTET4)
+        variant(flowLabel) FlagType(OCTET4)
+        variant(nextHeader) SetField([DECODE]); DefaultValue((59))
+        variant(payloadLength) SetField([CALCULATE, DECODE])
+        enumref(nextHeader) Protocols
+    }
+    
+    /*
+     * List of ExtensionHeader
+    */          
+    type set length(1 .. c_maxIpv6ExtHdrs) of ExtensionHeader ExtensionHeaderList
+    
+    /*
+     * Mainly derived from many RFC 2460
+    */
+    type union ExtensionHeader {
+        HopByHopHeader      hopByHopHeader,
+        RoutingHeader       routingHeader,
+        FragmentHeader      fragmentHeader,
+        DestOptionHeader    destOptionHeader,
+        AuthHeader          authHeader
+    } with {
+        variant CaseRef("-nextHeader", #integer); SelectRef("-nextHeader", #integer); 
+                SelectCond((c_hopHdr, c_routeHdr, c_fragHdr, c_dstHdr, c_authHdr))
+        variant(hopByHopHeader) CaseCond(integer (c_hopHdr))
+        variant(routingHeader) CaseCond(integer (c_routeHdr))
+        variant(fragmentHeader) CaseCond(integer (c_fragHdr))
+        variant(destOptionHeader) CaseCond(integer (c_dstHdr))
+        variant(authHeader) CaseCond(integer (c_authHdr))
+    }
+    
+    /*
+     * @desc Derived from  RFC 2460 Section 4.3
+    */
+    type record HopByHopHeader {
+        UInt8           nextHeader,
+        UInt8           hdrExtLen,
+        HopByHopOptionList  options
+    } with {
+        variant LengthRef("+hdrExtLen");LengthMultiplier(64);LengthIncrement(64)
+        variant(nextHeader) SetField([DECODE]);
+        enumref(nextHeader) Protocols        
+    }
+
+    type union HopByHopOption {
+        OptPad1             pad1,
+        OptPadN             padN, 
+        OptJumboPayload     jumboPayload, 
+        OptRouterAlert      routerAlert,
+        octetstring         generalOptionString
+    } with {
+        variant CaseRefRegion(0, 8); CaseDefault(generalOptionString)
+        variant(pad1) CaseCond(integer (c_optPad1))
+        variant(padN) CaseCond(integer (c_optPadN))
+        variant(jumboPayload) CaseCond(integer (c_optJumboPayload))
+        variant(routerAlert) CaseCond(integer (c_optRouterAlert))
+    }
+    
+    /*
+     * @desc Derived from RFC2460 clause 4.2 
+     * @url http://www.ietf.org/rfc/rfc2460.txt
+    */          
+    type record OptPad1 {
+        UInt8           optType(c_optPad1)
+    }
+
+    /*
+     * @desc Derived from RFC2460 clause 4.2 
+     * @url http://www.ietf.org/rfc/rfc2460.txt
+    */  
+    type record OptPadN {
+        UInt8           optType(c_optPadN),
+        UInt8           optLen,
+        octetstring     padding optional
+    } with {
+        variant LengthRef("+optLen"); LengthMultiplier(8); LengthIncrement(16)
+    }
+    
+    type set length (1 .. c_maxNrHopByHopOption) of HopByHopOption HopByHopOptionList;
+     
+    /*
+     * @desc Derived from RFC 2675 Section 2
+     * @url http://www.ietf.org/rfc/rfc2675.txt
+    */
+    type record OptJumboPayload {
+        UInt8           optType(c_optJumboPayload),
+        UInt8           optLen(4),
+        UInt32          optJumboPayloadLength
+    }
+    
+    /*
+     * @desc Derived from RFC 2711 Section 2.1
+     * @url http://www.ietf.org/rfc/rfc2711.txt
+    */
+    type record OptRouterAlert {
+        UInt8           optType(c_optRouterAlert),
+        UInt8           optLen(2),
+        UInt16          optValue
+    }
+    
+    /*
+     * @desc Derived from RFC 2460 Section 4.4
+    */
+    type record RoutingHeader {
+        UInt8               nextHeader,
+        UInt8               hdrExtLen,
+        UInt8               routingType,
+        UInt8               segmentsLeft,
+        UInt32              reserved,
+        RoutingHeaderData   routingHeaderData optional
+    } with {
+        variant LengthRef("+hdrExtLen"); LengthMultiplier(64); LengthIncrement(64);
+                PushEmptyField([DECODE], "routingType")
+        variant(nextHeader) SetField([DECODE]);
+        variant(routingType) SetField([DECODE]);
+        enumref(nextHeader) Protocols
+    }
+    
+    type union RoutingHeaderData {
+        RtHdrDataIpv6AddressList    addressList,
+        RtHdrDataHomeAddress        homeAddress,
+        octetstring data
+    } with {
+        variant CaseRef("-routingType", #integer); CaseDefault(data)
+        variant(addressList) CaseCond(integer (0))
+        variant(homeAddress) CaseCond(integer (2))
+    }
+    
+    type record length(1 .. c_maxNrIpv6Address) of Ipv6Address RtHdrDataIpv6AddressList
+    
+    type Ipv6Address RtHdrDataHomeAddress
+    
+    /*
+     * @desc Derived from RFC 2460  Section 4.5
+    */
+    type record FragmentHeader {
+        UInt8   nextHeader,
+        UInt8   reserved1,
+        UInt13  fragmentOffset,
+        UInt2   reserved2,
+        UInt1   moreFlag,
+        UInt32  identification 
+    } with {
+        variant(nextHeader) SetField([DECODE]);
+        variant(fragmentOffset) FlagType(OCTET2)
+        variant(reserved2) FlagType(OCTET2)
+        variant(moreFlag) FlagType(OCTET2)
+        enumref(nextHeader) Protocols
+    }
+
+    /*
+     * @desc Derived from RFC 2460  Section 4.6
+    */
+    type record DestOptionHeader {
+        UInt8           nextHeader,
+        UInt8           hdrExtLen,
+        DestOptionList  destOptionList 
+    } with {
+        variant(nextHeader) SetField([DECODE]);
+        variant LengthRef("+hdrExtLen"); LengthMultiplier(64); LengthIncrement(64);
+        enumref(nextHeader) Protocols
+    }
+
+    /* 
+     * @desc   List of DestOption
+     * @remark In a DestOptionList value either the pad1 or padN 
+     *         option can appear only once!
+        */
+    type set length (1 .. c_maxNrDestOption) of DestOption   DestOptionList;
+
+    /*
+    *   @desc Ipv6 Destination Options
+    */
+    type union DestOption {
+        OptPad1                 pad1,
+        OptPadN                 padN,
+        OptTunnelEncapLimit     tunnelEncapLimit, 
+        OptHomeAddress          homeAddressOption,
+        octetstring             generalOptionString
+    } with {
+        variant CaseRefRegion(0, 8); CaseDefault(generalOptionString)
+        variant(pad1) CaseCond(integer (c_optPad1))
+        variant(padN) CaseCond(integer (c_optPadN))
+        variant(tunnelEncapLimit) CaseCond(integer (c_optTunnelEncapLimit))
+        variant(homeAddressOption) CaseCond(integer (c_optHomeAddress))
+    }
+    
+    /*
+     * @desc Derived from RFC 2473 Section 4.1.1
+     * @url http://www.ietf.org/rfc/rfc2473.txt
+    */
+    type record OptTunnelEncapLimit {
+        UInt8   optType(c_optTunnelEncapLimit),
+        UInt8   optLen (1),
+        UInt8   optTunnelEncapLimitValue
+    }
+    
+    /* @desc Derived from RFCxxxx MIpv6, clause 6.2 
+     * @remark This extension shall be inserted:  
+     *       1) After the routing header, if that header is present, 
+     *       2) Before the Fragment Header, if that header is present
+     *       3) Before the AH Header or ESP Header, if either one of those headers is present 
+    */
+    type record OptHomeAddress {
+        UInt8         optType(c_optHomeAddress),
+        UInt8         optLen(16),
+        Ipv6Address   homeAddress
+    }
+    
+    type record AuthHeader {
+        UInt8       nextHeader,
+        UInt8       payloadLen,
+        UInt16      reserved,
+        UInt32      securityParametersIndex,
+        UInt32      sequenceNumber,
+        octetstring icv optional,
+        octetstring icvPadding
+    } with {
+        variant LengthRef("+payloadLen"); LengthMultiplier(32); LengthIncrement(64);
+        variant(nextHeader) SetField([DECODE]);
+        variant(icvPadding) PadType(OCTET8)
+        enumref(nextHeader) Protocols
+    }
+    
+    type union Ipv6Data {
+        Icmpv6Protocol icmpv6,
+        Ipv4Protocol ipv4,
+        Ipv6Protocol ipv6,
+        TcpProtocol tcp,
+        UdpProtocol udp,
+        octetstring data
+    } with {
+        variant CaseRef("-nextHeader", #integer); CaseDefault(data)
+        variant(icmpv6) CaseCond(integer (c_icmpHdr))
+        variant(ipv4) CaseCond(integer (c_ipv4Hdr))
+        variant(ipv6) CaseCond(integer (c_ipv6Hdr))
+        variant(tcp) CaseCond(integer (c_tcpHdr))
+        variant(udp) CaseCond(integer (c_udpHdr))
+    }
+    
+} with {
+    encode "FPB"
+    variant ByteOrder(BIG_ENDIAN)
+    runtime TypeEvFactoryJavaClass="com.fineqt.fpb.protocol.Ipv6TypeEVExtFactory"
+}
