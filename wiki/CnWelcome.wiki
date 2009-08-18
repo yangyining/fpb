@@ -1,7 +1,5 @@
 #summary 页面向导
 
-* 目录 *
-
 == 下载 ==
 || *下载链接* || *版本* ||
 || [http://fpb.googlecode.com/files/FPB_QuickStartTutorial_CN.pdf FPB快速入门手册] ||  2.0.beta2 ||
