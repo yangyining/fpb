@@ -16,14 +16,14 @@ String remoteHost = "www.google.com";
 //目标端口
 int remotePort = 80;
 HttpGetSample sample = new HttpGetSample();
+//设置是否打印数据通信内容
 sample.setDumpPacket(true);
 //执行HTTP GET动作（取得URI为/的资源，超时时间为1分钟）
 IValue response = sample.doGetAction(remoteHost, remotePort, "/", 60000);
-//取得应答报文中的数据
+//取得应答报文中的数据并打印至标准输出
 assert "200".equals(response.findField("response/responseLine/status").getText());
 IValue body = response.findField("response/message/httpBody");
-//设置是否打印数据通信内容
-IValueDumper.INSTANCE.dump(body);
+//IValueDumper.INSTANCE.dump(body);
 byte[] bodyData = IValueSerializer.INSTANCE.encode(body, false);
 System.out.println(new String(bodyData));
 }}}
