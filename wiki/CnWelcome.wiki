@@ -2,7 +2,7 @@
 
 = 下载 =
 || *下载链接* || *版本* ||
-|| [http://fpb.googlecode.com/files/FPB_QuickStartTutorial_CN.pdf FPB快速入门手册] ||  2.0.beta2 2009.09.29||
+|| [http://fpb.googlecode.com/files/FPB_QuickStartTutorial_CN.pdf FPB快速入门手册] ||  2.0.beta2 2009.08.29||
 || [http://fpb.googlecode.com/files/fpb_2.0.beta2.v200908291353.zip FPB安装程序]|| 2.0.beta2.v200908291353 ||
 || [http://fpb.googlecode.com/files/fpb_2.0.beta2_src.v200908291354.zip FPB源程序]|| 2.0.beta2_src.v200908291354 ||
 
