@@ -34,9 +34,10 @@ public class FpbProtocolTest {
 		suite.addTest(new TestSuite(Ipv6ProtocolTest.class));
 		suite.addTest(new TestSuite(UdpProtocolTest.class));
 		suite.addTest(new TestSuite(TcpProtocolTest.class));
-        suite.addTest(new TestSuite(HttpProtocolTest.class));
-        suite.addTest(new TestSuite(SampleTest.class));
-
+//        suite.addTest(new TestSuite(HttpProtocolTest.class));
+//        suite.addTest(new TestSuite(SampleTest.class));
+		suite.addTest(new TestSuite(SimDataTest.class));
+		
 //		suite.addTest(new TestSuite(PerformanceTest.class));
 		return suite;
 	}

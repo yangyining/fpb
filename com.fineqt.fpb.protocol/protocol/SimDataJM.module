@@ -1,0 +1,235 @@
+module SimDataJM {
+    import from BasicTypeAndValues {
+        type all
+    }
+    
+	import from EtherProtocol { 
+		type all
+	}
+	
+	import from ArpProtocol { 
+		type all
+	}
+	
+	import from Ipv4Protocol { 
+		type all
+	}
+	
+	import from TcpProtocol { 
+		type all
+	}
+	
+	type record SimRecord {
+		charstring mode length(1),
+		UInt16 recLen,
+		Oct2 nl1 length(2),
+		EtherProtocol packet,				
+		Oct2 nl2 length(2)
+	} with {
+        variant LengthRef("+recLen"); LengthMultiplier(8)
+	}
+	
+	type record of SimRecord SimRecordList;
+	
+	const Oct6 c_DstAddress := '000fe22df7bd'O;
+	
+	const Oct6 c_SrcAddress := '001d0903b7f6'O;
+	 
+
+	const SimRecord simRec1 := {
+			mode := "r",
+			recLen := 0,
+			nl1 := '0d0a'O,
+			packet := {
+                dstAddress := c_DstAddress,
+		        srcAddress := c_SrcAddress,
+		        etherType := 0,
+		        payload := {
+					data := '001122'O
+				},
+				fcs := omit
+			},
+			nl2 := '0d0a'O
+	}
+		
+	const SimRecordList recList := {
+		//ARP
+		[0] := 	{
+			mode := "r",
+			recLen := 0,
+			nl1 := '0d0a'O,
+			packet := {
+				dstAddress := 'ffffffffffff'O,
+		        srcAddress := c_SrcAddress,
+		        etherType := 0x0806,
+		        payload := {
+		        	arp := {
+				        hwType := 0x0001,
+				        protocolType := 0x0800,
+				        hlen := 6,
+				        plen := 4,
+				        operation := 1,
+				        senderHwAddress := '001d0903b7f6'O,
+				        senderProtocolAddress := '0a680114'O, 
+				        targetHwAddress := '000000000000'O,
+				        targetProtocolAddress := '0a680115'O
+		        	}
+		        },
+				fcs := omit
+			},
+			nl2 := '0d0a'O
+		},
+		//TCP No Data
+		[1] := 	{
+			mode := "r",
+			recLen := 0,
+			nl1 := '0d0a'O,
+			packet := {
+				dstAddress := c_DstAddress,
+		        srcAddress := c_SrcAddress,
+		        etherType := 0x0800,
+		        payload := {
+		        	ipv4 := {
+		        		header := {
+					        version := 4,
+					        headerLength := 0,
+					        typeOfService := '00000000'B,
+					        totalLength := 0,
+					        identification := 1,
+					        reserved := 0,
+					        doNotFrag := true,
+					        moreFrags := false,
+					        fragmentOffset := 0,
+					        timeToLive := 128,
+					        protocol := 0x06,
+					        hcs := '0000'O,
+					        sourceAddress := '0a680127'O,
+					        destinationAddress := 'cbd02568'O,
+					        options := omit
+		        		},
+						payload := {
+							tcp := {
+								header := {
+							        sourcePort := 4968,
+							        destinationPort := 80,
+							        sequenceNumber := 0,
+							        ackNumber := 0,
+							        dataOffset := 0,
+							        reserved := 0,
+							        urgent := false,
+							        ack := false,
+							        push := false,
+							        reset := false,
+							        syn := true,
+							        fin := false,
+							        windowSize := 65535,
+							        checksum := '0000'O,
+							        urgentPointer := 0,
+							        options := {
+							        	[0] := {
+											maxSs := {
+												optionCode := 2,
+												optionLength := 4,
+												value := 0x05b4
+											}
+							        	},
+							        	[1] := {
+											nop := 1
+							        	},
+							        	[2] := {
+											windowScale := {
+												optionCode := 3,
+												optionLength := 3,
+												shift := 1
+											}        		
+							        	},
+							        	[3] := {
+											nop := 1
+							        	},
+							        	[4] := {
+											nop := 1
+							        	},
+							        	[5] := {
+											sackPermitted := {
+												optionCode := 4,
+												optionLength := 2
+											}
+							        	}
+							        },
+							        padding := ''O
+								},
+								payload := omit
+							}
+						}				        
+		        	}
+		        },
+		        fcs := omit
+	        },
+			nl2 := '0d0a'O
+		},
+		//TCP With Data
+		[2] := 	{
+			mode := "r",
+			recLen := 0,
+			nl1 := '0d0a'O,
+			packet := {
+				dstAddress := c_DstAddress,
+		        srcAddress := c_SrcAddress,
+		        etherType := 0x0800,
+		        payload := {
+		        	ipv4 := {
+		        		header := {
+					        version := 4,
+					        headerLength := 0,
+					        typeOfService := '00000000'B,
+					        totalLength := 0,
+					        identification := 1,
+					        reserved := 0,
+					        doNotFrag := true,
+					        moreFrags := false,
+					        fragmentOffset := 0,
+					        timeToLive := 128,
+					        protocol := 0x06,
+					        hcs := '0000'O,
+					        sourceAddress := '0a680127'O,
+					        destinationAddress := 'cbd02568'O,
+					        options := omit
+		        		},
+						payload := {
+							tcp := {
+								header := {
+							        sourcePort := 4968,
+							        destinationPort := 80,
+							        sequenceNumber := 0,
+							        ackNumber := 0,
+							        dataOffset := 0,
+							        reserved := 0,
+							        urgent := false,
+							        ack := false,
+							        push := false,
+							        reset := false,
+							        syn := true,
+							        fin := false,
+							        windowSize := 65535,
+							        checksum := '0000'O,
+							        urgentPointer := 0,
+							        options := omit,
+							        padding := ''O
+								},
+								payload := {
+									data := '00112233'O
+								}
+							}
+						}				        
+		        	}
+		        },
+		        fcs := omit
+	        },
+			nl2 := '0d0a'O
+		}
+	}
+	
+} with {
+    encode "FPB"
+    variant ByteOrder(BIG_ENDIAN)
+}
