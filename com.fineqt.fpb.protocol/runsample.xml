@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="mainSample" name="run fpb sample">
+    <property name="src.java.sample.dir" value="./sample" />
+	
+    <property name="classes.dir" value="./classes" />
+	
+    <property name="lib.java.dir" value="./lib" />
+    <property name="jar.finepbuilder.name.prefix" value="finepbuilder" />
+    <property name="jar.fpbprotocols.name.prefix" value="fpbprotocols" />
+
+    <property name="javacSource" value="1.6"/>
+    <property name="javacTarget" value="1.6"/>
+    <property name="javacEncoding" value="UTF-8"/>
+    <property name="javacFailOnError" value="true"/>
+    <property name="javacDebugInfo" value="on"/>
+    <property name="javacVerbose" value="false"/>
+    <property name="javacOptimize" value="false"/>
+    <property name="javacNowarn" value="on"/>
+    <property name="javacCompiler" value="modern"/>
+	
+    <path id="compile.class.path">
+        <fileset dir="${lib.java.dir}">
+          <include name="**/*.jar" />
+          <include name="**/*.zip" />
+        </fileset>
+        <fileset dir=".">
+            <include name="${jar.fpbprotocols.name.prefix}*.jar"/>
+            <include name="${jar.finepbuilder.name.prefix}*.jar" />
+        </fileset>
+    </path>
+
+    <path id="run.class.path">
+        <pathelement location="${classes.dir}"/>
+    	<path refid="compile.class.path"/>
+    </path>
+	
+	<target name="mainSample" depends="compileSample">
+		<!-- Run main sample -->
+        <java classname="com.fineqt.fpb.protocol.sample.SampleMain" fork="true" dir=".">
+            <classpath refid="run.class.path"/>
+        </java>
+	</target>
+	
+	<target name="compileSample">
+		<!-- delete old classes -->
+        <delete dir="${classes.dir}"/>
+        <mkdir dir="${classes.dir}" />
+        <!-- build sample source -->
+        <javac srcdir="${src.java.sample.dir}"
+           destdir="${classes.dir}"
+            failonerror="${javacFailOnError}" verbose="${javacVerbose}" debug="${javacDebugInfo}" compiler="${javacCompiler}"
+            source="${javacSource}" target="${javacTarget}" encoding="${javacEncoding}" optimize="${javacOptimize}" nowarn="${javacNowarn}"
+           includes="**/*.java">
+          <classpath refid="compile.class.path"/>
+        </javac>
+	</target>
+</project>
+

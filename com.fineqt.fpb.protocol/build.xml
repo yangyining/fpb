@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="all" name="finepbuilder">
+	<property name="project.lib.dir" value="../com.fineqt.fpb.lib" />
+    <property name="dist.project.lib.dir" value="${project.lib.dir}/dist" />
+    <property name="src.java.main.project.lib.dir" value="${project.lib.dir}/src" />
+	
+    <property name="finepbuilder.version" value="2.0.beta2" />
+    <tstamp>
+          <format property="release.time" pattern="yyyyMMddHHmm"/>
+    </tstamp>
+    <property name="jar.fineqtcommon.name" value="fineqtcommon.jar" />
+    <property name="jar.finepbuilder.name.prefix" value="finepbuilder" />
+    <property name="jar.fpbprotocols.prefix" value="fpbprotocols" />
+    <property name="jar.test.fpbprotocols.prefix" value="fpbprotocolstest" />
+
+	<property name="src.java.main.dir" value="./src" />
+	<property name="src.java.test.dir" value="./testsrc" />
+    <property name="doc.dir" value="./doc" />
+	
+	<property name="lib.java.dir" value="./lib" />
+    <property name="lib.project.lib.dir" value="${project.lib.dir}/lib" />
+    <property name="protocol.dir" value="./protocol" />
+	
+    <property name="dist.bin.package.name" value="fpb_${finepbuilder.version}"/>
+	<property name="dist.dir" value="./dist" />
+	<property name="dist.lib.dir" value="${dist.dir}/lib" />
+    <property name="dist.protocol.dir" value="${dist.dir}/protocol" />
+	<property name="dist.bin.package.dir" value="${dist.dir}/${dist.bin.package.name}"/>
+    <property name="dist.doc.dir" value="${dist.bin.package.dir}/doc"/>
+    <property name="dist.doc.api.dir" value="${dist.doc.dir}/api"/>
+	<property name="dist.sample.bin.package.dir" value="${dist.bin.package.dir}/sample"/>
+	
+	<property name="build.dir" value="./build" />
+	<property name="build.classes.dir" value="${build.dir}/classes" />
+	<property name="build.lib.dir" value="${build.dir}/lib" />
+
+	<property name="javacSource" value="1.6"/>
+	<property name="javacTarget" value="1.6"/>
+	<property name="javacEncoding" value="UTF-8"/>
+	<property name="javacFailOnError" value="false"/>
+	<property name="javacDebugInfo" value="off"/>
+<!--	<property name="javacDebugInfo" value="on"/> -->
+	<property name="javacVerbose" value="false"/>
+	<property name="javacOptimize" value="false"/>
+	<property name="javacNowarn" value="on"/>
+	<property name="javacCompiler" value="modern"/>
+	
+	<property name="jar.fpbprotocols.name" value="${jar.fpbprotocols.prefix}_${finepbuilder.version}.v${release.time}.jar" />
+	<property name="jar.test.fpbprotocols.name" value="${jar.test.fpbprotocols.prefix}_${finepbuilder.version}.v${release.time}.jar" />
+	<property name="dll.finepbuilder.name" value="fpblib.dll" />
+	<property name="so.finepbuilder.name" value="libfpb.so" />
+	
+	<!-- set up the compile classpath -->
+	<path id="compile.class.path">
+	    <fileset dir="${build.lib.dir}">
+	      <include name="**/*.jar" />
+	      <include name="**/*.zip" />
+	    </fileset>
+        <fileset dir="${build.dir}">
+          <include name="${jar.finepbuilder.name.prefix}*.jar" />
+        </fileset>
+	</path>
+	
+	<!-- set up the run classpath (for unit tests of distribution) -->
+	<path id="distrun.class.path">
+	    <fileset dir="${dist.lib.dir}">
+	      <include name="**/*.jar" />
+	      <include name="**/*.zip" />
+	    </fileset>
+	    <fileset dir="${dist.dir}">
+	    	<include name="${jar.fpbprotocols.prefix}*.jar"/>
+	    	<include name="${jar.test.fpbprotocols.prefix}*.jar"/>
+	        <include name="${jar.finepbuilder.name.prefix}*.jar" />
+		</fileset>
+	</path>
+
+	<target name="all" depends="dist-fpbprotocols"
+	    description="==> builds distribution file" />
+	
+	<target name="dist-fpbprotocols" depends="init-dist, build-fpbprotocols">
+	    <antcall target="dist-copyfile" />
+		<antcall target="dist-zip-bin-package" />
+	</target>
+
+	<target name="build-fpbprotocols" depends="init-build">
+	    <antcall target="jar" />
+	</target>
+	
+	<target name="init-dist">
+		<delete dir="${dist.dir}"/>
+	    <mkdir dir="${dist.dir}" />
+	    <mkdir dir="${dist.lib.dir}" />
+        <mkdir dir="${dist.protocol.dir}" />
+	</target>
+
+    <target name="dist-javadoc">
+        <javadoc
+        	 destdir="${dist.doc.api.dir}"
+             author="true"
+             version="true"
+             use="true"
+             windowtitle="Fine Packet Builder API"
+        	 encoding="UTF8"
+        	 classpathref="distrun.class.path"
+        	 charset="UTF8">
+
+          <packageset dir="${src.java.main.project.lib.dir}" defaultexcludes="yes">
+            <include name="com/fineqt/fpb/lib/api/**"/>
+          </packageset>
+
+          <doctitle><![CDATA[<h1>Fine Packet Builder</h1>]]></doctitle>
+          <bottom><![CDATA[<i>Copyright &#169; 2007-2009 fineqt.com. All Rights Reserved.</i>]]></bottom>
+          <tag name="todo" scope="all" description="To do:"/>
+          <group title="Main API Packages" 
+          	packages="com.fineqt.fpb.lib.api"/>
+          <group title="Communication API Packages" 
+            packages="com.fineqt.fpb.lib.api.comm:com.fineqt.fpb.lib.api.comm.*"/>
+<!--        	
+          <link offline="true" href="http://java.sun.com/j2se/1.5.0/docs/api/" packagelistLoc="C:\tmp"/>
+          <link href="http://developer.java.sun.com/developer/products/xml/docs/api/"/>
+-->
+        </javadoc>
+    </target>
+	
+    <target name="dist-zip-bin-package">
+        <mkdir dir="${dist.bin.package.dir}" />
+        <mkdir dir="${dist.sample.bin.package.dir}" />
+        
+    	<antcall target="dist-javadoc" />
+    	
+    	<!-- copy files for release distribution --> 
+    	<!-- main files (library files) -->
+        <copy todir="${dist.bin.package.dir}" >
+            <fileset dir="${dist.dir}">
+              <include name="lib/*.jar" />
+              <exclude name="lib/*test.jar"/>
+              <exclude name="lib/junit*.jar"/>
+              <include name="protocol/**" />
+              <include name="${jar.fpbprotocols.name}"/>
+              <include name="${jar.finepbuilder.name.prefix}*.jar"/>
+              <exclude name="${jar.finepbuilder.name.prefix}test*.jar"/>
+              <include name="*.dll" />
+              <include name="*.so" />
+            </fileset>
+        </copy>
+    	<!-- sample sources -->
+        <copy todir="${dist.sample.bin.package.dir}" >
+            <fileset dir="${src.java.main.dir}">
+                <include name="com/fineqt/fpb/protocol/sample/**" />
+	    	</fileset>
+        </copy>
+    	<!-- document -->
+        <copy todir="${dist.doc.dir}" >
+            <fileset dir="${doc.dir}">
+                <include name="**" />
+            </fileset>
+        </copy>
+    	<!-- other files -->
+        <copy todir="${dist.bin.package.dir}" >
+            <fileset dir=".">
+                <include name="license.txt" />
+                <include name="runsample.xml" />
+            </fileset>
+        </copy>
+    	
+    	<!-- make zip file -->
+    	<zip destfile="${dist.dir}/${dist.bin.package.name}.v${release.time}.zip">
+            <fileset dir="${dist.dir}">
+            	<include name="${dist.bin.package.name}/**"/>
+            </fileset>
+    	</zip>
+	</target>
+
+	<target name="dist-copyfile">
+		<!-- copy third party java jar file-->
+		<copy todir="${dist.lib.dir}">
+		    <fileset dir="${build.lib.dir}">
+		      <include name="**/*.jar" />
+		      <include name="**/*.zip" />
+		    </fileset>
+		</copy>
+		<!-- copy finepbuilder java jar file-->
+		<copy todir="${dist.dir}">
+		    <fileset dir="${build.dir}">
+	          <include name="${jar.finepbuilder.name.prefix}*.jar" />
+		      <include name="${jar.fpbprotocols.name}" />
+		      <include name="${jar.test.fpbprotocols.name}" />
+		    </fileset>
+		</copy>
+		<!-- copy finepbuilder dll file-->
+		<copy file="${project.lib.dir}/${dll.finepbuilder.name}" todir="${dist.dir}"/>
+<!--
+		<copy file="./${so.finepbuilder.name}" todir="${dist.dir}"/>
+-->
+		<!-- copy protocol module file -->
+        <copy todir="${dist.protocol.dir}">
+            <fileset dir="${protocol.dir}">
+              <include name="**" />
+            </fileset>
+        </copy>
+		
+	</target>
+			
+	<target name="init-build">
+		<delete dir="${build.dir}"/>
+	    <mkdir dir="${build.dir}" />
+	    <mkdir dir="${build.lib.dir}" />
+	    <mkdir dir="${build.classes.dir}" />
+	</target>
+
+	<target name="build-copyfile">
+		<!-- copy java jar file-->
+		<copy todir="${build.lib.dir}">
+            <fileset dir="${lib.project.lib.dir}">
+              <include name="**/*.jar" />
+              <include name="**/*.zip" />
+            </fileset>
+		    <fileset dir="${lib.java.dir}">
+		      <include name="**/*.jar" />
+		      <include name="**/*.zip" />
+		    </fileset>
+		</copy>
+        <copy todir="${build.dir}">
+            <fileset dir="${dist.project.lib.dir}">
+              <include name="${jar.finepbuilder.name.prefix}*.jar" />
+            </fileset>
+        </copy>
+	</target>
+
+	<!-- build all java classes -->
+	<target name="java-compile" depends="init-build, build-copyfile"
+	    description="==> compiles all java classes">
+		<!-- build main -->
+	    <javac srcdir="${src.java.main.dir}"
+		   destdir="${build.classes.dir}"
+            failonerror="${javacFailOnError}" verbose="${javacVerbose}" debug="${javacDebugInfo}" compiler="${javacCompiler}"
+	    	source="${javacSource}" target="${javacTarget}" encoding="${javacEncoding}" optimize="${javacOptimize}" nowarn="${javacNowarn}"
+		   includes="**/*.java">
+	      <classpath refid="compile.class.path"/>
+	    </javac>
+		<!-- build test -->
+	    <javac srcdir="${src.java.test.dir}"
+		   destdir="${build.classes.dir}"
+            failonerror="${javacFailOnError}" verbose="${javacVerbose}" debug="${javacDebugInfo}" compiler="${javacCompiler}"
+	    	source="${javacSource}" target="${javacTarget}" encoding="${javacEncoding}" optimize="${javacOptimize}" nowarn="${javacNowarn}"
+		   includes="**/*.java">
+	      <classpath refid="compile.class.path"/>
+	    </javac>
+	</target>
+
+	<!-- build jarfiles of classes -->
+	<target name="jar" depends="java-compile"
+	    description="==> jars all java classes ">
+	    <!-- jars main (excule test) -->
+	    <jar jarfile="${build.dir}/${jar.fpbprotocols.name}"
+	         basedir="${build.classes.dir}"
+	         includes="**/*.class"
+	    	excludes="fpbprotocoltest**/*.class">
+	    	<manifest>
+	    	    <section name="Fine Pakcet Builder Protocols">
+	    	      <attribute name="Implementation-Title" value="Fine Pakcet Builder Protocols"/>
+	    	      <attribute name="Implementation-Version" value="${finepbuilder.version} ${release.time}"/> 
+	    	      <attribute name="Implementation-Vendor" value="www.fineqt.com"/>
+	    	    </section>
+	    	</manifest>
+	    </jar>
+	    <!-- jars test -->
+	    <jar jarfile="${build.dir}/${jar.test.fpbprotocols.name}"
+	         basedir="${build.classes.dir}"
+	         includes="fpbprotocoltest/**/*.class"/>
+	</target>
+	
+	<!-- test for distribution -->
+	<target name="dist-test">
+		<!-- unit test for java-->
+		<java classname="fpbprotocoltest.FpbProtocolTest" fork="true" dir="${dist.dir}">
+			<classpath refid="distrun.class.path"/>
+		</java>
+		<!-- unit test for jython script -->
+	</target>
+
+	<!-- test for distribution (only for linux)-->
+	<target name="dev-test">
+		<!-- unit test for java-->
+		<java classname="fpbtest.FpbTest" fork="true" dir=".">
+			<classpath refid="devrun.class.path"/>
+		</java>
+		<!-- unit test for jython script -->
+	</target>
+</project>

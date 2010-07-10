@@ -1,0 +1,221 @@
+/*
+ * Ipv4 protocol description. 
+ * Some source is copied from LibIpv6_Interface_TypesAndValues.ttcn of ETSI
+ */
+module Ipv4Protocol {
+    import from BasicTypeAndValues {
+        type UInt4, UInt16, UInt1, UInt13, UInt8, UInt24, UInt32, 
+            Bit8, 
+            Oct2, Oct4, Oct8,
+            Ipv4Address
+    }
+
+    import from GlobalEnumSets{
+        enumset Protocols
+    }
+    
+    import from Icmpv4Protocol {
+        type Icmpv4Protocol
+    }
+    
+    import from UdpProtocol {
+        type UdpProtocol
+    }
+    
+    import from TcpProtocol {
+        type TcpProtocol
+    }
+    
+    import from Ipv6Protocol {
+        type Ipv6Protocol
+    }
+    
+    type record Ipv4Protocol {
+        Ipv4Header header,
+        Ipv4Payload payload 
+    } with {
+        variant Protocol(true); SelectRefRegion(0, 4); SelectCond(integer (4));
+                LengthRef("+header/totalLength"); LengthMultiplier(8); 
+                PushEmptyField([DECODE], "protocol") ([ENCODE], "Ipv4Protocol.header")
+        variant(header) SetField([ENCODE], "Ipv4Protocol.header")
+    }
+    
+    type record Ipv4Header {
+        UInt4       version(4),
+        UInt4       headerLength,
+        Bit8        typeOfService,
+        UInt16      totalLength,
+        UInt16      identification,
+        UInt1       reserved,
+        boolean     doNotFrag,
+        boolean     moreFrags,
+        UInt13      fragmentOffset,
+        UInt8       timeToLive,
+        UInt8       protocol,
+        Oct2        hcs,
+        Ipv4Address    sourceAddress,
+        Ipv4Address    destinationAddress,
+        Ipv4OptionList options optional
+    } with {
+        variant LengthRef("+headerLength"); LengthMultiplier(32)
+        variant(version) FlagType(OCTET)
+        variant(headerLength) FlagType(OCTET)
+        variant(reserved) FlagType(OCTET2)
+        variant(doNotFrag) FlagType(OCTET2)
+        variant(moreFrags) FlagType(OCTET2)
+        variant(fragmentOffset) FlagType(OCTET2)
+        enumref(protocol) Protocols
+    }
+    
+    type record of Ipv4Option Ipv4OptionList;
+    
+    type union Ipv4Option {
+        SecurityOption security,
+        LssrOption lssr,
+        SsrrOption ssrr,
+        RrOption rr,
+        StreamidOption streamid,
+        TimestampOption timestamp,
+        RouterAlertOption routerAlert,
+        LastOption last
+    } with {
+        variant CaseRefRegion(0, 8); CaseDefault(last)
+        variant(security) CaseCond(integer (130))
+        variant(lssr) CaseCond(integer (131))
+        variant(ssrr) CaseCond(integer (137))
+        variant(rr) CaseCond(integer (7))
+        variant(streamid) CaseCond(integer (136))
+        variant(timestamp) CaseCond(integer (68))
+        variant(routerAlert) CaseCond(integer (0x94))
+    }
+    
+    type UInt8 Nop(1);
+     
+    type record SecurityOption {
+        UInt8 optionType(130),
+        UInt8 optionLength,
+        UInt16 security,
+        UInt16 compartments,
+        UInt16 handling,
+        UInt24 tcc,
+        Nop nop
+    } with {
+        variant LengthRef("+optionLength"); LengthMultiplier(8)
+        enum(security) {
+            (0x0000)    "Unclassified",
+            (0xF135)    "Confidential",
+            (0x789A)    "EFTO",
+            (0xBC4D)    "MMMM",
+            (0x5E26)    "PROG",
+            (0xAF13)    "Restricted",
+            (0xD788)    "Secret",
+            (0x6BC5)    "Top Secret",
+            (0x35E2)    "Reserved for future use - 0x35E2",
+            (0x9AF1)    "Reserved for future use - 0x9AF1",
+            (0x4D78)    "Reserved for future use - 0x4D78",
+            (0x24BD)    "Reserved for future use - 0x24BD",
+            (0x135E)    "Reserved for future use - 0x135E",
+            (0x89AF)    "Reserved for future use - 0x89AF",
+            (0xC4D6)    "Reserved for future use - 0xC4D6",
+            (0xE26B)    "Reserved for future use - 0xE26B"
+        }
+    }
+    
+    type record of Oct4 RouteData;
+    
+    type record LssrOption {
+        UInt8 optionType(131),
+        UInt8 optionLength,
+        UInt8 pointer,
+        RouteData routeData,
+        Nop nop
+    } with {
+        variant LengthRef("+optionLength"); LengthMultiplier(8)
+    }
+    
+    type bitstring LastOption with { variant PadType(OCTET4) }
+    
+    type record SsrrOption {
+        UInt8 optionType(137),
+        UInt8 optionLength,
+        UInt8 pointer,
+        RouteData routeData,
+        Nop nop
+    } with {
+        variant LengthRef("+optionLength"); LengthMultiplier(8)
+    }
+    
+    type record RrOption {
+        UInt8 optionType(7),
+        UInt8 optionLength,
+        UInt8 pointer,
+        RouteData routeData,
+        Nop nop
+    } with {
+        variant LengthRef("+optionLength"); LengthMultiplier(8)
+    }
+    
+    type record StreamidOption {
+        UInt8 optionType(136),
+        UInt8 streamLength,
+        UInt16 streamId
+    }
+    
+    type record TimestampOption {
+        UInt8 optionType(68),
+        UInt8 optionLength,
+        UInt8 pointer,
+        UInt4 overflow,
+        UInt4 flags,
+        TimestampOptionPairs pairs
+    } with {
+        variant LengthRef("+optionLength"); LengthMultiplier(8)
+        variant(overflow) FlagType(OCTET)
+        variant(flags) FlagType(OCTET)
+        enum(flags) {
+            (0)     "Timestamps only, in consecutive 32-bit words",
+            (1)     "IP address, timestamp pairs",
+            (3)     "IP addresses are prespecified"
+        }
+    }
+
+    type record TimestampOptionPair {
+        Ipv4Address address,
+        UInt32 timestamp
+    }
+    
+    type record of TimestampOptionPair TimestampOptionPairs;
+    
+    //RFC 2113
+    type record RouterAlertOption {
+        UInt8 optionType(0x94),
+        UInt8 optionLength(4),
+        UInt16 value
+    } with {
+        enum(value) {
+            (0)     "Router shall examine packet",
+            (1 .. 65535)     "Reserved"
+        }
+    }
+    
+    type union Ipv4Payload {
+        Icmpv4Protocol icmpv4,
+        Ipv4Protocol ipv4,
+        Ipv6Protocol ipv6,
+        TcpProtocol tcp,
+        UdpProtocol udp,
+        octetstring data
+    } with {
+        variant CaseRef("-protocol", #integer); CaseDefault(data)
+        variant(icmpv4) CaseCond(integer (1))
+        variant(ipv4) CaseCond(integer (4))
+        variant(ipv6) CaseCond(integer (41))
+        variant(tcp) CaseCond(integer (6))
+        variant(udp) CaseCond(integer (17))
+    }
+    
+} with {
+    encode "FPB"
+    variant ByteOrder(BIG_ENDIAN)
+    runtime TypeEvFactoryJavaClass="com.fineqt.fpb.protocol.Ipv4TypeEVExtFactory"
+}
