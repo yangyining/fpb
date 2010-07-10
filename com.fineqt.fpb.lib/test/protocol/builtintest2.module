@@ -1,0 +1,43 @@
+module builtintest2 {
+    type integer UINT8 (0 .. 255) with { 
+        variant Length(8); 
+    }
+
+    type integer UINT16 (0 .. 65535) with { 
+        variant Length(16); 
+    }
+    
+    type charstring HttpToken (pattern "[^()<>@,;:\\""\/\[\]?={} \t]+");
+    
+    type charstring HttpWS (pattern "[ \t]*");
+    
+    type record HttpHeader {
+        HttpToken name,
+        charstring colon(":"),
+        HttpWS space,
+        charstring value,
+        octetstring crlf('0D0A'O)
+    } with {
+        variant OneLineMode(CRLF);
+        variant(value) RestOfData(true); LengthIncrement(-16);
+    }
+    
+    type record of HttpHeader HttpHeaderList;
+    
+    type record MessageType1 {
+        UINT16 msgLength,
+        HttpHeaderList headers
+    } with {
+        variant LengthRef("+msgLength"); LengthMultiplier(8);
+    }
+    
+    type record MessageType2 {
+        HttpHeader header21,
+        HttpHeader header22,
+        MessageType1 msg1
+    }
+    
+} with {
+    encode "FPB"
+    variant ByteOrder(BIG_ENDIAN)
+}

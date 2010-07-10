@@ -1,0 +1,124 @@
+module langtest1 {
+    typedef integer UINT4 (0 .. 15);
+    
+    //charstring pattern constraint
+    typedef charstring StringToken (pattern "[a-zA-Z0-9]+");
+
+    //integer list constraint
+    typedef integer IntType1 (0 .. 255, 300, 400, 500 .. 600);
+
+    //float list constraint
+    typedef float FloatType1 (0.0 .. 255.0, 300.0, 400.0, 500.0 .. 600.0);
+    
+    //boolean list constraint
+    typedef boolean BooleanType1 (true);
+    
+    //bitstr list constraint
+    typedef bitstring BstrType1 ('00'B, '01'B, '11'B);
+     
+    //hexstring list constraint
+    typedef hexstring HstrType1 ('11'H, 'F'H, '22F'H);
+     
+    //octetstring list constraint
+    typedef octetstring OstrType1 ('11'O, '22'O, 'FFFF'O);
+    
+    //verdict  list constraint
+    typedef verdict VerdictType1 (error, fail);
+    
+    //charstring list constraint
+    typedef charstring SubStringType1 ("abc", "efg", "0".."9");
+  
+    typedef enumerated EnumType1 {
+        field1(10), 
+        field2(20),
+        field3
+    }
+    
+    //enum list constraint
+    typedef EnumType1 SubEnumType1 (field1, field2);
+    
+    //record of length constraint
+    typedef record length(2 .. 4) of UINT4 UINT4List;
+    
+    //set of length constraint
+    typedef set length(2) of UINT4 UINT4Set;
+    
+    //record of list constraint
+    typedef UINT4List SubUINT4List_1 ({ 
+        [0] := 1,
+        [1] := 2
+    }, {
+        [0] := 3,
+        [1] := 4
+    });
+
+    typedef UINT4List SubUINT4List_2 ({5, 6}, {7, 8});
+    
+    //set of list constraint
+    typedef UINT4Set SubUINT4Set ({ 
+        [0] := 10,
+        [1] := 11
+    }, {
+        [0] := 12,
+        [1] := 13
+    });
+    
+    //record
+    typedef record Record1 {
+        UINT4 uint4Field ( 5 .. 10 ),
+        StringToken tokenField length(4),
+        float floatField ( 1.0 .. 10.0, 20.0, 30.0 ),
+        integer intField ( 1 .. 10, 20, 30 ),
+        boolean booleanField ( true ),
+        bitstring bstrField length(4),
+        hexstring hstrField length(2),
+        octetstring ostrField ('00FF'O, '11FF'O, '22FF'O),
+        charstring cstrField length(3),
+        EnumType1 enumField (field1, field2),
+        verdict verdictField ( fail, pass)
+    }
+    
+    //record list constraint
+    typedef Record1 SubRecord1_1 ({
+        uint4Field := 5,
+        tokenField := "abcd",
+        floatField := 20.0,
+        intField := 20,
+        booleanField := true,
+        bstrField := '1101'B,
+        hstrField := 'FF'H,
+        ostrField := '00FF'O,
+        cstrField := "xyz",
+        enumField := field1,
+        verdictField := pass
+    });
+    
+    typedef Record1 SubRecord1_2 ({
+        5, "abcd", 20.0, 20, true, '1101'B, 'FF'H, '00FF'O, "xyz", -, pass
+    });
+    
+    //set 
+    typedef set Set1 {
+        UINT4 uint4Field ( 5 .. 10 ),
+        float floatField ( 1.0 .. 10.0, 20.0, 30.0, omit ) optional  
+    }
+
+    //set list constraint
+    typedef Set1 SubSet1_1 ({
+        uint4Field := 5,
+        floatField := 20.0
+    });
+    
+    typedef Set1 SubSet1_2 ({ 5, - });
+    
+    //union
+    typedef union Union1 {
+        UINT4 uint4Field ( 5 .. 10 ),
+        float floatField ( 1.0 .. 10.0, 20.0, 30.0 )
+    }
+    
+    //union list constraint
+    typedef Union1 SubUnion1 ({uint4Field := 9}, {floatField := 20.0});    
+} with {
+    encode "FPB"
+}

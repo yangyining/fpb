@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="modelsrc"/>
+	<classpathentry kind="src" path="testsrc"/>
+	<classpathentry kind="src" path="grammersrc"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry exported="true" kind="lib" path="lib/commons-lang-2.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/junit-4.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/org.eclipse.emf.common_2.3.0.v200709252135.jar" sourcepath="C:/eclipse/plugins/org.eclipse.emf.source_2.3.1.v200709252135/src/org.eclipse.emf.common_2.3.0.v200709252135/src.zip"/>
+	<classpathentry exported="true" kind="lib" path="lib/org.eclipse.emf.ecore_2.3.1.v200709252135.jar" sourcepath="C:/eclipse/plugins/org.eclipse.emf.source_2.3.1.v200709252135/src/org.eclipse.emf.ecore_2.3.1.v200709252135/src.zip"/>
+	<classpathentry exported="true" kind="lib" path="lib/org.eclipse.emf.ecore.xmi_2.3.1.v200709252135.jar"/>
+	<classpathentry kind="lib" path="lib/antlr-runtime-3.1.3.jar" sourcepath="D:/tools/antlr-3.1.3/runtime/Java/src/main/java"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

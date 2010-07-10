@@ -1,0 +1,37 @@
+module langtest2 {
+    import from langtest1 { type UINT4, StringToken, EnumType1 } with {
+        variant(UINT4) Length(4); Signed(false); ByteOrder(BIG_ENDIAN);
+        runtime(UINT4) TypeJavaClass="com.fineqt.fpb.lib.type.impl.PImportTypeExtImpl"
+    }
+    import from langtest1 {
+        enumset all;
+        const all;
+        modulepar all;
+    }
+    import from langtest1 { type StringToken, UINT4List } with {
+        encode "FPB"
+    }
+    
+    type UINT4 UINT4_1 (5 .. 10);
+    
+    type integer RootInt4 (0 .. 15);
+    
+    type charstring Cstr3 length(3);
+    
+    type record RecordA {
+        integer fieldInt,
+        RecordB fieldB 
+    }
+    
+    type RecordA SubRecordA({fieldInt:=10, 
+        fieldB:={fieldStr:="abc", fieldA:=omit}
+        }); 
+    
+    type record RecordB {
+        Cstr3 fieldStr("abc", "efg", "1"),
+        SubRecordA fieldA optional
+    }
+    
+} with {
+    encode "FPB"
+}

@@ -1,0 +1,51 @@
+module langtest5 {
+
+import from langtest1 { 
+    type RecordLevel1, RecordLevel2, RecordLevel3;
+    const all; 
+}
+
+modulepar {
+    integer mpar1 := 10;
+    integer mpar2 := mpar1;
+}
+
+const RecordLevel2 recl2Var2 := {
+    field1 := langtest1.recl1Var1.field2.field1,
+    field2 := recl1Var1.fieldx.field2
+}
+
+/**
+ * Type recursive reference.
+ * RecordA.fieldB -> RecordB.fieldC -> RecordC.fieldA -> RecordA
+ */
+type record RecordA {
+    RecordB fieldB
+}
+
+type record RecordB {
+    integer fieldInt,
+    RecordC fieldC
+}
+
+type record RecordC {
+    RecordA fieldA optional     //must be optional
+}
+
+/**
+ * For recursive constant reference error
+ * recaVar1.fieldB.fieldC=reccVar1 -> reccVar1.fieldA=recaVar1 -> recaVar1   
+ */
+const RecordA recaVar1 := {
+    fieldB := {
+            fieldInt := 10,
+            fieldC := reccVar1
+        }
+}
+
+const RecordC reccVar1 := {
+    fieldA := recaVar1
+}
+
+const integer intVar1 := mpar1;
+}

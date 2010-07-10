@@ -1,0 +1,8 @@
+module langtest3 {
+import from langtest2 all with {
+    variant(UINT4_1) Length(4); Signed(false); ByteOrder(LITTLE_ENDIAN);
+    runtime(UINT4_1) TypeJavaClass="com.fineqt.fpb.lib.type.impl.PImportTypeExtImpl"
+}
+
+//import from 
+}

@@ -1,0 +1,137 @@
+module builtintest {
+    typedef integer UINT4 (0 .. 15) with { 
+        variant { Length(4); Signed(false); ByteOrder(NONE) } 
+    }        
+    typedef integer UINT8 (0 .. 255) with { 
+        variant { Length(8); Signed(false); ByteOrder(NONE) } 
+    }       
+    typedef integer UINT16 (0 .. 65535) with {
+        variant { Length(16); Signed(false); ByteOrder(NONE) } 
+    }       
+    typedef charstring StringToken (pattern "[a-zA-Z0-9]+");     
+    typedef charstring StringWS (pattern "[ \t]*");
+    typedef record StringOneLine {     
+            StringToken token1,
+            StringWS ws1,
+            StringToken token2
+    } with { 
+        variant { OnelineMode(CRLF) }
+    }   
+    typedef record length(3) of StringOneLine StringMultiLineFix;       
+    typedef record of StringOneLine StringMultiLineVar;
+    typedef record DataLenghtHyp {     
+        UINT8 totalLength,   
+        UINT16 data1Length,  
+        boolean data2Flag, 
+        bitstring data1,
+        bitstring pad,
+        octetstring data2 length(4) optional,    
+        octetstring data3 optional
+    }   with {  
+        variant { PopField([DECODE, CALCULATE], "data1Length"); LengthRef("+totalLength");
+                LengthMultiplier(8) }                             
+        variant(data1Length) { PushField([DECODE, CALCULATE]) }    
+        variant(data2Flag) { DefaultValue((true)) } 
+        variant(data1) { LengthRef("-data1Length", "integer"); LengthIncrement(3); 
+                DefaultValue(('0101'B)) }                              
+        variant(pad) { PadType(OCTET2); PadValue(('10'B)) }                              
+        variant(data2) { SelectRef("^data2Flag"); SelectCond(boolean (true)); 
+                DefaultPresent(true); DefaultValue(('FFFF00'O)) }                                
+    }                        
+    typedef record StringBlock {                                                       
+        StringOneLne lines1Count,                                                    
+        StringMultiLineFix first3line,
+        StringMultiLineVar lines1,                                              
+        StringMultiLineVar lines2 optional                                                  
+    }   with {                                                  
+        variant(lines1) { RepeatRef("^lines1Count/token1") }                                                 
+        variant(lines2) { DefaultPresent(true); DefaultLength(1) }                                                   
+    }                                                       
+    typedef record CaseRecord {                                                        
+        UINT8 code,                                                 
+        UINT16 data                                         
+    }                                               
+    typedef union UnionBlock1 {                                                
+        Case1 case1,                                         
+        Case2 case2,                                        
+        Case3 case3                                         
+    }   with {                                          
+        variant { CaseRefRegion(0,8); CaseDefault(case1) }                                           
+        variant(case1) { CaseCond(integer, (1)); DefaultPresent(true) }                                          
+        variant(case2) { CaseCond(integer, (2)) }                                           
+        variant(case3) { CaseCond(integer, (3)) }                                           
+    }                                               
+    typedef CaseRecord Case1;
+    typedef CaseRecord Case2;
+    typedef CaseRecord Case3;
+    typedef UnionBlock1 UnionBlock2 with { 
+        variant { CaseRef("$code", "integer") }
+    }
+    typedef set SetBlock1 {                                        
+        Case1 case1,                           
+        Case2 case2 optional                                    
+    }   with {                                  
+        variant { CaseRefRegion(0, 8) }                                    
+        variant(case1) { CaseCond(integer, (1)) }                                  
+        variant(case2) { CaseCond(integer, (2)) }                                   
+    }                                       
+    typedef record Protocol1 {                                     
+        UINT8 prefix,                                    
+        UINT8 prtlcode,
+        Payload1 payload                                    
+    }   with {
+        variant { Protocol(true); PopField([decode], "prtlcode") }                                    
+        variant(prtlcode) {PushField([decode])}                                  
+        enum(prtl2) {"Protocol2", (32)}
+    }                                       
+    typedef union Payload1 {                                       
+        Protocol2 prtl2,                                     
+        Protocol3 prtl3,                                    
+        octetstring data                                        
+    }
+    typedef record Protocol2 {
+        UINT16 data                                     
+    }   with {
+        variant { Protocol(true); SelectRef("-prtlcode"); SelectCond(integer, (32)) } //0x20
+        enumref Protocol2Data
+    }                                        
+    typedef record Protocol3 {                                         
+        UINT16 prefix(12288), //0x3000
+        octetstring data,
+    }   with {
+        variant { Protocol(true); SelectRefRegion(0,16); SelectCond(integer, (12288)) }    //0x3000                                      
+    }                                           
+    typedef record LEndianRecord {
+        UINT4 int1,                          
+        boolean flag,
+        bitstring bits length(3),
+        UINT8 int2,
+        UINT16 int3,
+        hexstring hexs optional
+    }   with{
+        variant { ByteOrder(LITTLE_ENDIAN) }
+        variant(int1)   { FlagType(OCTET2) }
+        variant(flag)   { FlagType(OCTET2) }
+        variant(bits)   { FlagType(OCTET2) }
+        variant(int2)   { FlagType(OCTET2) }    //?
+    }   
+    typedef enumerated FieldName{FIELD1(10), FIELD2(20)}   
+    typedef record EnumRefRecord {     
+        FieldName fieldName,
+        UINT8 field1 optional,
+        UINT16 field2 optional
+    }   with {
+        variant(fieldName) { DefaultValue((FIELD2)); }
+        variant(field1) { SelectRef("^fieldName"); SelectCond(FieldName, (FIELD1)) }
+        variant(field2) { SelectRef("^fieldName"); SelectCond(FieldName, (FIELD2)) }                                                 
+    }                                                       
+    typedef record of UINT16 UINT16List;                                                       
+    typedef set of UINT16 UINT16Set;
+    enumset integer Protocol2Data {
+        "item1" ( 0 .. 9),
+        "item2" ( 10 .. 19)
+    }                                                   
+} with {
+    encode "FPB"
+    variant {ByteOrder(BIG_ENDIAN)}
+}

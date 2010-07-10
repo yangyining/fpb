@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="ASCII"?>
+<fpbmodule:PModule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:fpbmodule="http://fpbmodule.model.lib.fpb.fineqt.com" xmlns:fpbtemplate="http://fpbtemplate.model.lib.fpb.fineqt.com" name="compacttest" encode="FPB">
+  <variant xsi:type="fpbmodule:PFpbModuleEV" byteorder="BIG_ENDIAN"/>
+  <types xsi:type="fpbmodule:PImportType" name="integer" encode="FPB" typeID="1" importedModuleName="builtin" importedType="fpbmodule:PInteger builtin#//@pModule/@types.0" importedTypeName="integer">
+    <variant xsi:type="fpbmodule:PFpbTypeEV"/>
+  </types>
+  <types xsi:type="fpbmodule:PImportType" name="float" encode="FPB" typeID="2" importedModuleName="builtin" importedType="fpbmodule:PFloat builtin#//@pModule/@types.1" importedTypeName="float">
+    <variant xsi:type="fpbmodule:PFpbTypeEV"/>
+  </types>
+  <types xsi:type="fpbmodule:PImportType" name="objid" encode="FPB" typeID="3" importedModuleName="builtin" importedType="fpbmodule:PObjid builtin#//@pModule/@types.2" importedTypeName="objid">
+    <variant xsi:type="fpbmodule:PFpbTypeEV"/>
+  </types>
+  <types xsi:type="fpbmodule:PImportType" name="boolean" encode="FPB" typeID="4" importedModuleName="builtin" importedType="fpbmodule:PBoolean builtin#//@pModule/@types.3" importedTypeName="boolean">
+    <variant xsi:type="fpbmodule:PFpbTypeEV"/>
+  </types>
+  <types xsi:type="fpbmodule:PImportType" name="charstring" encode="FPB" typeID="5" importedModuleName="builtin" importedType="fpbmodule:PCharstring builtin#//@pModule/@types.4" importedTypeName="charstring">
+    <variant xsi:type="fpbmodule:PFpbTypeEV"/>
+  </types>
+  <types xsi:type="fpbmodule:PImportType" name="universal_charstring" encode="FPB" typeID="6" importedModuleName="builtin" importedType="fpbmodule:PInteger builtin#//@pModule/@types.0" importedTypeName="integer">
+    <variant xsi:type="fpbmodule:PFpbTypeEV"/>
+  </types>
+  <types xsi:type="fpbmodule:PImportType" name="bitstring" encode="FPB" typeID="7" importedModuleName="builtin" importedType="fpbmodule:PBitstring builtin#//@pModule/@types.6" importedTypeName="bitstring">
+    <variant xsi:type="fpbmodule:PFpbTypeEV"/>
+  </types>
+  <types xsi:type="fpbmodule:PImportType" name="hexstring" encode="FPB" typeID="8" importedModuleName="builtin" importedType="fpbmodule:PHexstring builtin#//@pModule/@types.7" importedTypeName="hexstring">
+    <variant xsi:type="fpbmodule:PFpbTypeEV"/>
+  </types>
+  <types xsi:type="fpbmodule:PImportType" name="octetstring" encode="FPB" typeID="9" importedModuleName="builtin" importedType="fpbmodule:POctetstring builtin#//@pModule/@types.8" importedTypeName="octetstring">
+    <variant xsi:type="fpbmodule:PFpbTypeEV"/>
+  </types>
+  <types xsi:type="fpbmodule:PImportType" name="verdict" encode="FPB" typeID="10" importedModuleName="builtin" importedType="fpbmodule:PVerdict builtin#//@pModule/@types.9" importedTypeName="verdict">
+    <variant xsi:type="fpbmodule:PFpbTypeEV"/>
+  </types>
+  <types xsi:type="fpbmodule:PSubType" name="UINT4" encode="FPB" typeID="101" superTypeName="integer">
+    <variant xsi:type="fpbmodule:PFpbTypeEV" byteorder="NONE" length="4"/>
+    <constraint xsi:type="fpbmodule:PListConstraint">
+      <matcher>
+        <items xsi:type="fpbtemplate:PRangeMatcher" lowerBound="0" upperBound="15"/>
+      </matcher>
+    </constraint>
+  </types>
+  <types xsi:type="fpbmodule:PSubType" name="UINT8" encode="FPB" typeID="102" superTypeName="integer">
+    <variant xsi:type="fpbmodule:PFpbTypeEV" byteorder="NONE" length="8"/>
+    <constraint xsi:type="fpbmodule:PListConstraint">
+      <matcher>
+        <items xsi:type="fpbtemplate:PRangeMatcher" lowerBound="0" upperBound="255"/>
+      </matcher>
+    </constraint>
+  </types>
+  <types xsi:type="fpbmodule:PSubType" name="UINT16" encode="FPB" typeID="103" superTypeName="integer">
+    <variant xsi:type="fpbmodule:PFpbTypeEV" byteorder="NONE" length="16"/>
+    <constraint xsi:type="fpbmodule:PListConstraint">
+      <matcher>
+        <items xsi:type="fpbtemplate:PRangeMatcher" lowerBound="0" upperBound="65535"/>
+      </matcher>
+    </constraint>
+  </types>
+  <types xsi:type="fpbmodule:PSubType" name="StringToken" encode="FPB" typeID="104" superTypeName="charstring">
+    <variant xsi:type="fpbmodule:PFpbTypeEV" byteorder="BIG_ENDIAN"/>
+    <constraint xsi:type="fpbmodule:PPatternConstraint">
+      <matcher desc="[a-zA-Z0-9]+"/>
+    </constraint>
+  </types>
+  <types xsi:type="fpbmodule:PSubType" name="StringWS" encode="FPB" typeID="105" superTypeName="charstring">
+    <variant xsi:type="fpbmodule:PFpbTypeEV" byteorder="BIG_ENDIAN"/>
+    <constraint xsi:type="fpbmodule:PPatternConstraint">
+      <matcher desc="[ \t]*"/>
+    </constraint>
+  </types>
+  <types xsi:type="fpbmodule:PRecord" name="StringOneLine" encode="FPB" typeID="106">
+    <variant xsi:type="fpbmodule:PFpbTypeEV" byteorder="BIG_ENDIAN" onelineMode="CRLF"/>
+    <pfields name="token1" encode="FPB" ptypeName="StringToken" fieldID="0" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV">
+        <typeEV xsi:type="fpbmodule:PFpbTypeEV"/>
+      </variant>
+    </pfields>
+    <pfields name="ws1" encode="FPB" ptypeName="StringWS" fieldID="1" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV">
+        <typeEV xsi:type="fpbmodule:PFpbTypeEV"/>
+      </variant>
+    </pfields>
+    <pfields name="token2" encode="FPB" ptypeName="StringToken" fieldID="2" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV">
+        <typeEV xsi:type="fpbmodule:PFpbTypeEV"/>
+      </variant>
+    </pfields>
+  </types>
+  <types xsi:type="fpbmodule:PRecordOf" name="StringMultiLineFix" encode="FPB" typeID="107" itemTypeName="StringOneLine">
+    <variant xsi:type="fpbmodule:PFpbTypeEV" byteorder="BIG_ENDIAN"/>
+    <constraint xsi:type="fpbmodule:PLengthConstraint" lowerBound="3" upperBound="3"/>
+  </types>
+  <types xsi:type="fpbmodule:PRecordOf" name="StringMultiLineVar" encode="FPB" typeID="108" itemTypeName="StringOneLine">
+    <variant xsi:type="fpbmodule:PFpbTypeEV" byteorder="BIG_ENDIAN"/>
+  </types>
+  <types xsi:type="fpbmodule:PRecord" name="DataLengthHyp" encode="FPB" typeID="109">
+    <variant xsi:type="fpbmodule:PFpbTypeEV" byteorder="BIG_ENDIAN" lengthMultiplier="8" lengthRef="(+totalLength)" popField="([decode, calculate], data1Length)"/>
+    <pfields name="totalLength" encode="FPB" ptypeName="UINT8" fieldID="0" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV">
+        <typeEV xsi:type="fpbmodule:PFpbTypeEV"/>
+      </variant>
+    </pfields>
+    <pfields name="data1Length" encode="FPB" ptypeName="UINT16" fieldID="1" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV" pushField="([decode, calculate])">
+        <typeEV xsi:type="fpbmodule:PFpbTypeEV"/>
+      </variant>
+    </pfields>
+    <pfields name="data2Flag" encode="FPB" ptypeName="boolean" fieldID="2" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV" defaultValue="(true)">
+        <typeEV xsi:type="fpbmodule:PFpbTypeEV"/>
+      </variant>
+    </pfields>
+    <pfields name="data1" encode="FPB" ptypeName="bitstring" fieldID="3" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV" defaultValue="('0101'B)">
+        <typeEV xsi:type="fpbmodule:PFpbTypeEV" lengthIncrement="3" lengthRef="(-data1Length, integer)"/>
+      </variant>
+    </pfields>
+    <pfields name="pad" encode="FPB" ptypeName="bitstring" fieldID="4" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV">
+        <typeEV xsi:type="fpbmodule:PFpbTypeEV" padType="2OCTET" padValue="('10'B)"/>
+      </variant>
+    </pfields>
+    <pfields name="data2" encode="FPB" ptypeName="octetstring" fieldID="5" optional="true">
+      <variant xsi:type="fpbmodule:PFpbFieldEV" defaultPresent="true" defaultValue="('FFFF00'O)">
+        <typeEV xsi:type="fpbmodule:PFpbTypeEV" selectCond="(boolean, (true))" selectRef="(^data2Flag)"/>
+      </variant>
+      <constraint xsi:type="fpbmodule:PLengthConstraint" lowerBound="4" upperBound="4"/>
+    </pfields>
+    <pfields name="data3" encode="FPB" ptypeName="octetstring" fieldID="6" optional="true">
+      <variant xsi:type="fpbmodule:PFpbFieldEV">
+        <typeEV xsi:type="fpbmodule:PFpbTypeEV"/>
+      </variant>
+    </pfields>
+  </types>
+  <types xsi:type="fpbmodule:PRecord" name="StringBlock" encode="FPB" typeID="110">
+    <variant xsi:type="fpbmodule:PFpbTypeEV" byteorder="BIG_ENDIAN"/>
+    <pfields name="lines1Count" encode="FPB" ptypeName="StringOneLine" fieldID="0" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV">
+        <typeEV xsi:type="fpbmodule:PFpbTypeEV"/>
+      </variant>
+    </pfields>
+    <pfields name="first3Line" encode="FPB" ptypeName="StringMultiLineFix" fieldID="1" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV">
+        <typeEV xsi:type="fpbmodule:PFpbTypeEV"/>
+      </variant>
+    </pfields>
+    <pfields name="lines1" encode="FPB" ptypeName="StringMultiLineVar" fieldID="2" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV">
+        <typeEV xsi:type="fpbmodule:PFpbTypeEV" repeatRef="(^lines1Count/token1)"/>
+      </variant>
+    </pfields>
+    <pfields name="lines2" encode="FPB" ptypeName="StringMultiLineVar" fieldID="3" optional="true">
+      <variant xsi:type="fpbmodule:PFpbFieldEV" defaultLength="1" defaultPresent="true">
+        <typeEV xsi:type="fpbmodule:PFpbTypeEV"/>
+      </variant>
+    </pfields>
+  </types>
+  <types xsi:type="fpbmodule:PRecord" name="CaseRecord" encode="FPB" typeID="122">
+    <variant xsi:type="fpbmodule:PFpbTypeEV" byteorder="BIG_ENDIAN"/>
+    <pfields name="code" encode="FPB" ptypeName="UINT8" fieldID="0" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV">
+        <typeEV xsi:type="fpbmodule:PFpbTypeEV"/>
+      </variant>
+    </pfields>
+    <pfields name="data" encode="FPB" ptypeName="UINT16" fieldID="1" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV">
+        <typeEV xsi:type="fpbmodule:PFpbTypeEV"/>
+      </variant>
+    </pfields>
+  </types>
+  <types xsi:type="fpbmodule:PUnion" name="UnionBlock1" encode="FPB" typeID="111">
+    <variant xsi:type="fpbmodule:PFpbTypeEV" byteorder="BIG_ENDIAN" caseDefault="case1" caseRefRegion="(0, 8)"/>
+    <pfields name="case1" encode="FPB" ptypeName="Case1" fieldID="0" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV" caseCond="(integer, (1))" defaultPresent="true">
+        <typeEV xsi:type="fpbmodule:PFpbTypeEV"/>
+      </variant>
+    </pfields>
+    <pfields name="case2" encode="FPB" ptypeName="Case2" fieldID="1" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV" caseCond="(integer, (2))">
+        <typeEV xsi:type="fpbmodule:PFpbTypeEV"/>
+      </variant>
+    </pfields>
+    <pfields name="case3" encode="FPB" ptypeName="Case3" fieldID="2" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV" caseCond="(integer, (3))">
+        <typeEV xsi:type="fpbmodule:PFpbTypeEV"/>
+      </variant>
+    </pfields>
+  </types>
+  <types xsi:type="fpbmodule:PSubType" name="Case1" encode="FPB" typeID="112" superTypeName="CaseRecord">
+    <variant xsi:type="fpbmodule:PFpbTypeEV" byteorder="BIG_ENDIAN"/>
+  </types>
+  <types xsi:type="fpbmodule:PSubType" name="Case2" encode="FPB" typeID="113" superTypeName="CaseRecord">
+    <variant xsi:type="fpbmodule:PFpbTypeEV" byteorder="BIG_ENDIAN"/>
+  </types>
+  <types xsi:type="fpbmodule:PSubType" name="Case3" encode="FPB" typeID="114" superTypeName="CaseRecord">
+    <variant xsi:type="fpbmodule:PFpbTypeEV" byteorder="BIG_ENDIAN"/>
+  </types>
+  <types xsi:type="fpbmodule:PSubType" name="UnionBlock2" encode="FPB" typeID="115" superTypeName="UnionBlock1">
+    <variant xsi:type="fpbmodule:PFpbTypeEV" byteorder="BIG_ENDIAN" caseRef="($code, integer)"/>
+  </types>
+  <types xsi:type="fpbmodule:PSet" name="SetBlock1" encode="FPB" typeID="116">
+    <variant xsi:type="fpbmodule:PFpbTypeEV" byteorder="BIG_ENDIAN" caseRefRegion="(0, 8)"/>
+    <pfields name="case1" encode="FPB" ptypeName="Case1" fieldID="0" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV" caseCond="(integer, (1))">
+        <typeEV xsi:type="fpbmodule:PFpbTypeEV"/>
+      </variant>
+    </pfields>
+    <pfields name="case2" encode="FPB" ptypeName="Case2" fieldID="1" optional="true">
+      <variant xsi:type="fpbmodule:PFpbFieldEV" caseCond="(integer, (2))">
+        <typeEV xsi:type="fpbmodule:PFpbTypeEV"/>
+      </variant>
+    </pfields>
+  </types>
+  <enumSets basetype="integer" name="Protocol2Data">
+    <enumItems name="item1">
+      <cond xsi:type="fpbmodule:PListConstraint">
+        <matcher>
+          <items xsi:type="fpbtemplate:PRangeMatcher" lowerBound="0" upperBound="9"/>
+        </matcher>
+      </cond>
+    </enumItems>
+    <enumItems name="item2">
+      <cond xsi:type="fpbmodule:PListConstraint">
+        <matcher>
+          <items xsi:type="fpbtemplate:PRangeMatcher" lowerBound="10" upperBound="19"/>
+        </matcher>
+      </cond>
+    </enumItems>
+  </enumSets>
+</fpbmodule:PModule>

@@ -1,0 +1,108 @@
+module tutorial {
+
+type bitstring MyListOfBitStrings ('01'B, '10'B, '11'B);
+type float pi (3.1415926);
+
+type integer MyIntegerRange (0 .. 255);
+type float piRange (3.14 .. 3142E-3);
+
+type integer MyIntegerRange2 (-infinity .. -1); 
+type integer MyIntegerRange3 (1, 2, 3, 10 .. 20, 99, 100);
+
+type bitstring MyByte1 length(8);
+type bitstring MyByte2 length(8 .. 8);
+type bitstring MyNibbleToByte length(4 .. 8); 
+
+
+type record MyRecordType
+{
+    integer field1,
+    MyOtherRecordType field2 optional,
+    charstring field3
+}
+
+type record MyOtherRecordType
+{
+    bitstring otherField1,
+    boolean otherField2
+}
+
+type record MyEmptyRecord { }
+
+const integer MyIntegerValue:= 1;
+
+const MyOtherRecordType MyOtherRecordValue:=
+{
+    otherField1 := '11001'B,
+    otherField2 := true
+}
+const MyRecordType MyRecordValue:=
+{
+    field1 := MyIntegerValue,
+    field2 := MyOtherRecordValue,
+    field3 := "A string"
+}
+
+const MyRecordType MyRecordValue2 := {MyIntegerValue, {'11001'B, true}, "A string"};
+
+ 
+const MyRecordType MyRecordValue3 := {MyIntegerValue, omit , "A string"};
+
+const MyRecordType MyRecordValue4 := {MyIntegerValue, - , "A string"};
+
+const integer intFieldValue := MyRecordValue3.field1;
+const boolean boolFieldValue := MyRecordValue2.field2.otherField2;
+
+type record length(10) of integer MyRecordOfType1; 
+type record length(0 .. 10) of integer MyRecordOfType2; 
+type record length(10 .. infinity) of integer MyRecordOfType3; 
+type set of boolean MySetOfType1; 
+type record length(0 .. 10) of charstring StringArray length(12);
+
+type record of integer MyRecordOf;
+const MyRecordOf MyRecordVar := { 0, 1, 2, 3 };
+const integer intItemValue1 := MyRecordVar[0];
+const MyRecordOf MyRecordVar2 := {
+ [0] := 0,
+ [4] := 4
+}
+const MyRecordOf MyRecordVar3 := { 0, 1, -, 2, omit };
+
+type record of integer MyBasicRecordOfType;
+type record of MyBasicRecordOfType MyRecordOfType;
+const MyRecordOfType myRecordOfArray := {
+    [1] := { [0] := 0, 
+             [2] := 2 }, 
+    [2] := { [1] := 1}
+}
+const integer intItemValue2 := myRecordOfArray[1][2];
+
+type enumerated MyFirstEnumType {
+    Monday, Tuesday, Wednesday, Thursday, Friday
+};
+type record MyNewRecordType {
+    MyFirstEnumType firstField,
+    integer secondField
+};
+const MyNewRecordType newRecordValue := { Monday, 0 }
+
+type union MyUnionType
+{
+    integer number,
+    charstring string
+};
+const MyUnionType numberVar := { number := 10 };
+const MyUnionType strVar := { string := "abc"};
+
+type integer UINT4 (0 .. 15);
+type integer UINT8 (0 .. 255);
+
+const UINT8 uint8Value := 100;
+const UINT4 uint4Value := uint8Value;
+
+ 
+//const float floatValue := uint8Value;
+
+} with {
+    encode "FPB"
+}

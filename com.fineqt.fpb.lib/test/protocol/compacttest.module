@@ -1,0 +1,81 @@
+module compacttest {
+    type integer UINT4 (0 .. 15) with { 
+        variant Length(4); Signed(false); ByteOrder(NONE) 
+    }        
+    type integer UINT8 (0 .. 255) with { 
+        variant Length(8); Signed(false); ByteOrder(NONE) 
+    }       
+    type integer UINT16 (0 .. 65535) with {
+        variant Length(16); Signed(false); ByteOrder(NONE) 
+    }       
+    type charstring StringToken (pattern "[a-zA-Z0-9]+");     
+    type charstring StringWS (pattern "[ \t]*");
+    type record StringOneLine {     
+            StringToken token1,
+            StringWS ws1,
+            StringToken token2
+    } with { 
+        variant OneLineMode(CRLF)
+    }   
+    type record length(3) of StringOneLine StringMultiLineFix;       
+    type record of StringOneLine StringMultiLineVar;
+    type record DataLengthHyp {     
+        UINT8 totalLength,   
+        UINT16 data1Length,  
+        boolean data2Flag, 
+        bitstring data1,
+        bitstring pad,
+        octetstring data2 length(4) optional,    
+        octetstring data3 optional
+    }   with {  
+        variant PushEmptyField([DECODE, CALCULATE], "data1Length"); LengthRef("+totalLength");
+                LengthMultiplier(8)                             
+        variant(data1Length) SetField([DECODE, CALCULATE])    
+        variant(data2Flag) DefaultValue((true)) 
+        variant(data1) LengthRef("-data1Length", #integer); LengthIncrement(3); 
+                DefaultValue(('0101'B))                              
+        variant(pad) PadType(OCTET2); PadValue(('10'B))                              
+        variant(data2) SelectRef("^data2Flag"); SelectCond(boolean (true)); 
+                DefaultPresent(true); DefaultValue(('FFFF00'O))                                
+    }                        
+    type record StringBlock {                                                       
+        StringOneLine lines1Count,
+        StringMultiLineFix first3Line,
+        StringMultiLineVar lines1,
+        StringMultiLineVar lines2 optional
+    }   with {                                                  
+        variant(lines1) RepeatRef("^lines1Count/token1")                                                 
+        variant(lines2) DefaultPresent(true); DefaultLength(1)                                                   
+    }                                                       
+    type record CaseRecord {                                                        
+        UINT8 code,                                                 
+        UINT16 data                                         
+    }                                               
+    type union UnionBlock1 {                                                
+        Case1 case1,                                         
+        Case2 case2,                                        
+        Case3 case3                                         
+    }   with {                                          
+        variant CaseRefRegion(0,8); CaseDefault(case1)                                           
+        variant(case1) CaseCond(integer (1)); DefaultPresent(true)                                          
+        variant(case2) CaseCond(integer (2))                                           
+        variant(case3) CaseCond(integer (3))                                           
+    }                                               
+    type CaseRecord Case1;
+    type CaseRecord Case2;
+    type CaseRecord Case3;
+    type UnionBlock1 UnionBlock2 with { 
+        variant CaseRef("$code", #integer)
+    }
+    type set SetBlock1 {                                        
+        Case1 case1,                           
+        Case2 case2 optional                                    
+    }   with {                                  
+        variant CaseRefRegion(0, 8)                                    
+        variant(case1) CaseCond(integer (1))                                  
+        variant(case2) CaseCond(integer (2))                                   
+    }                                       
+} with {
+    encode "FPB"
+    variant ByteOrder(BIG_ENDIAN)
+}

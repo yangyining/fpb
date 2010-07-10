@@ -1,0 +1,220 @@
+module langtest1 {
+    type integer UINT4 (0 .. 15);
+    
+    type integer PlusInt (0 .. infinity);
+
+    type integer MinusInt (-infinity .. 0);
+    
+    type float PlusFloat (0.0 .. infinity);
+
+    type float MinusFloat (-infinity .. 0.0);
+    
+    //charstring pattern constraint
+    type charstring StringToken (pattern "[a-zA-Z0-9]+");
+
+    //integer list constraint
+    type integer IntType1 (0 .. 255, 300, 400, 500 .. 600);
+
+    //float list constraint
+    type float FloatType1 (0.0 .. 255.0, 300.0, 400.0, 500.0 .. 600.0);
+    
+    //boolean list constraint
+    type boolean BooleanType1 (true);
+    
+    //bitstr list constraint
+    type bitstring BstrType1 ('00'B, '01'B, '11'B);
+    
+    type bitstring BstrType2 length(2 .. infinity);
+     
+    //hexstring list constraint
+    type hexstring HstrType1 ('11'H, 'F'H, '22F'H);
+     
+    //octetstring list constraint
+    type octetstring OstrType1 ('11'O, '22'O, 'FFFF'O);
+    
+    //verdict  list constraint
+    type verdict VerdictType1 (error, fail);
+    
+    //charstring list constraint
+    type charstring SubStringType1 ("abc", "efg", "0".."9");
+  
+    type enumerated EnumType1 {
+        field1(10), 
+        field2(20),
+        field3
+    }
+    
+    //enum list constraint
+    type EnumType1 SubEnumType1 (field1, field2);
+    
+    //record of length constraint
+    type record length(2 .. 4) of integer UINT4List (0 .. 15);
+    
+    //set of length constraint
+    type set length(2) of UINT4 UINT4Set;
+    
+    //record of list constraint
+    type UINT4List SubUINT4List_1 ({ 
+        [0] := 1,
+        [1] := 2
+    }, {
+        [0] := 3,
+        [1] := 4
+    });
+
+    type UINT4List SubUINT4List_2 ({5, 6}, {7, 8});
+    
+    //set of list constraint
+    type UINT4Set SubUINT4Set ({ 
+        [0] := 10,
+        [1] := 11
+    }, {
+        [0] := 12,
+        [1] := 13
+    });
+    
+    //record
+    type record Record1 {
+        UINT4 uint4Field ( 5 .. 10 ),
+        StringToken tokenField length(4),
+        float floatField ( 1.0 .. 10.0, 20.0, 30.0 ),
+        integer intField ( 1 .. 10, 20, 30 ),
+        boolean booleanField ( true ),
+        bitstring bstrField length(4),
+        hexstring hstrField length(2),
+        octetstring ostrField ('00FF'O, '11FF'O, '22FF'O),
+        charstring cstrField length(3),
+        EnumType1 enumField (field1, field2),
+        verdict verdictField ( fail, pass)
+    }
+    
+    //record list constraint
+    type Record1 SubRecord1_1 ({
+        uint4Field := 5,
+        tokenField := "abcd",
+        floatField := 20.0,
+        intField := 20,
+        booleanField := true,
+        bstrField := '1101'B,
+        hstrField := 'FF'H,
+        ostrField := '00FF'O,
+        cstrField := "xyz",
+        enumField := field1,
+        verdictField := pass
+    });
+    
+    type Record1 SubRecord1_2 ({
+        5, "abcd", 20.0, 20, true, '1101'B, 'FF'H, '00FF'O, "xyz", -, pass
+    });
+    
+    //set 
+    type set Set1 {
+        UINT4 uint4Field ( 5 .. 10 ),
+        float floatField ( 1.0 .. 10.0, 20.0, 30.0, omit ) optional  
+    }
+
+    //set list constraint
+    type Set1 SubSet1_1 ({
+        uint4Field := 5,
+        floatField := 20.0
+    });
+    
+    type Set1 SubSet1_2 ({ 5, - });
+    
+    //union
+    type union Union1 {
+        UINT4 uint4Field ( 5 .. 10 ),
+        float floatField ( 1.0 .. 10.0, 20.0, 30.0 )
+    }
+    
+    //union list constraint
+    type Union1 SubUnion1 ({uint4Field := 9}, {floatField := 20.0});  
+    
+    const UINT4 intVar1 := 1;
+
+    const UINT4 intVar2 := 21;
+      
+    const SubEnumType1 enumVar1 := field2;
+    
+    const SubEnumType1 enumVar2 := enumVar1;
+    
+    const UINT4List intListVar1 := { 
+        [0] := 1,
+        [2] := 2
+    };
+    
+    const UINT4List intListVar2 := {3, 4, -, 5, omit};
+    
+    const Set1 setVar1 := {
+        uint4Field := 5,
+        floatField := 20.0
+    };
+    
+    const Set1 setVar2 := {6, 21.0};
+    
+    const Union1 unionVar1 := {uint4Field := 9};
+    
+    modulepar UINT4 intMpar1 := 1, intMpar2;
+    
+    modulepar {
+        StringToken strMpar1 := "abc", strMpar2;
+        FloatType1 fMpar1 := 100.0;
+        UINT4 intMpar4 := intVar1;
+    } 
+    
+    thread modulepar UINT4 intMpar3 := 3;
+    
+    //composite type
+    type record RecordLevel1 {
+        integer field1,
+        RecordLevel2 field2
+    }
+    
+    type record RecordLevel2 {
+        integer field1,
+        RecordLevel3 field2 optional
+    }
+    
+    type record RecordLevel3 {
+        integer field1,
+        float field2
+    } 
+    
+    const RecordLevel1 recl1Var1 := {
+        field1 := 1,
+        field2 := {
+            field1 := 11,
+            field2 := {
+                field1 := 111,
+                field2 := 222.0
+            }
+        }
+    }
+    
+    const RecordLevel3 recl3Var1 := {111, 222.0}
+    
+    const RecordLevel2 recl2Var1 := {
+        field1 := 11,
+        field2 := recl3Var1
+    }
+    
+    const RecordLevel2 recl2Var2 := {
+        field1 := recl1Var1.field2.field1,
+        field2 := recl1Var1.field2.field2
+    }
+    
+    //multi dimesion type
+    type record of integer MyBasicRecordOfType;
+    
+    type record of MyBasicRecordOfType MyMultiRecordOfType;
+    
+    const MyMultiRecordOfType multiRecordOfArray := {
+        [1] := { [2] := 2 }, 
+        [2] := { [1] := 1}
+    }
+    
+    const integer intItemValue2 := multiRecordOfArray[1][2];
+    
+} with {
+    encode "FPB"
+}

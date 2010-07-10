@@ -1,0 +1,108 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: fpblibtest - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\JiangMin\LOCALS~1\Temp\RSPD0.tmp" with contents
+[
+/nologo /ML /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /Fp"Release/fpblibtest.pch" /YX /Fo"Release/" /Fd"Release/" /FD /I../../../mainsrc /c 
+"D:\work\ttcnworkspace\com.fineqt.fpb.lib\jnisrc\testsrc\autotesttest.cpp"
+"D:\work\ttcnworkspace\com.fineqt.fpb.lib\jnisrc\mainsrc\AutotestUtil.cpp"
+"D:\work\ttcnworkspace\com.fineqt.fpb.lib\jnisrc\testsrc\pcaptest.cpp"
+"D:\work\ttcnworkspace\com.fineqt.fpb.lib\jnisrc\mainsrc\TextBitset.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\JiangMin\LOCALS~1\Temp\RSPD0.tmp" 
+Creating temporary file "C:\DOCUME~1\JiangMin\LOCALS~1\Temp\RSPD1.tmp" with contents
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib wpcap.lib /nologo /subsystem:console /incremental:no /pdb:"Release/fpblibtest.pdb" /machine:I386 /out:"Release/fpblibtest.exe" 
+.\Release\autotesttest.obj
+.\Release\AutotestUtil.obj
+.\Release\pcaptest.obj
+.\Release\TextBitset.obj
+]
+Creating command line "link.exe @C:\DOCUME~1\JiangMin\LOCALS~1\Temp\RSPD1.tmp"
+<h3>Output Window</h3>
+Compiling...
+autotesttest.cpp
+D:\work\ttcnworkspace\com.fineqt.fpb.lib\jnisrc\testsrc\autotesttest.cpp(69) : warning C4305: '=' : truncation from 'const int' to 'char'
+D:\work\ttcnworkspace\com.fineqt.fpb.lib\jnisrc\testsrc\autotesttest.cpp(69) : warning C4309: '=' : truncation of constant value
+D:\work\ttcnworkspace\com.fineqt.fpb.lib\jnisrc\testsrc\autotesttest.cpp(117) : warning C4305: '=' : truncation from 'const int' to 'char'
+D:\work\ttcnworkspace\com.fineqt.fpb.lib\jnisrc\testsrc\autotesttest.cpp(117) : warning C4309: '=' : truncation of constant value
+D:\work\ttcnworkspace\com.fineqt.fpb.lib\jnisrc\testsrc\autotesttest.cpp(120) : warning C4305: '=' : truncation from 'const int' to 'char'
+D:\work\ttcnworkspace\com.fineqt.fpb.lib\jnisrc\testsrc\autotesttest.cpp(120) : warning C4309: '=' : truncation of constant value
+D:\work\ttcnworkspace\com.fineqt.fpb.lib\jnisrc\testsrc\autotesttest.cpp(123) : warning C4305: '=' : truncation from 'const int' to 'char'
+D:\work\ttcnworkspace\com.fineqt.fpb.lib\jnisrc\testsrc\autotesttest.cpp(123) : warning C4309: '=' : truncation of constant value
+D:\work\ttcnworkspace\com.fineqt.fpb.lib\jnisrc\testsrc\autotesttest.cpp(126) : warning C4305: '=' : truncation from 'const int' to 'char'
+D:\work\ttcnworkspace\com.fineqt.fpb.lib\jnisrc\testsrc\autotesttest.cpp(126) : warning C4309: '=' : truncation of constant value
+D:\work\ttcnworkspace\com.fineqt.fpb.lib\jnisrc\testsrc\autotesttest.cpp(232) : warning C4305: '=' : truncation from 'const int' to 'char'
+D:\work\ttcnworkspace\com.fineqt.fpb.lib\jnisrc\testsrc\autotesttest.cpp(232) : warning C4309: '=' : truncation of constant value
+D:\work\ttcnworkspace\com.fineqt.fpb.lib\jnisrc\testsrc\autotesttest.cpp(233) : warning C4305: '=' : truncation from 'const int' to 'char'
+D:\work\ttcnworkspace\com.fineqt.fpb.lib\jnisrc\testsrc\autotesttest.cpp(233) : warning C4309: '=' : truncation of constant value
+AutotestUtil.cpp
+pcaptest.cpp
+TextBitset.cpp
+Linking...
+<h3>
+--------------------Configuration: fpblib - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\JiangMin\LOCALS~1\Temp\RSPD3.tmp" with contents
+[
+/nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "FPBLIB_EXPORTS" /FR"Release/" /Fp"Release/fpblib.pch" /YX /Fo"Release/" /Fd"Release/" /FD /c 
+"D:\work\ttcnworkspace\com.fineqt.fpb.lib\jnisrc\mainsrc\AutotestUtil.cpp"
+"D:\work\ttcnworkspace\com.fineqt.fpb.lib\jnisrc\vc6\finepbuilder\fpblib\fpblib.cpp"
+"D:\work\ttcnworkspace\com.fineqt.fpb.lib\jnisrc\mainsrc\J_PcapSocketImpl.cpp"
+"D:\work\ttcnworkspace\com.fineqt.fpb.lib\jnisrc\mainsrc\J_TextBitset.cpp"
+"D:\work\ttcnworkspace\com.fineqt.fpb.lib\jnisrc\mainsrc\Processing.cpp"
+"D:\work\ttcnworkspace\com.fineqt.fpb.lib\jnisrc\vc6\finepbuilder\fpblib\StdAfx.cpp"
+"D:\work\ttcnworkspace\com.fineqt.fpb.lib\jnisrc\mainsrc\TextBitset.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\JiangMin\LOCALS~1\Temp\RSPD3.tmp" 
+Creating temporary file "C:\DOCUME~1\JiangMin\LOCALS~1\Temp\RSPD4.tmp" with contents
+[
+wpcap.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib wpcap.lib /nologo /dll /incremental:no /pdb:"Release/fpblib.pdb" /machine:I386 /out:"Release/fpblib.dll" /implib:"Release/fpblib.lib" 
+.\Release\AutotestUtil.obj
+.\Release\fpblib.obj
+.\Release\J_PcapSocketImpl.obj
+.\Release\J_TextBitset.obj
+.\Release\Processing.obj
+.\Release\StdAfx.obj
+.\Release\TextBitset.obj
+]
+Creating command line "link.exe @C:\DOCUME~1\JiangMin\LOCALS~1\Temp\RSPD4.tmp"
+<h3>Output Window</h3>
+Compiling...
+AutotestUtil.cpp
+fpblib.cpp
+J_PcapSocketImpl.cpp
+J_TextBitset.cpp
+D:\work\ttcnworkspace\com.fineqt.fpb.lib\jnisrc\mainsrc\J_TextBitset.cpp(146) : warning C4800: 'unsigned char' : forcing value to bool 'true' or 'false' (performance warning)
+D:\work\ttcnworkspace\com.fineqt.fpb.lib\jnisrc\mainsrc\J_TextBitset.cpp(256) : warning C4800: 'unsigned char' : forcing value to bool 'true' or 'false' (performance warning)
+D:\work\ttcnworkspace\com.fineqt.fpb.lib\jnisrc\mainsrc\J_TextBitset.cpp(304) : warning C4800: 'unsigned char' : forcing value to bool 'true' or 'false' (performance warning)
+Processing.cpp
+StdAfx.cpp
+TextBitset.cpp
+Linking...
+   Creating library Release/fpblib.lib and object Release/fpblib.exp
+Creating command line "bscmake.exe /nologo /o"Release/fpblib.bsc"  .\Release\AutotestUtil.sbr .\Release\fpblib.sbr .\Release\J_PcapSocketImpl.sbr .\Release\J_TextBitset.sbr .\Release\Processing.sbr .\Release\StdAfx.sbr .\Release\TextBitset.sbr"
+Creating browse info file...
+<h3>Output Window</h3>
+Creating temporary file "C:\DOCUME~1\JiangMin\LOCALS~1\Temp\RSPD8.bat" with contents
+[
+@echo off
+copy   Release\fpblib.dll   ..\..\..\..\
+]
+Creating command line "C:\DOCUME~1\JiangMin\LOCALS~1\Temp\RSPD8.bat"
+
+        1 個のファイルをコピーしました。
+
+
+
+<h3>Results</h3>
+fpblib.dll - 0 error(s), 17 warning(s)
+</pre>
+</body>
+</html>

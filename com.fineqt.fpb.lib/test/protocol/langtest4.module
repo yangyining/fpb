@@ -1,0 +1,49 @@
+module langtest4 {
+//module not found
+//import from NoneModule { all }
+
+type integer IntType1;
+//duplicated type
+type integer IntType1;
+
+const integer intConst1 := 1;
+//duplicated const
+const integer intConst1 := 1;
+
+modulepar integer intMpar1;
+//duplicated module parameter
+modulepar integer intMpar1;
+
+enumset integer intEnumSet1 {
+    ( 0 .. 9)   "item1" ,
+    ( 10 .. 19) "item2" 
+}
+//duplicated enumset
+enumset integer intEnumSet1 {
+    ( 0 .. 9)   "item1" ,
+    ( 10 .. 19) "item1" 
+}
+
+//duplicated enumeration type item
+type enumerated FieldName{
+    FIELD1(10), 
+    FIELD2(20),
+    FIELD1(10)
+}
+
+type record RecType1 {
+    integer field1,
+    //duplicated field
+    boolean field1
+}
+
+//Not Exist Parent Type
+type NoneType1 Type2;
+const NoneType2 const2 := 1;
+modulepar NoneType3 mpar2;
+enumset NoneType4 eset3 {
+    ( 0 .. 9)   "item1",
+    ( 10 .. 19) "item2" 
+}
+
+}

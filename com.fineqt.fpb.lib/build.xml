@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="all" name="finepbuilder">
+	<property name="project.lib.dir" value="." />
+	<property name="project.model.dir" value="../com.fineqt.fpb.lib.model" />
+	<property name="src.java.main.dir" value="./src" />
+  <property name="src.java.grammer.dir" value="./grammersrc" />
+	<property name="src.java.test.dir" value="./testsrc" />
+	<property name="src.java.model.dir" value="${project.model.dir}/src" />
+	<property name="bin.java.main.dir" value="./bin" />
+	<property name="bin.java.model.dir" value="${project.model.dir}/bin" />
+	
+	<property name="lib.java.dir" value="./lib" />
+	
+	<property name="dist.dir" value="./dist" />
+	<property name="dist.lib.dir" value="${dist.dir}/lib" />
+	
+	<property name="build.dir" value="./build" />
+	<property name="build.classes.dir" value="${build.dir}/classes" />
+	<property name="build.lib.dir" value="${build.dir}/lib" />
+	<property name="javacSource" value="1.6"/>
+	<property name="javacTarget" value="1.6"/>
+	<property name="javacEncoding" value="UTF-8"/>
+	<property name="javacFailOnError" value="false"/>
+	<property name="javacDebugInfo" value="off"/>
+<!--	<property name="javacDebugInfo" value="on"/> -->
+	<property name="javacVerbose" value="false"/>
+	<property name="javacOptimize" value="false"/>
+	<property name="javacNowarn" value="on"/>
+	<property name="javacCompiler" value="modern"/>
+	
+	<property name="finepbuilder.version" value="2.0.beta2" />
+	<tstamp>
+	      <format property="release.time" pattern="yyyyMMddHHmm"/>
+	</tstamp>
+	<property name="jar.fineqtcommon.name" value="fineqtcommon.jar" />
+	<property name="jar.finepbuilder.prefix" value="finepbuilder" />
+	<property name="jar.test.finepbuilder.prefix" value="finepbuildertest" />
+	
+	<property name="jar.finepbuilder.name" value="${jar.finepbuilder.prefix}_${finepbuilder.version}.v${release.time}.jar" />
+	<property name="jar.test.finepbuilder.name" value="${jar.test.finepbuilder.prefix}_${finepbuilder.version}.v${release.time}.jar" />
+	<property name="dll.finepbuilder.name" value="fpblib.dll" />
+	<property name="so.finepbuilder.name" value="libfpb.so" />
+	
+	<!-- set up the compile classpath -->
+	<path id="compile.class.path">
+	    <fileset dir="${build.lib.dir}">
+	      <include name="**/*.jar" />
+	      <include name="**/*.zip" />
+	    </fileset>
+	</path>
+	
+	<!-- set up the run classpath (for unit tests of distribution) -->
+	<path id="distrun.class.path">
+	    <fileset dir="${dist.lib.dir}">
+	      <include name="**/*.jar" />
+	      <include name="**/*.zip" />
+	    </fileset>
+	    <fileset dir="${dist.dir}">
+	    	<include name="${jar.finepbuilder.prefix}*.jar"/>
+	    	<include name="${jar.test.finepbuilder.prefix}*.jar"/>
+		</fileset>
+	</path>
+
+	<!-- set up the run classpath (for unit tests of developing) -->
+	<path id="devrun.class.path">
+	    <fileset dir="${lib.java.dir}">
+	      <include name="**/*.jar" />
+	      <include name="**/*.zip" />
+	    </fileset>
+		<pathelement location="${bin.java.main.dir}"/>
+		<pathelement location="${bin.java.model.dir}"/>
+	</path>
+	
+	<target name="all" depends="dist-finepbuilder"
+	    description="==> builds distribution file" />
+	
+	<target name="dist-finepbuilder" depends="init-dist, build-finepbuilder">
+	    <antcall target="dist-copyfile" />
+	</target>
+
+	<target name="build-finepbuilder" depends="init-build">
+	    <antcall target="jar" />
+	</target>
+	
+	<target name="init-dist">
+		<delete dir="${dist.dir}"/>
+	    <mkdir dir="${dist.dir}" />
+	    <mkdir dir="${dist.lib.dir}" />
+	</target>
+	
+	<target name="dist-copyfile">
+		<!-- copy third party java jar file-->
+		<copy todir="${dist.lib.dir}">
+		    <fileset dir="${build.lib.dir}">
+		      <include name="**/*.jar" />
+		      <include name="**/*.zip" />
+		    </fileset>
+		</copy>
+		<!-- copy finepbuilder java jar file-->
+		<copy todir="${dist.dir}">
+		    <fileset dir="${build.dir}">
+		      <include name="${jar.finepbuilder.name}" />
+		      <include name="${jar.test.finepbuilder.name}" />
+		    </fileset>
+		</copy>
+		<!-- copy finepbuilder dll file-->
+		<copy file="./${dll.finepbuilder.name}" todir="${dist.dir}"/>
+<!--
+		<copy file="./${so.finepbuilder.name}" todir="${dist.dir}"/>
+-->
+	</target>
+			
+	<target name="init-build">
+      <delete dir="${build.dir}"/>
+	    <mkdir dir="${build.dir}" />
+	    <mkdir dir="${build.lib.dir}" />
+	    <mkdir dir="${build.classes.dir}" />
+	</target>
+
+	<target name="build-copyfile">
+		<!-- copy java jar file-->
+		<copy todir="${build.lib.dir}">
+		    <fileset dir="${lib.java.dir}">
+		      <include name="**/*.jar" />
+		      <include name="**/*.zip" />
+		    </fileset>
+		</copy>
+	</target>
+
+	<!-- build all java classes -->
+	<target name="java-compile" depends="init-build, build-copyfile"
+	    description="==> compiles all java classes">
+		<!-- build model -->
+	    <javac srcdir="${src.java.model.dir}"
+		   destdir="${build.classes.dir}"
+            failonerror="${javacFailOnError}" verbose="${javacVerbose}" debug="${javacDebugInfo}" compiler="${javacCompiler}"
+	    	source="${javacSource}" target="${javacTarget}" encoding="${javacEncoding}" optimize="${javacOptimize}" nowarn="${javacNowarn}"
+		   includes="**/*.java">
+	      <classpath refid="compile.class.path"/>
+	    </javac>
+		<!-- build main, grammmer -->
+	    <javac
+	    	destdir="${build.classes.dir}"
+            failonerror="${javacFailOnError}" verbose="${javacVerbose}" debug="${javacDebugInfo}" compiler="${javacCompiler}"
+	    	source="${javacSource}" target="${javacTarget}" encoding="${javacEncoding}" optimize="${javacOptimize}" nowarn="${javacNowarn}">
+	      <src path="${src.java.main.dir}"/>
+          <src path="${src.java.grammer.dir}"/>
+	      <classpath refid="compile.class.path"/>
+	    </javac>
+		<!-- build test -->
+	    <javac srcdir="${src.java.test.dir}"
+		   destdir="${build.classes.dir}"
+            failonerror="${javacFailOnError}" verbose="${javacVerbose}" debug="${javacDebugInfo}" compiler="${javacCompiler}"
+	    	source="${javacSource}" target="${javacTarget}" encoding="${javacEncoding}" optimize="${javacOptimize}" nowarn="${javacNowarn}"
+		   includes="**/*.java">
+	      <classpath refid="compile.class.path"/>
+	    </javac>
+	</target>
+
+	<!-- build jarfiles of classes -->
+	<target name="jar" depends="java-compile"
+	    description="==> jars all java classes ">
+	    <!-- jars main (excule test) -->
+	    <jar jarfile="${build.dir}/${jar.finepbuilder.name}"
+	         basedir="${build.classes.dir}"
+	        includes="**/*.class"
+	    	excludes="fpbtest/**/*.class">
+	    	<manifest>
+	    	    <section name="Fine Pakcet Builder Library">
+	    	      <attribute name="Implementation-Title" value="Fine Pakcet Builder Library"/>
+	    	      <attribute name="Implementation-Version" value="${finepbuilder.version} ${release.time}"/> 
+	    	      <attribute name="Implementation-Vendor" value="www.fineqt.com"/>
+	    	    </section>
+	    	</manifest>
+	    </jar>
+	    <!-- jars test -->
+	    <jar jarfile="${build.dir}/${jar.test.finepbuilder.name}"
+	         basedir="${build.classes.dir}"
+	         includes="fpbtest/**/*.class"/>
+	</target>
+	
+	<!-- test for distribution -->
+	<target name="dist-test">
+		<!-- unit test for java-->
+		<java classname="fpbtest.FpbTest" fork="true" dir="${dist.dir}">
+			<classpath refid="distrun.class.path"/>
+		</java>
+		<!-- unit test for jython script -->
+	</target>
+
+	<!-- test for distribution (only for linux)-->
+	<target name="dev-test">
+		<!-- unit test for java-->
+		<java classname="fpbtest.FpbTest" fork="true" dir=".">
+			<classpath refid="devrun.class.path"/>
+		</java>
+		<!-- unit test for jython script -->
+	</target>
+</project>

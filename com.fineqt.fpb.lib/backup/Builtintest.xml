@@ -1,0 +1,747 @@
+<?xml version="1.0" encoding="ASCII"?>
+<fpbmodule:PModule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:fpbmodule="http://fpbmodule.model.lib.fpb.fineqt.com" xmlns:fpbtemplate="http://fpbtemplate.model.lib.fpb.fineqt.com" name="builtintest" encode="FPB">
+  <variant xsi:type="fpbmodule:PFpbModuleEV">
+    <prpList><properties name="byteOrder" ><groups>
+      <arguments xsi:type="fpbmodule:PIdentifierArgument" desc="BIG_ENDIAN"/>
+    </groups></properties></prpList>
+  </variant>
+  <types xsi:type="fpbmodule:PSubType" name="UINT4" javaClass="com.fineqt.fpb.lib.type.impl.PSubTypeExtImpl" encode="FPB" typeID="101" superType="fpbmodule:PImportType builtintest#//@pModule/@types.0" superTypeName="integer">
+    <variant xsi:type="fpbmodule:PFpbTypeEV">
+      <prpList>
+        <properties name="byteOrder" ><groups>
+          <arguments xsi:type="fpbmodule:PIdentifierArgument" desc="NONE"/>
+        </groups></properties>
+        <properties name="length" ><groups>
+          <arguments xsi:type="fpbmodule:PIntegerArgument" desc="4"/>
+        </groups></properties>
+      </prpList>
+    </variant>
+    <constraint xsi:type="fpbmodule:PListConstraint">
+      <matcher>
+        <items xsi:type="fpbtemplate:PRangeMatcher" lowerBound="0" upperBound="15"/>
+      </matcher>
+    </constraint>
+  </types>
+  <types xsi:type="fpbmodule:PSubType" name="UINT8" javaClass="com.fineqt.fpb.lib.type.impl.PSubTypeExtImpl" encode="FPB" typeID="102" superType="fpbmodule:PImportType builtintest#//@pModule/@types.0" superTypeName="integer">
+    <variant xsi:type="fpbmodule:PFpbTypeEV">
+      <prpList>
+        <properties name="byteOrder" ><groups>
+          <arguments xsi:type="fpbmodule:PIdentifierArgument" desc="NONE"/>
+        </groups></properties>
+        <properties name="length" ><groups>
+          <arguments xsi:type="fpbmodule:PIntegerArgument" desc="8"/>
+        </groups></properties>
+      </prpList>
+    </variant>
+    <constraint xsi:type="fpbmodule:PListConstraint">
+      <matcher>
+        <items xsi:type="fpbtemplate:PRangeMatcher" lowerBound="0" upperBound="255"/>
+      </matcher>
+    </constraint>
+  </types>
+  <types xsi:type="fpbmodule:PSubType" name="UINT16" javaClass="com.fineqt.fpb.lib.type.impl.PSubTypeExtImpl" encode="FPB" typeID="103" superType="fpbmodule:PImportType builtintest#//@pModule/@types.0" superTypeName="integer">
+    <variant xsi:type="fpbmodule:PFpbTypeEV">
+      <prpList>
+        <properties name="byteOrder" ><groups>
+          <arguments xsi:type="fpbmodule:PIdentifierArgument" desc="NONE"/>
+        </groups></properties>
+        <properties name="length" ><groups>
+          <arguments xsi:type="fpbmodule:PIntegerArgument" desc="16"/>
+        </groups></properties>
+      </prpList>
+    </variant>
+    <constraint xsi:type="fpbmodule:PListConstraint">
+      <matcher>
+        <items xsi:type="fpbtemplate:PRangeMatcher" lowerBound="0" upperBound="65535"/>
+      </matcher>
+    </constraint>
+  </types>
+  <types xsi:type="fpbmodule:PSubType" name="StringToken" javaClass="com.fineqt.fpb.lib.type.impl.PSubTypeExtImpl" encode="FPB" typeID="104" superType="fpbmodule:PImportType builtintest#//@pModule/@types.4" superTypeName="charstring">
+    <variant xsi:type="fpbmodule:PFpbTypeEV">
+      <prpList>
+        <properties name="byteOrder" ><groups>
+          <arguments xsi:type="fpbmodule:PIdentifierArgument" desc="BIG_ENDIAN"/>
+        </groups></properties>
+      </prpList>
+    </variant>
+    <constraint xsi:type="fpbmodule:PPatternConstraint">
+      <matcher desc="[a-zA-Z0-9]+"/>
+    </constraint>
+  </types>
+  <types xsi:type="fpbmodule:PSubType" name="StringWS" javaClass="com.fineqt.fpb.lib.type.impl.PSubTypeExtImpl" encode="FPB" typeID="105" superType="fpbmodule:PImportType builtintest#//@pModule/@types.4" superTypeName="charstring">
+    <variant xsi:type="fpbmodule:PFpbTypeEV">
+      <prpList>
+        <properties name="byteOrder" ><groups>
+          <arguments xsi:type="fpbmodule:PIdentifierArgument" desc="BIG_ENDIAN"/>
+        </groups></properties>
+      </prpList>
+    </variant>
+    <constraint xsi:type="fpbmodule:PPatternConstraint">
+      <matcher desc="[ \t]*"/>
+    </constraint>
+  </types>
+  <types xsi:type="fpbmodule:PRecord" name="StringOneLine" javaClass="fpbtest.module.builtintest.impl.StringOneLineType" encode="FPB" typeID="106">
+    <variant xsi:type="fpbmodule:PFpbTypeEV">
+      <prpList>
+        <properties name="byteOrder" ><groups>
+          <arguments xsi:type="fpbmodule:PIdentifierArgument" desc="BIG_ENDIAN"/>
+        </groups></properties>
+        <properties name="oneLineMode" ><groups>
+          <arguments xsi:type="fpbmodule:PIdentifierArgument" desc="CRLF"/>
+        </groups></properties>
+      </prpList>
+    </variant>
+    <pfields name="token1" encode="FPB" ptypeName="StringToken" fieldID="0" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV">
+      </variant>
+    </pfields>
+    <pfields name="ws1" encode="FPB" ptypeName="StringWS" fieldID="1" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV">
+      </variant>
+    </pfields>
+    <pfields name="token2" encode="FPB" ptypeName="StringToken" fieldID="2" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV">
+      </variant>
+    </pfields>
+  </types>
+  <types xsi:type="fpbmodule:PRecordOf" name="StringMultiLineFix" javaClass="fpbtest.module.builtintest.impl.StringMultiLineFixType" encode="FPB" typeID="107" itemTypeName="StringOneLine">
+    <variant xsi:type="fpbmodule:PFpbTypeEV">
+      <prpList>
+        <properties name="byteOrder" ><groups>
+          <arguments xsi:type="fpbmodule:PIdentifierArgument" desc="BIG_ENDIAN"/>
+        </groups></properties>
+      </prpList>
+    </variant>
+    <constraint xsi:type="fpbmodule:PLengthConstraint" lowerBound="3" upperBound="3"/>
+  </types>
+  <types xsi:type="fpbmodule:PRecordOf" name="StringMultiLineVar" javaClass="fpbtest.module.builtintest.impl.StringMultiLineVarType" encode="FPB" typeID="108" itemTypeName="StringOneLine">
+    <variant xsi:type="fpbmodule:PFpbTypeEV">
+      <prpList>
+        <properties name="byteOrder" ><groups>
+          <arguments xsi:type="fpbmodule:PIdentifierArgument" desc="BIG_ENDIAN"/>
+        </groups></properties>
+      </prpList>
+    </variant>
+  </types>
+  <types xsi:type="fpbmodule:PRecord" name="DataLengthHyp" javaClass="fpbtest.module.builtintest.impl.DataLengthHypType" encode="FPB" typeID="109">
+    <variant xsi:type="fpbmodule:PFpbTypeEV">
+      <prpList>
+        <properties name="byteOrder" ><groups>
+          <arguments xsi:type="fpbmodule:PIdentifierArgument" desc="BIG_ENDIAN"/>
+        </groups></properties>
+        <properties name="lengthMultiplier" ><groups>
+          <arguments xsi:type="fpbmodule:PIntegerArgument" desc="8"/>
+        </groups></properties>
+        <properties name="lengthRef" ><groups>
+          <arguments xsi:type="fpbmodule:PCharstringArgument" desc="+totalLength"/>
+        </groups></properties>
+        <properties name="popField" ><groups>
+          <arguments xsi:type="fpbmodule:PListArgument">
+            <children xsi:type="fpbmodule:PIdentifierArgument" desc="DECODE"/>
+            <children xsi:type="fpbmodule:PIdentifierArgument" desc="CALCULATE"/>
+          </arguments>  
+          <arguments xsi:type="fpbmodule:PCharstringArgument" desc="data1Length"/>
+        </groups></properties>
+      </prpList>
+    </variant>
+    <pfields name="totalLength" encode="FPB" ptypeName="UINT8" fieldID="0" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV">
+      </variant>
+    </pfields>
+    <pfields name="data1Length" encode="FPB" ptypeName="UINT16" fieldID="1" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV" >
+        <prpList>
+          <properties name="pushField" ><groups>
+            <arguments xsi:type="fpbmodule:PListArgument">
+              <children xsi:type="fpbmodule:PIdentifierArgument" desc="DECODE"/>
+              <children xsi:type="fpbmodule:PIdentifierArgument" desc="CALCULATE"/>
+            </arguments>  
+          </groups></properties>
+        </prpList>
+      </variant>
+    </pfields>
+    <pfields name="data2Flag" encode="FPB" ptypeName="boolean" fieldID="2" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV" >
+        <prpList>
+          <properties name="defaultValue" ><groups>
+            <arguments xsi:type="fpbmodule:PConditionArgument" typeName="boolean">
+              <condition xsi:type="fpbmodule:PListConstraint">
+                <matcher>
+                  <items xsi:type="fpbtemplate:PPrimitiveValueMatcher" valueDesc="true"/>
+                </matcher>
+              </condition>
+            </arguments>
+          </groups></properties>
+        </prpList>
+      </variant>
+    </pfields>
+    <pfields name="data1" encode="FPB" ptypeName="bitstring" fieldID="3" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV">
+        <prpList>
+          <properties name="defaultValue" ><groups>
+            <arguments xsi:type="fpbmodule:PConditionArgument" typeName="bitstring">
+              <condition xsi:type="fpbmodule:PListConstraint">
+                <matcher>
+                  <items xsi:type="fpbtemplate:PPrimitiveValueMatcher" valueDesc="0101"/>
+                </matcher>
+              </condition>
+            </arguments>
+          </groups></properties>
+          <properties name="lengthIncrement" ><groups>
+            <arguments xsi:type="fpbmodule:PIntegerArgument" desc="3"/>
+          </groups></properties>
+          <properties name="lengthRef" ><groups>
+            <arguments xsi:type="fpbmodule:PCharstringArgument" desc="-data1Length"/>
+            <arguments xsi:type="fpbmodule:PCharstringArgument" desc="integer"/>
+          </groups></properties>
+        </prpList>
+      </variant>
+    </pfields>
+    <pfields name="pad" encode="FPB" ptypeName="bitstring" fieldID="4" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV">
+        <prpList>
+          <properties name="padType" ><groups>
+            <arguments xsi:type="fpbmodule:PIdentifierArgument" desc="2OCTET"/>
+          </groups></properties>
+          <properties name="padValue" ><groups>
+            <arguments xsi:type="fpbmodule:PConditionArgument" typeName="bitstring">
+              <condition xsi:type="fpbmodule:PListConstraint">
+                <matcher>
+                  <items xsi:type="fpbtemplate:PPrimitiveValueMatcher" valueDesc="10"/>
+                </matcher>
+              </condition>
+            </arguments>
+          </groups></properties>
+        </prpList>
+      </variant>
+    </pfields>
+    <pfields name="data2" encode="FPB" ptypeName="octetstring" fieldID="5" optional="true">
+      <variant xsi:type="fpbmodule:PFpbFieldEV" >
+        <prpList>
+          <properties name="defaultPresent" ><groups>
+            <arguments xsi:type="fpbmodule:PBooleanArgument" desc="true"/>
+          </groups></properties>
+          <properties name="defaultValue" ><groups>
+            <arguments xsi:type="fpbmodule:PConditionArgument" typeName="octetstring">
+              <condition xsi:type="fpbmodule:PListConstraint">
+                <matcher>
+                  <items xsi:type="fpbtemplate:PPrimitiveValueMatcher" valueDesc="FFFF00"/>
+                </matcher>
+              </condition>
+            </arguments>
+          </groups></properties>
+          <properties name="selectCond"><groups>
+              <arguments xsi:type="fpbmodule:PConditionArgument" typeName="boolean">
+                <condition xsi:type="fpbmodule:PListConstraint">
+                  <matcher>
+                    <items xsi:type="fpbtemplate:PPrimitiveValueMatcher" valueDesc="true"/>
+                  </matcher>
+                </condition>
+              </arguments>
+          </groups></properties>
+          <properties name="selectRef" ><groups>
+            <arguments xsi:type="fpbmodule:PCharstringArgument" desc="^data2Flag"/>
+          </groups></properties>
+        </prpList>
+      </variant>
+      <constraint xsi:type="fpbmodule:PLengthConstraint" lowerBound="4" upperBound="4"/>
+    </pfields>
+    <pfields name="data3" encode="FPB" ptypeName="octetstring" fieldID="6" optional="true">
+      <variant xsi:type="fpbmodule:PFpbFieldEV">
+      </variant>
+    </pfields>
+  </types>
+  <types xsi:type="fpbmodule:PRecord" name="StringBlock" javaClass="fpbtest.module.builtintest.impl.StringBlockType" encode="FPB" typeID="110">
+    <variant xsi:type="fpbmodule:PFpbTypeEV">
+      <prpList>
+        <properties name="byteOrder" ><groups>
+          <arguments xsi:type="fpbmodule:PIdentifierArgument" desc="BIG_ENDIAN"/>
+        </groups></properties>
+      </prpList>
+    </variant>
+    <pfields name="lines1Count" encode="FPB" ptypeName="StringOneLine" fieldID="0" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV">
+      </variant>
+    </pfields>
+    <pfields name="first3Line" encode="FPB" ptypeName="StringMultiLineFix" fieldID="1" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV">
+      </variant>
+    </pfields>
+    <pfields name="lines1" encode="FPB" ptypeName="StringMultiLineVar" fieldID="2" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV">
+        <prpList>
+          <properties name="repeatRef" ><groups>
+            <arguments xsi:type="fpbmodule:PCharstringArgument" desc="^lines1Count/token1"/>
+          </groups></properties>
+        </prpList>
+      </variant>
+    </pfields>
+    <pfields name="lines2" encode="FPB" ptypeName="StringMultiLineVar" fieldID="3" optional="true">
+      <variant xsi:type="fpbmodule:PFpbFieldEV">
+        <prpList>
+          <properties name="defaultLength" ><groups>
+            <arguments xsi:type="fpbmodule:PIntegerArgument" desc="1"/>
+          </groups></properties>
+          <properties name="defaultPresent" ><groups>
+            <arguments xsi:type="fpbmodule:PBooleanArgument" desc="true"/>
+          </groups></properties>
+        </prpList>
+      </variant>
+    </pfields>
+  </types>
+  <types xsi:type="fpbmodule:PRecord" name="CaseRecord" javaClass="fpbtest.module.builtintest.impl.CaseRecordType" encode="FPB" typeID="122">
+    <variant xsi:type="fpbmodule:PFpbTypeEV">
+      <prpList>
+        <properties name="byteOrder" ><groups>
+          <arguments xsi:type="fpbmodule:PIdentifierArgument" desc="BIG_ENDIAN"/>
+        </groups></properties>
+      </prpList>
+    </variant>
+    <pfields name="code" encode="FPB" ptypeName="UINT8" fieldID="0" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV">
+      </variant>
+    </pfields>
+    <pfields name="data" encode="FPB" ptypeName="UINT16" fieldID="1" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV">
+      </variant>
+    </pfields>
+  </types>
+  <types xsi:type="fpbmodule:PUnion" name="UnionBlock1" javaClass="fpbtest.module.builtintest.impl.UnionBlock1Type" encode="FPB" typeID="111">
+    <variant xsi:type="fpbmodule:PFpbTypeEV">
+      <prpList>
+        <properties name="byteOrder" ><groups>
+          <arguments xsi:type="fpbmodule:PIdentifierArgument" desc="BIG_ENDIAN"/>
+        </groups></properties>
+        <properties name="caseDefault" ><groups>
+          <arguments xsi:type="fpbmodule:PIdentifierArgument" desc="case1"/>
+        </groups></properties>
+        <properties name="caseRefRegion" ><groups>
+          <arguments xsi:type="fpbmodule:PIntegerArgument" desc="0"/>
+          <arguments xsi:type="fpbmodule:PIntegerArgument" desc="8"/>
+        </groups></properties>
+      </prpList>
+    </variant>
+    <pfields name="case1" encode="FPB" ptypeName="Case1" fieldID="0" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV">
+        <prpList>
+          <properties name="caseCond"><groups>
+              <arguments xsi:type="fpbmodule:PConditionArgument" typeName="integer">
+                <condition xsi:type="fpbmodule:PListConstraint">
+                  <matcher>
+                    <items xsi:type="fpbtemplate:PPrimitiveValueMatcher" valueDesc="1"/>
+                  </matcher>
+                </condition>
+              </arguments>
+          </groups></properties>
+          <properties name="defaultPresent" ><groups>
+            <arguments xsi:type="fpbmodule:PBooleanArgument" desc="true"/>
+          </groups></properties>
+        </prpList>
+      </variant>
+    </pfields>
+    <pfields name="case2" encode="FPB" ptypeName="Case2" fieldID="1" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV">
+        <prpList>
+          <properties name="caseCond"><groups>
+              <arguments xsi:type="fpbmodule:PConditionArgument" typeName="integer">
+                <condition xsi:type="fpbmodule:PListConstraint">
+                  <matcher>
+                    <items xsi:type="fpbtemplate:PPrimitiveValueMatcher" valueDesc="2"/>
+                  </matcher>
+                </condition>
+              </arguments>
+          </groups></properties>
+        </prpList>
+      </variant>
+    </pfields>
+    <pfields name="case3" encode="FPB" ptypeName="Case3" fieldID="2" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV">
+        <prpList>
+          <properties name="caseCond"><groups>
+              <arguments xsi:type="fpbmodule:PConditionArgument" typeName="integer">
+                <condition xsi:type="fpbmodule:PListConstraint">
+                  <matcher>
+                    <items xsi:type="fpbtemplate:PPrimitiveValueMatcher" valueDesc="3"/>
+                  </matcher>
+                </condition>
+              </arguments>
+          </groups></properties>
+        </prpList>
+      </variant>
+    </pfields>
+  </types>
+  <types xsi:type="fpbmodule:PSubType" name="Case1" javaClass="com.fineqt.fpb.lib.type.impl.PSubTypeExtImpl" encode="FPB" typeID="112" superTypeName="CaseRecord">
+    <variant xsi:type="fpbmodule:PFpbTypeEV">
+      <prpList>
+        <properties name="byteOrder" ><groups>
+          <arguments xsi:type="fpbmodule:PIdentifierArgument" desc="BIG_ENDIAN"/>
+        </groups></properties>
+      </prpList>
+    </variant>
+  </types>
+  <types xsi:type="fpbmodule:PSubType" name="Case2" javaClass="com.fineqt.fpb.lib.type.impl.PSubTypeExtImpl" encode="FPB" typeID="113" superTypeName="CaseRecord">
+    <variant xsi:type="fpbmodule:PFpbTypeEV">
+      <prpList>
+        <properties name="byteOrder" ><groups>
+          <arguments xsi:type="fpbmodule:PIdentifierArgument" desc="BIG_ENDIAN"/>
+        </groups></properties>
+      </prpList>
+    </variant>
+  </types>
+  <types xsi:type="fpbmodule:PSubType" name="Case3" javaClass="com.fineqt.fpb.lib.type.impl.PSubTypeExtImpl" encode="FPB" typeID="114" superTypeName="CaseRecord">
+    <variant xsi:type="fpbmodule:PFpbTypeEV">
+      <prpList>
+        <properties name="byteOrder" ><groups>
+          <arguments xsi:type="fpbmodule:PIdentifierArgument" desc="BIG_ENDIAN"/>
+        </groups></properties>
+      </prpList>
+    </variant>
+  </types>
+  <types xsi:type="fpbmodule:PSubType" name="UnionBlock2" javaClass="com.fineqt.fpb.lib.type.impl.PSubTypeExtImpl" encode="FPB" typeID="115" superTypeName="UnionBlock1">
+    <variant xsi:type="fpbmodule:PFpbTypeEV">
+      <prpList>
+        <properties name="byteOrder" ><groups>
+          <arguments xsi:type="fpbmodule:PIdentifierArgument" desc="BIG_ENDIAN"/>
+        </groups></properties>
+        <properties name="caseRef" ><groups>
+          <arguments xsi:type="fpbmodule:PCharstringArgument" desc="$code"/>
+          <arguments xsi:type="fpbmodule:PCharstringArgument" desc="integer"/>
+        </groups></properties>
+      </prpList>
+    </variant>
+  </types>
+  <types xsi:type="fpbmodule:PSet" name="SetBlock1" javaClass="fpbtest.module.builtintest.impl.SetBlock1Type" encode="FPB" typeID="116">
+    <variant xsi:type="fpbmodule:PFpbTypeEV">
+      <prpList>
+        <properties name="byteOrder" ><groups>
+          <arguments xsi:type="fpbmodule:PIdentifierArgument" desc="BIG_ENDIAN"/>
+        </groups></properties>
+        <properties name="caseRefRegion" ><groups>
+          <arguments xsi:type="fpbmodule:PIntegerArgument" desc="0"/>
+          <arguments xsi:type="fpbmodule:PIntegerArgument" desc="8"/>
+        </groups></properties>
+      </prpList>
+    </variant>
+    <pfields name="case1" encode="FPB" ptypeName="Case1" fieldID="0" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV">
+        <prpList>
+          <properties name="caseCond" ><groups>
+              <arguments xsi:type="fpbmodule:PConditionArgument" typeName="integer">
+                <condition xsi:type="fpbmodule:PListConstraint">
+                  <matcher>
+                    <items xsi:type="fpbtemplate:PPrimitiveValueMatcher" valueDesc="1"/>
+                  </matcher>
+                </condition>
+               </arguments>
+          </groups></properties>
+        </prpList>
+      </variant>
+    </pfields>
+    <pfields name="case2" encode="FPB" ptypeName="Case2" fieldID="1" optional="true">
+      <variant xsi:type="fpbmodule:PFpbFieldEV">
+        <prpList>
+          <properties name="caseCond" ><groups>
+              <arguments xsi:type="fpbmodule:PConditionArgument" typeName="integer">
+                <condition xsi:type="fpbmodule:PListConstraint">
+                  <matcher>
+                    <items xsi:type="fpbtemplate:PPrimitiveValueMatcher" valueDesc="2"/>
+                  </matcher>
+                </condition>
+               </arguments>
+          </groups></properties>
+        </prpList>
+      </variant>
+    </pfields>
+  </types>
+  <types xsi:type="fpbmodule:PRecord" name="Protocol1" javaClass="fpbtest.module.builtintest.impl.Protocol1Type" encode="FPB" typeID="117">
+    <variant xsi:type="fpbmodule:PFpbTypeEV">
+      <prpList>
+        <properties name="byteOrder" ><groups>
+          <arguments xsi:type="fpbmodule:PIdentifierArgument" desc="BIG_ENDIAN"/>
+        </groups></properties>
+        <properties name="popField" ><groups>
+          <arguments xsi:type="fpbmodule:PListArgument" >
+            <children xsi:type="fpbmodule:PIdentifierArgument" desc="decode"/>
+          </arguments>
+          <arguments xsi:type="fpbmodule:PCharstringArgument" desc="prtlcode"/>
+        </groups></properties>
+        <properties name="protocol" ><groups>
+          <arguments xsi:type="fpbmodule:PBooleanArgument" desc="true"/>
+        </groups></properties>
+      </prpList>
+    </variant>
+    <pfields name="prefix" encode="FPB" ptypeName="UINT8" fieldID="0" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV">
+      </variant>
+    </pfields>
+    <pfields name="prtlcode" encode="FPB" ptypeName="UINT8" fieldID="1" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV">
+        <prpList>
+          <properties name="pushField" ><groups>
+            <arguments xsi:type="fpbmodule:PListArgument" >
+              <children xsi:type="fpbmodule:PIdentifierArgument" desc="decode"/>
+            </arguments>
+          </groups></properties>
+        </prpList>
+      </variant>
+      <enumItems name="protocol2">
+        <cond xsi:type="fpbmodule:PListConstraint">
+          <matcher>
+            <items xsi:type="fpbtemplate:PPrimitiveValueMatcher" valueDesc="0x20"/>
+          </matcher>
+        </cond>
+      </enumItems>
+    </pfields>
+    <pfields name="payload" encode="FPB" ptypeName="Payload1" fieldID="2" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV">
+      </variant>
+    </pfields>
+  </types>
+  <types xsi:type="fpbmodule:PUnion" name="Payload1" javaClass="fpbtest.module.builtintest.impl.Payload1Type" encode="FPB" typeID="118">
+    <variant xsi:type="fpbmodule:PFpbTypeEV">
+      <prpList>
+        <properties name="byteOrder" ><groups>
+          <arguments xsi:type="fpbmodule:PIdentifierArgument" desc="BIG_ENDIAN"/>
+        </groups></properties>
+      </prpList>
+    </variant>
+    <pfields name="prtl2" encode="FPB" ptypeName="Protocol2" fieldID="0" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV">
+      </variant>
+    </pfields>
+    <pfields name="prtl3" encode="FPB" ptypeName="Protocol3" fieldID="1" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV">
+      </variant>
+    </pfields>
+    <pfields name="data" encode="FPB" ptypeName="octetstring" fieldID="2" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV">
+      </variant>
+    </pfields>
+  </types>
+  <types xsi:type="fpbmodule:PRecord" name="Protocol2" javaClass="fpbtest.module.builtintest.impl.Protocol2Type" encode="FPB" typeID="119">
+    <variant xsi:type="fpbmodule:PFpbTypeEV">
+      <prpList>
+        <properties name="byteOrder" ><groups>
+          <arguments xsi:type="fpbmodule:PIdentifierArgument" desc="BIG_ENDIAN"/>
+        </groups></properties>
+        <properties name="protocol" ><groups>
+          <arguments xsi:type="fpbmodule:PBooleanArgument" desc="true"/>
+        </groups></properties>
+        <properties name="selectCond" ><groups>
+            <arguments xsi:type="fpbmodule:PConditionArgument" typeName="integer">
+              <condition xsi:type="fpbmodule:PListConstraint">
+                <matcher>
+                  <items xsi:type="fpbtemplate:PPrimitiveValueMatcher" valueDesc="0x20"/>
+                </matcher>
+              </condition>
+             </arguments>
+        </groups></properties>
+        <properties name="selectRef" ><groups>
+          <arguments xsi:type="fpbmodule:PCharstringArgument" desc="-prtlcode"/>
+          <arguments xsi:type="fpbmodule:PCharstringArgument" desc="integer"/>
+        </groups></properties>
+      </prpList>
+    </variant>
+    <pfields name="data" encode="FPB" ptypeName="UINT16" enumRef="Protocol2Data" fieldID="0" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV">
+      </variant>
+    </pfields>
+  </types>
+  <types xsi:type="fpbmodule:PRecord" name="Protocol3" javaClass="fpbtest.module.builtintest.impl.Protocol3Type" encode="FPB" typeID="120">
+    <variant xsi:type="fpbmodule:PFpbTypeEV">
+      <prpList>
+        <properties name="byteOrder" ><groups>
+          <arguments xsi:type="fpbmodule:PIdentifierArgument" desc="BIG_ENDIAN"/>
+        </groups></properties>
+        <properties name="protocol" ><groups>
+          <arguments xsi:type="fpbmodule:PBooleanArgument" desc="true"/>
+        </groups></properties>
+        <properties name="selectCond" ><groups>
+            <arguments xsi:type="fpbmodule:PConditionArgument" typeName="integer">
+              <condition xsi:type="fpbmodule:PListConstraint">
+                <matcher>
+                  <items xsi:type="fpbtemplate:PPrimitiveValueMatcher" valueDesc="0x3000"/>
+                </matcher>
+              </condition>
+             </arguments>
+        </groups></properties>
+        <properties name="selectRefRegion" ><groups>
+          <arguments xsi:type="fpbmodule:PIntegerArgument" desc="0"/>
+          <arguments xsi:type="fpbmodule:PIntegerArgument" desc="16"/>
+        </groups></properties>
+      </prpList>
+    </variant>
+    
+    <pfields name="prefix" encode="FPB" ptypeName="UINT16" fieldID="0" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV">
+      </variant>
+      <constraint xsi:type="fpbmodule:PListConstraint">
+        <matcher>
+          <items xsi:type="fpbtemplate:PPrimitiveValueMatcher" valueDesc="0x3000"/>
+        </matcher>
+      </constraint>
+    </pfields>
+    <pfields name="data" encode="FPB" ptypeName="octetstring" fieldID="1" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV">
+      </variant>
+    </pfields>
+  </types>
+  <types xsi:type="fpbmodule:PRecord" name="LEndianRecord" javaClass="fpbtest.module.builtintest.impl.LEndianRecordType" encode="FPB" typeID="121">
+    <variant xsi:type="fpbmodule:PFpbTypeEV">
+      <prpList>
+        <properties name="byteOrder" ><groups>
+          <arguments xsi:type="fpbmodule:PIdentifierArgument" desc="LITTLE_ENDIAN"/>
+        </groups></properties>
+      </prpList>
+    </variant>
+    <pfields name="int1" encode="FPB" ptypeName="UINT4" fieldID="0" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV">
+        <prpList>
+          <properties name="flagType"><groups>
+            <arguments xsi:type="fpbmodule:PIdentifierArgument" desc="2OCTET"/>
+          </groups></properties>
+        </prpList>
+      </variant>
+    </pfields>
+    <pfields name="flag" encode="FPB" ptypeName="boolean" fieldID="1" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV">
+        <prpList>
+          <properties name="flagType"><groups>
+            <arguments xsi:type="fpbmodule:PIdentifierArgument" desc="2OCTET"/>
+          </groups></properties>
+        </prpList>
+      </variant>
+    </pfields>
+    <pfields name="bits" encode="FPB" ptypeName="bitstring" fieldID="2" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV">
+        <prpList>
+          <properties name="flagType"><groups>
+            <arguments xsi:type="fpbmodule:PIdentifierArgument" desc="2OCTET"/>
+          </groups></properties>
+        </prpList>
+      </variant>
+      <constraint xsi:type="fpbmodule:PLengthConstraint" lowerBound="3" upperBound="3"/>
+    </pfields>
+    <pfields name="int2" encode="FPB" ptypeName="UINT8" fieldID="3" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV">
+      </variant>
+    </pfields>
+    <pfields name="int3" encode="FPB" ptypeName="UINT16" fieldID="4" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV">
+      </variant>
+    </pfields>
+    <pfields name="hexs" encode="FPB" ptypeName="hexstring" fieldID="5" optional="true">
+      <variant xsi:type="fpbmodule:PFpbFieldEV">
+      </variant>
+    </pfields>
+  </types>
+  <types xsi:type="fpbmodule:PEnumerated" name="FieldName" javaClass="com.fineqt.fpb.lib.type.impl.PEnumeratedTypeExtImpl" encode="FPB" typeID="123">
+    <variant xsi:type="fpbmodule:PFpbTypeEV">
+      <prpList>
+        <properties name="byteOrder" ><groups>
+          <arguments xsi:type="fpbmodule:PIdentifierArgument" desc="BIG_ENDIAN"/>
+        </groups></properties>
+      </prpList>
+    </variant>
+    <items enumName="FIELD1" enumValue="10"/>
+    <items enumName="FIELD2" enumValue="20"/>
+  </types>
+  <types xsi:type="fpbmodule:PRecord" name="EnumRefRecord" javaClass="fpbtest.module.builtintest.impl.EnumRefRecordType" encode="FPB" typeID="124">
+    <variant xsi:type="fpbmodule:PFpbTypeEV">
+      <prpList>
+        <properties name="byteOrder" ><groups>
+          <arguments xsi:type="fpbmodule:PIdentifierArgument" desc="BIG_ENDIAN"/>
+        </groups></properties>
+      </prpList>
+    </variant>
+    <pfields name="fieldName" encode="FPB" ptypeName="FieldName" fieldID="0" optional="false">
+      <variant xsi:type="fpbmodule:PFpbFieldEV">
+        <prpList>
+          <properties name="defaultValue" ><groups>
+            <arguments xsi:type="fpbmodule:PConditionArgument" typeName="FieldName">
+              <condition xsi:type="fpbmodule:PListConstraint">
+                <matcher>
+                  <items xsi:type="fpbtemplate:PPrimitiveValueMatcher" valueDesc="FIELD2"/>
+                </matcher>
+              </condition>
+            </arguments>
+          </groups></properties>
+        </prpList>
+      </variant>
+    </pfields>
+    <pfields name="field1" encode="FPB" ptypeName="UINT8" fieldID="1" optional="true">
+      <variant xsi:type="fpbmodule:PFpbFieldEV">
+        <prpList>
+          <properties name="selectCond"><groups>
+              <arguments xsi:type="fpbmodule:PConditionArgument" typeName="FieldName">
+                <condition xsi:type="fpbmodule:PListConstraint">
+                  <matcher>
+                    <items xsi:type="fpbtemplate:PPrimitiveValueMatcher" valueDesc="FIELD1"/>
+                  </matcher>
+                </condition>
+              </arguments>
+          </groups></properties>
+          <properties name="selectRef" ><groups>
+            <arguments xsi:type="fpbmodule:PCharstringArgument" desc="^fieldName"/>
+          </groups></properties>
+        </prpList>
+      </variant>
+    </pfields>
+    <pfields name="field2" encode="FPB" ptypeName="UINT16" fieldID="2" optional="true">
+      <variant xsi:type="fpbmodule:PFpbFieldEV">
+        <prpList>
+          <properties name="defaultPresent" ><groups>
+            <arguments xsi:type="fpbmodule:PBooleanArgument" desc="true"/>
+          </groups></properties>
+          <properties name="selectCond"><groups>
+              <arguments xsi:type="fpbmodule:PConditionArgument" typeName="FieldName">
+                <condition xsi:type="fpbmodule:PListConstraint">
+                  <matcher>
+                    <items xsi:type="fpbtemplate:PPrimitiveValueMatcher" valueDesc="FIELD2"/>
+                  </matcher>
+                </condition>
+              </arguments>
+          </groups></properties>
+          <properties name="selectRef" ><groups>
+            <arguments xsi:type="fpbmodule:PCharstringArgument" desc="^fieldName"/>
+          </groups></properties>
+        </prpList>
+      </variant>
+    </pfields>
+  </types>
+  <types xsi:type="fpbmodule:PRecordOf" name="UINT16List" javaClass="fpbtest.module.builtintest.impl.Uint16ListType" encode="FPB" typeID="125" itemTypeName="UINT16">
+    <variant xsi:type="fpbmodule:PFpbTypeEV">
+      <prpList>
+        <properties name="byteOrder" ><groups>
+          <arguments xsi:type="fpbmodule:PIdentifierArgument" desc="BIG_ENDIAN"/>
+        </groups></properties>
+      </prpList>
+    </variant>
+  </types>
+  <types xsi:type="fpbmodule:PSetOf" name="UINT16Set" javaClass="fpbtest.module.builtintest.impl.Uint16SetType" encode="FPB" typeID="126" itemTypeName="UINT16">
+    <variant xsi:type="fpbmodule:PFpbTypeEV">
+      <prpList>
+        <properties name="byteOrder" ><groups>
+          <arguments xsi:type="fpbmodule:PIdentifierArgument" desc="BIG_ENDIAN"/>
+        </groups></properties>
+      </prpList>
+    </variant>
+  </types>
+  
+  <enumSets xsi:type="fpbmodule:PEntityEnumSet" name="Protocol2Data" baseTypeName="integer" enumSetID="127">
+    <enumItems name="item1">
+      <cond xsi:type="fpbmodule:PListConstraint">
+        <matcher>
+          <items xsi:type="fpbtemplate:PRangeMatcher" lowerBound="0" upperBound="9"/>
+        </matcher>
+      </cond>
+    </enumItems>
+    <enumItems name="item2">
+      <cond xsi:type="fpbmodule:PListConstraint">
+        <matcher>
+          <items xsi:type="fpbtemplate:PRangeMatcher" lowerBound="10" upperBound="19"/>
+        </matcher>
+      </cond>
+    </enumItems>
+  </enumSets>
+</fpbmodule:PModule>

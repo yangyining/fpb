@@ -1,0 +1,213 @@
+module builtintest {
+    const integer c_UInt4Length := 4 with {
+        runtime ElementID="1000"
+    }
+    
+    type integer UINT4 (0 .. 15) with { 
+        variant Length($c_UInt4Length); Signed(false); ByteOrder(NONE);
+        runtime ElementID="101"
+    }
+
+    type integer UINT8 (0 .. 255) with { 
+        variant Length(8); Signed(false); ByteOrder(NONE); 
+        runtime ElementID="102"
+    }       
+
+    type integer UINT16 (0 .. 65535) with {
+        variant Length(16); Signed(false); ByteOrder(NONE); 
+        runtime ElementID="103"
+    }       
+
+    type charstring StringToken (pattern "[a-zA-Z0-9]+") with {
+        runtime ElementID="104"
+    }     
+
+    type charstring StringWS (pattern "[ \t]*") with {
+        runtime ElementID="105"
+    }
+
+    type record StringOneLine {     
+            StringToken token1,
+            StringWS ws1,
+            StringToken token2,
+            octetstring crlf('0D0A'O)
+    } with { 
+        variant OneLineMode(CRLF);
+        runtime ElementID="106" TypeJavaClass="fpbtest.module.builtintest.impl.StringOneLineType"
+    }   
+
+    type record length(3) of StringOneLine StringMultiLineFix with {
+        runtime ElementID="107" TypeJavaClass="fpbtest.module.builtintest.impl.StringMultiLineFixType"
+    }       
+
+    type record of StringOneLine StringMultiLineVar with {
+        runtime ElementID="108" TypeJavaClass="fpbtest.module.builtintest.impl.StringMultiLineVarType"
+    }
+
+    type record DataLengthHyp {     
+        UINT8 totalLength,   
+        UINT16 data1Length,  
+        boolean data2Flag, 
+        bitstring data1,
+        bitstring pad,
+        octetstring data2 length(4) optional,    
+        octetstring data3 optional
+    }   with {  
+        variant PushEmptyField([DECODE, CALCULATE], "data1Length"); LengthRef("+totalLength");
+                LengthMultiplier(8);       
+        variant(data1Length) SetField([DECODE, CALCULATE])
+        variant(data2Flag) DefaultValue((true)) 
+        variant(data1) LengthRef("-data1Length", #integer); LengthIncrement(3); 
+                DefaultValue(('0101'B))                              
+        variant(pad) PadType(OCTET2); PadValue(('10'B))                              
+        variant(data2) SelectRef("^data2Flag"); SelectCond(boolean (true)); 
+                DefaultPresent(true); DefaultValue(('FFFF00'O))                                
+        runtime ElementID="109" TypeJavaClass="fpbtest.module.builtintest.impl.DataLengthHypType"
+    }                        
+
+    type record StringBlock {                                                       
+        StringOneLine lines1Count,
+        StringMultiLineFix first3Line,
+        StringMultiLineVar lines1,
+        StringMultiLineVar lines2 optional
+    }   with {                                                  
+        variant(lines1) RepeatRef("^lines1Count/token1")                                                 
+        variant(lines2) DefaultPresent(true); DefaultLength(1)                                                   
+        runtime ElementID="110" TypeJavaClass="fpbtest.module.builtintest.impl.StringBlockType"
+    }                                                       
+
+    type record CaseRecord {                                                        
+        UINT8 code,                                                 
+        UINT16 data                                         
+    }   with {
+        runtime ElementID="122" TypeJavaClass="fpbtest.module.builtintest.impl.CaseRecordType"
+    }                                               
+
+    type union UnionBlock1 {                                                
+        Case1 case1,                                         
+        Case2 case2,                                        
+        Case3 case3                                         
+    }   with {                                          
+        variant CaseRefRegion(0,8); CaseDefault(case1)                                           
+        variant(case1) CaseCond(integer (1)); DefaultPresent(true)                                          
+        variant(case2) CaseCond(integer (2))                                           
+        variant(case3) CaseCond(integer (3))                                           
+        runtime ElementID="111" TypeJavaClass="fpbtest.module.builtintest.impl.UnionBlock1Type"
+    }                                               
+
+    type CaseRecord Case1 with {
+        runtime ElementID="112"
+    }
+
+    type CaseRecord Case2 with {
+        runtime ElementID="113"
+    }
+
+    type CaseRecord Case3 with {
+        runtime ElementID="114"
+    }
+
+    type UnionBlock1 UnionBlock2 with { 
+        variant CaseRef("$code", #integer)
+        runtime ElementID="115"
+    }
+
+    type set SetBlock1 {                                        
+        Case1 case1,                           
+        Case2 case2 optional                                    
+    }   with {                                  
+        variant CaseRefRegion(0, 8)                                    
+        variant(case1) CaseCond(integer (1))                                  
+        variant(case2) CaseCond(integer (2))                                   
+        runtime ElementID="116" TypeJavaClass="fpbtest.module.builtintest.impl.SetBlock1Type"
+    }                                       
+
+    type record Protocol1 {                                     
+        UINT8 prefix,                                    
+        UINT8 prtlcode,
+        Payload1 payload                                    
+    }   with {
+        variant Protocol(true); PushEmptyField([decode], "prtlcode")                                    
+        variant(prtlcode) SetField([decode])                                  
+        enum(prtlcode) {(32) "Protocol2"}
+        runtime ElementID="117" TypeJavaClass="fpbtest.module.builtintest.impl.Protocol1Type"
+    }                                       
+
+    type union Payload1 {                                       
+        Protocol2 prtl2,                                     
+        Protocol3 prtl3,                                    
+        octetstring data                                        
+    } with {
+        runtime ElementID="118" TypeJavaClass="fpbtest.module.builtintest.impl.Payload1Type"
+    }
+
+    type record Protocol2 {
+        UINT16 data                                     
+    }   with {
+        variant Protocol(true); SelectRef("-prtlcode"); SelectCond(integer (0x20))
+        enumref(data) Protocol2Data
+        runtime ElementID="119" TypeJavaClass="fpbtest.module.builtintest.impl.Protocol2Type"
+    }                                        
+
+    type record Protocol3 {                                         
+        UINT16 prefix(0x3000),
+        octetstring data
+    }   with {
+        variant Protocol(true); SelectRefRegion(0,16); SelectCond(integer (0x3000))                                      
+        runtime ElementID="120" TypeJavaClass="fpbtest.module.builtintest.impl.Protocol3Type"
+    }                                           
+
+    type record LEndianRecord {
+        UINT4 int1,                          
+        boolean flag,
+        bitstring bits length(3),
+        UINT8 int2,
+        UINT16 int3,
+        hexstring hexs optional
+    }   with{
+        variant ByteOrder(LITTLE_ENDIAN)
+        variant(int1)   FlagType(OCTET2)
+        variant(flag)   FlagType(OCTET2)
+        variant(bits)   FlagType(OCTET2)
+        variant(int2)   FlagType(OCTET2)
+        runtime ElementID="121" TypeJavaClass="fpbtest.module.builtintest.impl.LEndianRecordType"
+    }   
+
+    type enumerated FieldName{FIELD1(10), FIELD2(20)} with {
+        runtime ElementID="123"
+    }   
+
+    type record EnumRefRecord {
+        FieldName fieldName,
+        UINT8 field1 optional,
+        UINT16 field2 optional
+    }   with {
+        variant(fieldName) DefaultValue((FIELD2))
+        variant(field1) SelectRef("^fieldName"); SelectCond(FieldName (FIELD1))
+        variant(field2) SelectRef("^fieldName"); SelectCond(FieldName (FIELD2))                                                 
+        runtime ElementID="124" TypeJavaClass="fpbtest.module.builtintest.impl.EnumRefRecordType"
+    }
+                                                           
+    type record length(0 .. 100) of integer UINT16List (0 .. 65535) with {
+        variant(item) Length(16); Signed(false); ByteOrder(NONE); 
+        runtime ElementID="125" TypeJavaClass="fpbtest.module.builtintest.impl.Uint16ListType"
+    }
+                
+    type set of UINT16 UINT16Set with {
+        runtime ElementID="126" TypeJavaClass="fpbtest.module.builtintest.impl.Uint16SetType"
+    }
+
+    enumset integer Protocol2Data {
+        ( 0 .. 9)   "item1" ,
+        ( 10 .. 19) "item2" 
+    } with {
+        runtime ElementID="127"
+    }
+                                                       
+} with {
+    encode "FPB"
+    variant ByteOrder(BIG_ENDIAN)
+    runtime ModuleJavaClass="fpbtest.module.builtintest.impl.BuiltintestModuleImpl"
+            FactoryJavaClass="fpbtest.module.builtintest.impl.BuiltintestFactoryImpl" 
+            TypeEvFactoryJavaClass="fpbtest.module.builtintest.impl.BuiltintestTypeEVExtFactoryImpl"
+}
