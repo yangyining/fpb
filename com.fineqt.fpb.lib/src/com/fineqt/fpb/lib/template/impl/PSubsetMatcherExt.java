@@ -19,6 +19,7 @@ import java.util.Map;
 
 import org.eclipse.emf.common.util.EList;
 
+import com.fineqt.fpb.lib.meta.PModuleExt;
 import com.fineqt.fpb.lib.meta.exception.InitMetaException;
 import com.fineqt.fpb.lib.meta.exception.MetaException;
 import com.fineqt.fpb.lib.model.fpbtemplate.PMatcher;
@@ -37,8 +38,9 @@ public class PSubsetMatcherExt extends PSimpleMatcherExtBase {
 	private List<PValue> items = new ArrayList<PValue>();
 	protected LengthRestriction lengthRestriction;
 
-	public PSubsetMatcherExt(PSubSetMatcher model, PTypeElementMeta matcherMeta) {
-		super(model, matcherMeta);
+	public PSubsetMatcherExt(PSubSetMatcher model, PTypeElementMeta matcherMeta, 
+			PModuleExt ownerModule) {
+		super(model, matcherMeta, ownerModule);
 	}
 
 	@Override
@@ -99,7 +101,7 @@ public class PSubsetMatcherExt extends PSimpleMatcherExtBase {
 		for (PMatcher modelItem : modelItems) {
 			PMatcherExt matcherItem;
 			matcherItem = extFactory.createMatcher(
-					listType.getItemType(), modelItem, this);
+					listType.getItemType(), modelItem, this, getPModule());
 			matcherItem.init();
 			PValue value;
 			try {

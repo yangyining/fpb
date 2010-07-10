@@ -13,13 +13,15 @@ GNU General Public License for more details at gnu.org.
 ******************************************************************/
 package com.fineqt.fpb.lib.template.impl;
 
+import com.fineqt.fpb.lib.meta.PModuleExt;
 import com.fineqt.fpb.lib.model.fpbtemplate.PTemplateMatcher;
 import com.fineqt.fpb.lib.value.PTypeElementMeta;
 
 abstract public class PSimpleMatcherExtBase extends PTemplateMatcherExtBase {
 
-	public PSimpleMatcherExtBase(PTemplateMatcher pmodel, PTypeElementMeta matcherMeta) {
-		super(pmodel, matcherMeta);
+	public PSimpleMatcherExtBase(PTemplateMatcher pmodel, PTypeElementMeta matcherMeta, 
+			PModuleExt ownerModule) {
+		super(pmodel, matcherMeta, ownerModule);
 	}
 
 }

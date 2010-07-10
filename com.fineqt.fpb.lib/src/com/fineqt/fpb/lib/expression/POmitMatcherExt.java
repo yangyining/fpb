@@ -15,6 +15,7 @@ package com.fineqt.fpb.lib.expression;
 
 import java.util.Map;
 
+import com.fineqt.fpb.lib.meta.PModuleExt;
 import com.fineqt.fpb.lib.model.fpbtemplate.POmitMatcher;
 import com.fineqt.fpb.lib.template.PTemplateParIns;
 import com.fineqt.fpb.lib.template.TemplateMatchingExption;
@@ -24,8 +25,9 @@ import com.fineqt.fpb.lib.value.PTypeElementMeta;
 
 public class POmitMatcherExt extends PExpressionMatcherExtBase {
 
-	public POmitMatcherExt(POmitMatcher model, PTypeElementMeta matcherMeta, PTypeElementMeta parentMeta) {
-		super(model, matcherMeta);
+	public POmitMatcherExt(POmitMatcher model, PTypeElementMeta matcherMeta, 
+			PTypeElementMeta parentMeta, PModuleExt ownerModule) {
+		super(model, matcherMeta, ownerModule);
 		if (parentMeta.asTypeMeta().isContainerType() &&
 				(matcherMeta.asFieldMeta() == null || !matcherMeta.asFieldMeta().isOptional())) {
 			throw new IllegalArgumentException("Must be optional field.");

@@ -17,6 +17,7 @@ import java.util.Map;
 
 import com.fineqt.fpb.lib.builtin.PFloatValue;
 import com.fineqt.fpb.lib.builtin.PIntegerValue;
+import com.fineqt.fpb.lib.meta.PModuleExt;
 import com.fineqt.fpb.lib.meta.exception.InitMetaException;
 import com.fineqt.fpb.lib.meta.exception.MetaException;
 import com.fineqt.fpb.lib.model.fpbtemplate.PUnaryExpression;
@@ -31,8 +32,9 @@ public class PUnaryExpressionExt extends PExpressionMatcherExtBase {
 	private boolean isMinusOp;
 	private PMatcherExt primaryMatcher;
 	
-	public PUnaryExpressionExt(PUnaryExpression pmodel, PTypeElementMeta matcherMeta) {
-		super(pmodel, matcherMeta);
+	public PUnaryExpressionExt(PUnaryExpression pmodel, PTypeElementMeta matcherMeta, 
+			PModuleExt ownerModule) {
+		super(pmodel, matcherMeta, ownerModule);
 	}
 
 	@Override
@@ -70,7 +72,8 @@ public class PUnaryExpressionExt extends PExpressionMatcherExtBase {
 		//
 		PUnaryExpression model = (PUnaryExpression)pmodel;
 		assert model.getPrimary() != null;
-		primaryMatcher = extFactory.createMatcher(matcherMeta, model.getPrimary(), this);
+		primaryMatcher = extFactory.createMatcher(
+				matcherMeta, model.getPrimary(), this, getPModule());
 		if ("-".equals(model.getOperator())) {
 			isMinusOp = true;
 		}

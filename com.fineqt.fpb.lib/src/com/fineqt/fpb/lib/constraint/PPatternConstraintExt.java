@@ -30,7 +30,7 @@ public class PPatternConstraintExt extends PTypeConstraintExtBase {
 		super(pmodel, targetType);
 		assert pmodel.getMatcher() != null;
 		matcher = (PCharstringMatcherExt)extFactory.createMatcher(targetType, 
-				pmodel.getMatcher(), null);
+				pmodel.getMatcher(), null, getPModule());
 	}
 
 	@Override

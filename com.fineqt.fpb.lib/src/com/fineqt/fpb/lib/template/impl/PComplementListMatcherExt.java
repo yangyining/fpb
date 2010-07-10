@@ -19,6 +19,7 @@ import java.util.Map;
 
 import org.eclipse.emf.common.util.EList;
 
+import com.fineqt.fpb.lib.meta.PModuleExt;
 import com.fineqt.fpb.lib.meta.exception.InitMetaException;
 import com.fineqt.fpb.lib.model.fpbtemplate.PComplementListMatcher;
 import com.fineqt.fpb.lib.model.fpbtemplate.PMatcher;
@@ -33,8 +34,9 @@ import com.fineqt.fpb.lib.value.PTypeElementMeta;
 public class PComplementListMatcherExt extends PSimpleMatcherExtBase{
 	private List<PMatcherExt> items = new ArrayList<PMatcherExt>();
 	
-	public PComplementListMatcherExt(PComplementListMatcher pmodel, PTypeElementMeta matcherMeta) {
-		super(pmodel, matcherMeta);
+	public PComplementListMatcherExt(PComplementListMatcher pmodel, 
+			PTypeElementMeta matcherMeta, PModuleExt ownerModule) {
+		super(pmodel, matcherMeta, ownerModule);
 	}
 
 	@Override
@@ -65,7 +67,8 @@ public class PComplementListMatcherExt extends PSimpleMatcherExtBase{
 		PComplementListMatcher model = (PComplementListMatcher)pmodel;
 		EList<PTemplateMatcher> modelItems = model.getItems();
 		for (PMatcher modelItem : modelItems) {
-			PMatcherExt matcherItem = extFactory.createMatcher(matcherMeta, modelItem, this);
+			PMatcherExt matcherItem = extFactory.createMatcher(matcherMeta, modelItem, 
+					this, getPModule());
 			getItems().add(matcherItem);
 		}
 	}

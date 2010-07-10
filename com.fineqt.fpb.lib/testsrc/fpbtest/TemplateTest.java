@@ -33,12 +33,12 @@ import com.fineqt.fpb.lib.template.impl.PEntityTemplateExtImpl;
 import com.fineqt.fpb.lib.template.impl.PHexstringMatcherExt;
 import com.fineqt.fpb.lib.template.impl.PIntRangeMatcherExt;
 import com.fineqt.fpb.lib.template.impl.PListFieldMatcherExt;
-import com.fineqt.fpb.lib.template.impl.PTemplateMatcherExtBase;
 import com.fineqt.fpb.lib.template.impl.POctetstringMatcherExt;
 import com.fineqt.fpb.lib.template.impl.PRecordOfMatcherExt;
 import com.fineqt.fpb.lib.template.impl.PSetOfMatcherExt;
 import com.fineqt.fpb.lib.template.impl.PSubsetMatcherExt;
 import com.fineqt.fpb.lib.template.impl.PSupersetMatcherExt;
+import com.fineqt.fpb.lib.template.impl.PTemplateMatcherExtBase;
 import com.fineqt.fpb.lib.template.impl.PTemplateParMetaImpl;
 import com.fineqt.fpb.lib.type.PContainerTypeExt;
 import com.fineqt.fpb.lib.type.PTypeExt;
@@ -47,11 +47,13 @@ import com.fineqt.fpb.lib.value.PValue;
 import fpbtest.module.builtintest.BuiltintestFactory;
 import fpbtest.module.builtintest.BuiltintestModule;
 import fpbtest.module.builtintest.DataLengthHyp;
+import com.fineqt.fpb.lib.meta.PModuleExt;
 
 public class TemplateTest extends TestCase {
 	FpbtemplateFactory mfactory = FpbtemplateFactory.eINSTANCE;
 
 	public void testBitstringStringMatcher() throws Exception {
+		PModuleExt module = BuiltinModule.BUILTIN_INSTANCE;
 		PTypeExt bstrType = BuiltinModule.BUILTIN_INSTANCE.getBitstring();
 		//Bitstring
 		PBitstringMatcherExt bstrMatcher;
@@ -59,7 +61,7 @@ public class TemplateTest extends TestCase {
 		PBitstringMatcher mmodel = mfactory.createPBitstringMatcher();
 		//Value
 		mmodel.setDesc("10");
-		bstrMatcher = PBitstringMatcherExt.create(mmodel, bstrType);
+		bstrMatcher = PBitstringMatcherExt.create(mmodel, bstrType, module);
 		assertEquals(1, bstrMatcher.getElements().size());
 		assertEquals(PElementPattern.Type.Value, bstrMatcher.getElements().get(0).getType());
 		bstrValue.setText("10");
@@ -68,7 +70,7 @@ public class TemplateTest extends TestCase {
 		assertFalse(bstrMatcher.match(bstrValue, null));
 		//Any
 		mmodel.setDesc("?");
-		bstrMatcher = PBitstringMatcherExt.create(mmodel, bstrType);
+		bstrMatcher = PBitstringMatcherExt.create(mmodel, bstrType, module);
 		assertEquals(1, bstrMatcher.getElements().size());
 		assertEquals(PElementPattern.Type.Any, bstrMatcher.getElements().get(0).getType());
 		bstrValue.setText("10");
@@ -77,7 +79,7 @@ public class TemplateTest extends TestCase {
 		assertTrue(bstrMatcher.match(bstrValue, null));
 		//AnyOrNone
 		mmodel.setDesc("*");
-		bstrMatcher = PBitstringMatcherExt.create(mmodel, bstrType);
+		bstrMatcher = PBitstringMatcherExt.create(mmodel, bstrType, module);
 		assertEquals(1, bstrMatcher.getElements().size());
 		assertEquals(PElementPattern.Type.AnyOrNone, bstrMatcher.getElements().get(0).getType());
 		bstrValue.setText("10");
@@ -86,7 +88,7 @@ public class TemplateTest extends TestCase {
 		assertTrue(bstrMatcher.match(bstrValue, null));
 		//1*0?
 		mmodel.setDesc("1*0?");
-		bstrMatcher = PBitstringMatcherExt.create(mmodel, bstrType);
+		bstrMatcher = PBitstringMatcherExt.create(mmodel, bstrType, module);
 		assertEquals(4, bstrMatcher.getElements().size());
 		assertEquals(PElementPattern.Type.Value, bstrMatcher.getElements().get(0).getType());
 		assertEquals(PElementPattern.Type.AnyOrNone, bstrMatcher.getElements().get(1).getType());
@@ -102,7 +104,7 @@ public class TemplateTest extends TestCase {
 		assertFalse(bstrMatcher.match(bstrValue, null));
 		//11?*01?*
 		mmodel.setDesc("11?*01?*");
-		bstrMatcher = PBitstringMatcherExt.create(mmodel, bstrType);
+		bstrMatcher = PBitstringMatcherExt.create(mmodel, bstrType, module);
 		assertEquals(6, bstrMatcher.getElements().size());
 		assertEquals(PElementPattern.Type.Value, bstrMatcher.getElements().get(0).getType());
 		assertEquals(PElementPattern.Type.Any, bstrMatcher.getElements().get(1).getType());
@@ -121,7 +123,7 @@ public class TemplateTest extends TestCase {
 		
 		//1* length 3
 		mmodel.setDesc("1*");
-		bstrMatcher = PBitstringMatcherExt.create(mmodel, bstrType);
+		bstrMatcher = PBitstringMatcherExt.create(mmodel, bstrType, module);
 		bstrMatcher.setLengthRestriction(new PTemplateMatcherExtBase.LengthRange(3, 3));
 		bstrValue.setText("111");
 		assertTrue(bstrMatcher.match(bstrValue, null));
@@ -132,6 +134,7 @@ public class TemplateTest extends TestCase {
 	}
 	
 	public void testHexstringStringMatcher() throws Exception {
+		PModuleExt module = BuiltinModule.BUILTIN_INSTANCE;
 		PTypeExt hstrType = BuiltinModule.BUILTIN_INSTANCE.getHexstring();
 		//Bitstring
 		PHexstringMatcherExt bstrMatcher;
@@ -139,7 +142,7 @@ public class TemplateTest extends TestCase {
 		PHexstringMatcher mmodel = mfactory.createPHexstringMatcher();
 		//Value
 		mmodel.setDesc("1A");
-		bstrMatcher = PHexstringMatcherExt.create(mmodel, hstrType);
+		bstrMatcher = PHexstringMatcherExt.create(mmodel, hstrType, module);
 		assertEquals(1, bstrMatcher.getElements().size());
 		assertEquals(PElementPattern.Type.Value, bstrMatcher.getElements().get(0).getType());
 		strValue.setText("1A");
@@ -148,7 +151,7 @@ public class TemplateTest extends TestCase {
 		assertFalse(bstrMatcher.match(strValue, null));
 		//Any
 		mmodel.setDesc("?");
-		bstrMatcher = PHexstringMatcherExt.create(mmodel, hstrType);
+		bstrMatcher = PHexstringMatcherExt.create(mmodel, hstrType, module);
 		assertEquals(1, bstrMatcher.getElements().size());
 		assertEquals(PElementPattern.Type.Any, bstrMatcher.getElements().get(0).getType());
 		strValue.setText("1A");
@@ -157,7 +160,7 @@ public class TemplateTest extends TestCase {
 		assertTrue(bstrMatcher.match(strValue, null));
 		//AnyOrNone
 		mmodel.setDesc("*");
-		bstrMatcher = PHexstringMatcherExt.create(mmodel, hstrType);
+		bstrMatcher = PHexstringMatcherExt.create(mmodel, hstrType, module);
 		assertEquals(1, bstrMatcher.getElements().size());
 		assertEquals(PElementPattern.Type.AnyOrNone, bstrMatcher.getElements().get(0).getType());
 		strValue.setText("1A");
@@ -166,7 +169,7 @@ public class TemplateTest extends TestCase {
 		assertTrue(bstrMatcher.match(strValue, null));
 		//3*F?
 		mmodel.setDesc("3*F?");
-		bstrMatcher = PHexstringMatcherExt.create(mmodel, hstrType);
+		bstrMatcher = PHexstringMatcherExt.create(mmodel, hstrType, module);
 		assertEquals(4, bstrMatcher.getElements().size());
 		assertEquals(PElementPattern.Type.Value, bstrMatcher.getElements().get(0).getType());
 		assertEquals(PElementPattern.Type.AnyOrNone, bstrMatcher.getElements().get(1).getType());
@@ -183,6 +186,7 @@ public class TemplateTest extends TestCase {
 	}
 	
 	public void testOctetstringStringMatcher() throws Exception {
+		PModuleExt module = BuiltinModule.BUILTIN_INSTANCE;
 		PTypeExt hstrType = BuiltinModule.BUILTIN_INSTANCE.getOctetstring();
 		//Bitstring
 		POctetstringMatcherExt bstrMatcher;
@@ -190,7 +194,7 @@ public class TemplateTest extends TestCase {
 		POctetstringMatcher mmodel = mfactory.createPOctetstringMatcher();
 		//Value
 		mmodel.setDesc("11AA");
-		bstrMatcher = POctetstringMatcherExt.create(mmodel, hstrType);
+		bstrMatcher = POctetstringMatcherExt.create(mmodel, hstrType, module);
 		assertEquals(1, bstrMatcher.getElements().size());
 		assertEquals(PElementPattern.Type.Value, bstrMatcher.getElements().get(0).getType());
 		bstrValue.setText("11AA");
@@ -199,7 +203,7 @@ public class TemplateTest extends TestCase {
 		assertFalse(bstrMatcher.match(bstrValue, null));
 		//Any
 		mmodel.setDesc("?");
-		bstrMatcher = POctetstringMatcherExt.create(mmodel, hstrType);
+		bstrMatcher = POctetstringMatcherExt.create(mmodel, hstrType, module);
 		assertEquals(1, bstrMatcher.getElements().size());
 		assertEquals(PElementPattern.Type.Any, bstrMatcher.getElements().get(0).getType());
 		bstrValue.setText("11AA");
@@ -208,7 +212,7 @@ public class TemplateTest extends TestCase {
 		assertTrue(bstrMatcher.match(bstrValue, null));
 		//AnyOrNone
 		mmodel.setDesc("*");
-		bstrMatcher = POctetstringMatcherExt.create(mmodel, hstrType);
+		bstrMatcher = POctetstringMatcherExt.create(mmodel, hstrType, module);
 		assertEquals(1, bstrMatcher.getElements().size());
 		assertEquals(PElementPattern.Type.AnyOrNone, bstrMatcher.getElements().get(0).getType());
 		bstrValue.setText("11AA");
@@ -217,7 +221,7 @@ public class TemplateTest extends TestCase {
 		assertTrue(bstrMatcher.match(bstrValue, null));
 		//3*F?
 		mmodel.setDesc("33*FF?");
-		bstrMatcher = POctetstringMatcherExt.create(mmodel, hstrType);
+		bstrMatcher = POctetstringMatcherExt.create(mmodel, hstrType, module);
 		assertEquals(4, bstrMatcher.getElements().size());
 		assertEquals(PElementPattern.Type.Value, bstrMatcher.getElements().get(0).getType());
 		assertEquals(PElementPattern.Type.AnyOrNone, bstrMatcher.getElements().get(1).getType());
@@ -234,20 +238,21 @@ public class TemplateTest extends TestCase {
 	}
 	
 	public void testCharstringMatcher() throws Exception {
+		PModuleExt module = BuiltinModule.BUILTIN_INSTANCE;
 		PTypeExt hstrType = BuiltinModule.BUILTIN_INSTANCE.getCharstring();
 		PCharstringMatcherExt matcher;
 		PCharstringValue cstrValue = (PCharstringValue)BuiltinFactory.BUILTIN_INSTANCE.createCharstring();
 		PCharstringMatcher mmodel = mfactory.createPCharstringMatcher();
 		//A??C
 		mmodel.setDesc("A..C");
-		matcher = PCharstringMatcherExt.create(mmodel, hstrType);
+		matcher = PCharstringMatcherExt.create(mmodel, hstrType, module);
 		cstrValue.setText("A->C");
 		assertTrue(matcher.match(cstrValue, null));
 		cstrValue.setText("AAC");
 		assertFalse(matcher.match(cstrValue, null));
 		//A*A
 		mmodel.setDesc("A(.)*A");
-		matcher = PCharstringMatcherExt.create(mmodel, hstrType);
+		matcher = PCharstringMatcherExt.create(mmodel, hstrType, module);
 		cstrValue.setText("ABBA");
 		assertTrue(matcher.match(cstrValue, null));
 		cstrValue.setText("AA");
@@ -256,7 +261,7 @@ public class TemplateTest extends TestCase {
 		assertFalse(matcher.match(cstrValue, null));
 		//A* length 3
 		mmodel.setDesc("A(.)*");
-		matcher = PCharstringMatcherExt.create(mmodel, hstrType);
+		matcher = PCharstringMatcherExt.create(mmodel, hstrType, module);
 		matcher.setLengthRestriction(new PTemplateMatcherExtBase.LengthRange(3, 3));
 		cstrValue.setText("ABB");
 		assertTrue(matcher.match(cstrValue, null));
@@ -265,11 +270,12 @@ public class TemplateTest extends TestCase {
 	}
 	
 	public void testConstPrimitiveValueMatcher() throws Exception {
+		PModuleExt module = BuiltinModule.BUILTIN_INSTANCE;
 		PPrimitiveValueMatcherExt matcher;
 		//charstring valueof
 		PPrimitiveValueMatcher model = mfactory.createPPrimitiveValueMatcher();
 		model.setValueDesc("xyz");
-		matcher = PPrimitiveValueMatcherExt.create(model, BuiltinModule.BUILTIN_INSTANCE.getCharstring());
+		matcher = PPrimitiveValueMatcherExt.create(model, BuiltinModule.BUILTIN_INSTANCE.getCharstring(), module);
 		PCharstringValue cstrValue = (PCharstringValue)BuiltinFactory.BUILTIN_INSTANCE.createCharstring();
 		cstrValue.setText("xyz");
 		PCharstringValue cstrValue2 = (PCharstringValue)matcher.valueOf(null);
@@ -279,12 +285,13 @@ public class TemplateTest extends TestCase {
 	}
 	
 	public void testRangeMatcher() throws Exception {
+		PModuleExt module = BuiltinModule.BUILTIN_INSTANCE;
 		PRangeMatcher mmodel = mfactory.createPRangeMatcher();
 		//integer
 		mmodel.setLowerBound(createPrmMatcher("120"));
 		mmodel.setUpperBound(createPrmMatcher("1000"));
 		PIntRangeMatcherExt intMatcher = new PIntRangeMatcherExt(mmodel, 
-				BuiltintestModule.INSTANCE.getUint8());
+				BuiltintestModule.INSTANCE.getUint8(), module);
 		intMatcher.init();
 		PIntegerValue intValue = (PIntegerValue)BuiltintestFactory.INSTANCE.createUINT8();
 		intValue.setInteger(130);
@@ -297,7 +304,7 @@ public class TemplateTest extends TestCase {
 		mmodel.setLowerBound(createPrmMatcher("a"));
 		mmodel.setUpperBound(createPrmMatcher("z"));
 		PCharRangeMatcherExt charMatcher = new PCharRangeMatcherExt(mmodel, 
-				BuiltintestModule.INSTANCE.getCharstring());
+				BuiltintestModule.INSTANCE.getCharstring(), module);
 		charMatcher.init();
 		PCharstringValue charValue = (PCharstringValue)BuiltintestFactory.INSTANCE.createCharstring();
 		charValue.setLength(1);
@@ -319,7 +326,8 @@ public class TemplateTest extends TestCase {
 		PIntegerValue intValue;
 		IListValue<IIntegerValue> intList;
 		//Superset(2, 3)
-		PSupersetMatcherExt superMatcher = new PSupersetMatcherExt(null, module.getUint16Set());
+		PSupersetMatcherExt superMatcher = 
+			new PSupersetMatcherExt(null, module.getUint16Set(), module);
 		intValue = (PIntegerValue)factory.createUINT16();
 		intValue.setInteger(2);
 		superMatcher.getItems().add(intValue);
@@ -346,7 +354,7 @@ public class TemplateTest extends TestCase {
 		assertTrue(superMatcher.match((PValue)intList, null));
 		
 		//Superset(2) length 2
-		superMatcher = new PSupersetMatcherExt(null, module.getUint16Set());
+		superMatcher = new PSupersetMatcherExt(null, module.getUint16Set(), module);
 		superMatcher.setLengthRestriction(new PTemplateMatcherExtBase.LengthRange(2, 2));
 		intValue = (PIntegerValue)factory.createUINT16();
 		intValue.setInteger(2);
@@ -369,7 +377,8 @@ public class TemplateTest extends TestCase {
 		assertTrue(superMatcher.match((PValue)intList, null));
 		
 		//Subset(2, 3)
-		PSubsetMatcherExt subMatcher = new PSubsetMatcherExt(null, module.getUint16Set());
+		PSubsetMatcherExt subMatcher = 
+			new PSubsetMatcherExt(null, module.getUint16Set(), module);
 		intValue = (PIntegerValue)factory.createUINT16();
 		intValue.setInteger(2);
 		subMatcher.getItems().add(intValue);
@@ -393,7 +402,7 @@ public class TemplateTest extends TestCase {
 		assertFalse(subMatcher.match((PValue)intList, null));
 
 		//Subset(2) length 2
-		subMatcher = new PSubsetMatcherExt(null, module.getUint16Set());
+		subMatcher = new PSubsetMatcherExt(null, module.getUint16Set(), module);
 		subMatcher.setLengthRestriction(new PTemplateMatcherExtBase.LengthRange(2, 2));
 		intValue = (PIntegerValue)factory.createUINT16();
 		intValue.setInteger(2);
@@ -423,46 +432,47 @@ public class TemplateTest extends TestCase {
 		PMatcherExt itemMatcher;
 		//Record
 		PContainerTypeExt dlhType = (PContainerTypeExt)module.getDataLengthHyp();
-		PContainerFieldMatcherExt recordMatcher = new PContainerFieldMatcherExt(null, dlhType);
+		PContainerFieldMatcherExt recordMatcher = 
+			new PContainerFieldMatcherExt(null, dlhType, module);
 		citem = new PContainerFieldMatcherExt.Item(
 				dlhType.getFieldMeta(BuiltintestModule.DATA_LENGTH_HYP__TOTAL_LENGTH));
 		PPrimitiveValueMatcher model = mfactory.createPPrimitiveValueMatcher();
 		model.setValueDesc("10");
-		itemMatcher = PPrimitiveValueMatcherExt.create(model, module.getUint8());
+		itemMatcher = PPrimitiveValueMatcherExt.create(model, module.getUint8(), module);
 		citem.setMatcher(itemMatcher);
 		recordMatcher.getItems().add(citem);
 		citem = new PContainerFieldMatcherExt.Item(
 				dlhType.getFieldMeta(BuiltintestModule.DATA_LENGTH_HYP__DATA1_LENGTH));
 		model = mfactory.createPPrimitiveValueMatcher();
 		model.setValueDesc("20");
-		itemMatcher = PPrimitiveValueMatcherExt.create(model, module.getUint16());
+		itemMatcher = PPrimitiveValueMatcherExt.create(model, module.getUint16(), module);
 		citem.setMatcher(itemMatcher);
 		recordMatcher.getItems().add(citem);
 		citem = new PContainerFieldMatcherExt.Item(
 				dlhType.getFieldMeta(BuiltintestModule.DATA_LENGTH_HYP__DATA2_FLAG));
 		model = mfactory.createPPrimitiveValueMatcher();
 		model.setValueDesc("true");
-		itemMatcher = PPrimitiveValueMatcherExt.create(model, module.getBoolean());
+		itemMatcher = PPrimitiveValueMatcherExt.create(model, module.getBoolean(), module);
 		citem.setMatcher(itemMatcher);
 		recordMatcher.getItems().add(citem);
 		citem = new PContainerFieldMatcherExt.Item(
 				dlhType.getFieldMeta(BuiltintestModule.DATA_LENGTH_HYP__DATA1));
 		model = mfactory.createPPrimitiveValueMatcher();
 		model.setValueDesc("101");
-		itemMatcher = PPrimitiveValueMatcherExt.create(model, module.getBitstring());
+		itemMatcher = PPrimitiveValueMatcherExt.create(model, module.getBitstring(), module);
 		citem.setMatcher(itemMatcher);
 		recordMatcher.getItems().add(citem);
 		citem = new PContainerFieldMatcherExt.Item(
 				dlhType.getFieldMeta(BuiltintestModule.DATA_LENGTH_HYP__PAD));
 		model = mfactory.createPPrimitiveValueMatcher();
 		model.setValueDesc("1100");
-		itemMatcher = PPrimitiveValueMatcherExt.create(model, module.getBitstring());
+		itemMatcher = PPrimitiveValueMatcherExt.create(model, module.getBitstring(), module);
 		citem.setMatcher(itemMatcher);
 		recordMatcher.getItems().add(citem);
 		citem = new PContainerFieldMatcherExt.Item(
 				dlhType.getFieldMeta(BuiltintestModule.DATA_LENGTH_HYP__DATA2));
 		itemMatcher = new POmitMatcherExt(null, dlhType.getFieldMeta(
-				BuiltintestModule.DATA_LENGTH_HYP__DATA2), dlhType);
+				BuiltintestModule.DATA_LENGTH_HYP__DATA2), dlhType, module);
 		citem.setMatcher(itemMatcher);
 		recordMatcher.getItems().add(citem);
 		citem = new PContainerFieldMatcherExt.Item(
@@ -470,7 +480,7 @@ public class TemplateTest extends TestCase {
 		model = mfactory.createPPrimitiveValueMatcher();
 		model.setValueDesc("11FF");
 		itemMatcher = PPrimitiveValueMatcherExt.create(model, dlhType.getFieldMeta(
-				BuiltintestModule.DATA_LENGTH_HYP__DATA3));
+				BuiltintestModule.DATA_LENGTH_HYP__DATA3), module);
 //		itemMatcher.setIfPresent(true);
 		citem.setMatcher(itemMatcher);
 		recordMatcher.getItems().add(citem);
@@ -488,18 +498,19 @@ public class TemplateTest extends TestCase {
 
 		//List(0, 10) (2, 30) length 3
 		PListFieldMatcherExt.Item litem;
-		PListFieldMatcherExt listMatcher = new PListFieldMatcherExt(null, module.getUint16List());
+		PListFieldMatcherExt listMatcher = 
+			new PListFieldMatcherExt(null, module.getUint16List(), module);
 		listMatcher.setLengthRestriction(new PTemplateMatcherExtBase.LengthRange(3, 3));
 		litem = new PListFieldMatcherExt.StaticItem(0);
 		model = mfactory.createPPrimitiveValueMatcher();
 		model.setValueDesc("10");
-		itemMatcher = PPrimitiveValueMatcherExt.create(model, module.getUint16());
+		itemMatcher = PPrimitiveValueMatcherExt.create(model, module.getUint16(), module);
 		litem.setMatcher(itemMatcher);
 		listMatcher.getItems().add(litem);
 		litem = new PListFieldMatcherExt.StaticItem(2);
 		model = mfactory.createPPrimitiveValueMatcher();
 		model.setValueDesc("30");
-		itemMatcher = PPrimitiveValueMatcherExt.create(model, module.getUint16());
+		itemMatcher = PPrimitiveValueMatcherExt.create(model, module.getUint16(), module);
 		litem.setMatcher(itemMatcher);
 		listMatcher.getItems().add(litem);
 		//valueOf
@@ -527,15 +538,15 @@ public class TemplateTest extends TestCase {
 		PRecordOfMatcherExt rofMatcher;
 		PSetOfMatcherExt sofMatcher;
 		//record of (1, 2) 
-		rofMatcher = new PRecordOfMatcherExt(null, module.getUint16List());
+		rofMatcher = new PRecordOfMatcherExt(null, module.getUint16List(), module);
 		PPrimitiveValueMatcher model = mfactory.createPPrimitiveValueMatcher();
 		model.setValueDesc("1");
-		valueMatcher = PPrimitiveValueMatcherExt.create(model, module.getUint16()); 
+		valueMatcher = PPrimitiveValueMatcherExt.create(model, module.getUint16(), module); 
 		valuePattern = new PElementPattern.PListValueElementPattern(valueMatcher);
 		rofMatcher.getElements().add(valuePattern);
 		model = mfactory.createPPrimitiveValueMatcher();
 		model.setValueDesc("2");
-		valueMatcher = PPrimitiveValueMatcherExt.create(model, module.getUint16()); 
+		valueMatcher = PPrimitiveValueMatcherExt.create(model, module.getUint16(), module); 
 		valuePattern = new PElementPattern.PListValueElementPattern(valueMatcher);
 		rofMatcher.getElements().add(valuePattern);
 		rofMatcher.init();
@@ -549,15 +560,15 @@ public class TemplateTest extends TestCase {
 		assertFalse(rofMatcher.match((PValue)listValue, null));
 		
 		//Set of (1, 2)
-		sofMatcher = new PSetOfMatcherExt(null, module.getUint16Set());
+		sofMatcher = new PSetOfMatcherExt(null, module.getUint16Set(), module);
 		model = mfactory.createPPrimitiveValueMatcher();
 		model.setValueDesc("1");
-		valueMatcher = PPrimitiveValueMatcherExt.create(model, module.getUint16()); 
+		valueMatcher = PPrimitiveValueMatcherExt.create(model, module.getUint16(), module); 
 		valuePattern = new PElementPattern.PListValueElementPattern(valueMatcher);
 		sofMatcher.getElements().add(valuePattern);
 		model = mfactory.createPPrimitiveValueMatcher();
 		model.setValueDesc("2");
-		valueMatcher = PPrimitiveValueMatcherExt.create(model, module.getUint16()); 
+		valueMatcher = PPrimitiveValueMatcherExt.create(model, module.getUint16(), module); 
 		valuePattern = new PElementPattern.PListValueElementPattern(valueMatcher);
 		sofMatcher.getElements().add(valuePattern);
 		sofMatcher.init();
@@ -583,7 +594,8 @@ public class TemplateTest extends TestCase {
 		PValueReferenceMatcher mmodel = mfactory.createPValueReferenceMatcher();
 		mmodel.setRefName("para1");
 		mmodel.setRefType(ValueReferenceType.TEMPLATEPAR);
-		PValueReferenceMatcherExt matcher = new PValueReferenceMatcherExt(mmodel, module.getUint8());
+		PValueReferenceMatcherExt matcher = 
+			new PValueReferenceMatcherExt(mmodel, module.getUint8(), module);
 		matcher.init();
 		PEntityTemplateExtImpl tmpa = new PEntityTemplateExtImpl(module.getUint8(), matcher);
 		PTemplateParMetaImpl para1 = new PTemplateParMetaImpl(false, module.getUint8(), "para1");

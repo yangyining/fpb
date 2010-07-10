@@ -20,6 +20,7 @@ import java.util.Map;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.eclipse.emf.common.util.EList;
 
+import com.fineqt.fpb.lib.meta.PModuleExt;
 import com.fineqt.fpb.lib.meta.exception.InitMetaException;
 import com.fineqt.fpb.lib.model.fpbtemplate.PMatcher;
 import com.fineqt.fpb.lib.model.fpbtemplate.PTemplateMatcher;
@@ -34,8 +35,9 @@ import com.fineqt.fpb.lib.value.PTypeElementMeta;
 public class PValueListMatcherExt extends PSimpleMatcherExtBase {
 	private List<PMatcherExt> items = new ArrayList<PMatcherExt>();
 
-	public PValueListMatcherExt(PValueListMatcher model, PTypeElementMeta matcherMeta) {
-		super(model, matcherMeta);
+	public PValueListMatcherExt(PValueListMatcher model, PTypeElementMeta matcherMeta, 
+			PModuleExt ownerModule) {
+		super(model, matcherMeta, ownerModule);
 	}
 
 	@Override
@@ -67,7 +69,7 @@ public class PValueListMatcherExt extends PSimpleMatcherExtBase {
 		EList<PTemplateMatcher> modelItems = model.getItems();
 		for (PMatcher modelItem : modelItems) {
 			PMatcherExt matcherItem = extFactory.createMatcher(matcherMeta, modelItem, 
-					this);
+					this, getPModule());
 			getItems().add(matcherItem);
 		}
 	}

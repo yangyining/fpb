@@ -114,7 +114,7 @@ implements PEntityModuleParExt {
 		basetype.init();
 		//Matcher
 		if (model.getMatcher() != null) {
-			matcher = extFactory.createMatcher(basetype, model.getMatcher(), null);
+			matcher = extFactory.createMatcher(basetype, model.getMatcher(), null, getPModule());
 		}
 		if (matcher != null) {
 			//依赖Matcher的初始化

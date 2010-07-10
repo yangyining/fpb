@@ -17,6 +17,7 @@ import java.util.Map;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 
+import com.fineqt.fpb.lib.meta.PModuleExt;
 import com.fineqt.fpb.lib.model.fpbtemplate.PAnyOrOmitMatcher;
 import com.fineqt.fpb.lib.template.NotSingleValueException;
 import com.fineqt.fpb.lib.template.PTemplateParIns;
@@ -27,8 +28,8 @@ import com.fineqt.fpb.lib.value.PTypeElementMeta;
 public class PAnyOrOmitMatcherExt extends PSimpleMatcherExtBase {
 
 	public PAnyOrOmitMatcherExt(PAnyOrOmitMatcher model, PTypeElementMeta matcherMeta, 
-			PTypeElementMeta parentMeta) {
-		super(model, matcherMeta);
+			PTypeElementMeta parentMeta, PModuleExt ownerModule) {
+		super(model, matcherMeta, ownerModule);
 		if (parentMeta.asTypeMeta().isContainerType() &&
 				(matcherMeta.asFieldMeta() == null || !matcherMeta.asFieldMeta().isOptional())) {
 			throw new IllegalArgumentException("Must be optional field.");

@@ -152,74 +152,78 @@ public class PElementExtFactoryImpl implements PElementExtFactory {
 
 	@Override
 	public PMatcherExt createMatcher(PTypeElementMeta baseType, PMatcher model, 
-			PMatcherExt parentMatcher) {
+			PMatcherExt parentMatcher, PModuleExt ownerModule) {
 		assert baseType != null;
 		assert model != null;
 		PMatcherExt result = null;
 		switch(model.eClass().getClassifierID()) {
 		case FpbtemplatePackage.PCOMPLEMENT_LIST_MATCHER:
-			result = createComplementList((PComplementListMatcher)model, baseType);
+			result = createComplementList((PComplementListMatcher)model, baseType, ownerModule);
 			break;
 		case FpbtemplatePackage.PVALUE_LIST_MATCHER:
-			result = createValueList((PValueListMatcher)model, baseType);
+			result = createValueList((PValueListMatcher)model, baseType, ownerModule);
 			break;
 		case FpbtemplatePackage.PANY_MATCHER:
-			result = createAny((PAnyMatcher)model, baseType);
+			result = createAny((PAnyMatcher)model, baseType, ownerModule);
 			break;
 		case FpbtemplatePackage.PANY_OR_OMIT_MATCHER:
-			result = createAnyOrOmit((PAnyOrOmitMatcher)model, baseType, parentMatcher);
+			result = createAnyOrOmit(
+					(PAnyOrOmitMatcher)model, baseType, parentMatcher, ownerModule);
 			break;
 		case FpbtemplatePackage.POMIT_MATCHER:
-			result = createOmit((POmitMatcher)model, baseType, parentMatcher);
+			result = createOmit((POmitMatcher)model, baseType, parentMatcher, ownerModule);
 			break;
 		case FpbtemplatePackage.PNOT_USED_MATCHER:
-			result = createNotUsed((PNotUsedMatcher)model, baseType);
+			result = createNotUsed((PNotUsedMatcher)model, baseType, ownerModule);
 			break;
 		case FpbtemplatePackage.PRANGE_MATCHER:
-			result = createRangeMatcher((PRangeMatcher)model, baseType);
+			result = createRangeMatcher((PRangeMatcher)model, baseType, ownerModule);
 			break;
 		case FpbtemplatePackage.PBITSTRING_MATCHER:
-			result = createBitstring((PBitstringMatcher)model, baseType);
+			result = createBitstring((PBitstringMatcher)model, baseType, ownerModule);
 			break;
 		case FpbtemplatePackage.PHEXSTRING_MATCHER:
-			result = createHexstring((PHexstringMatcher)model, baseType);
+			result = createHexstring((PHexstringMatcher)model, baseType, ownerModule);
 			break;
 		case FpbtemplatePackage.POCTETSTRING_MATCHER:
-			result = createOctetstring((POctetstringMatcher)model, baseType);
+			result = createOctetstring((POctetstringMatcher)model, baseType, ownerModule);
 			break;
 		case FpbtemplatePackage.PCHARSTRING_MATCHER:
-			result = createCharstring((PCharstringMatcher)model, baseType);
+			result = createCharstring((PCharstringMatcher)model, baseType, ownerModule);
 			break;
 		case FpbtemplatePackage.PSUB_SET_MATCHER:
-			result = createSubSet((PSubSetMatcher)model, baseType);
+			result = createSubSet((PSubSetMatcher)model, baseType, ownerModule);
 			break;
 		case FpbtemplatePackage.PSUPER_SET_MATCHER:
-			result = createSuperSet((PSuperSetMatcher)model, baseType);
+			result = createSuperSet((PSuperSetMatcher)model, baseType, ownerModule);
 			break;
 		case FpbtemplatePackage.PPRIMITIVE_VALUE_MATCHER:
-			result = createPrimitiveValue((PPrimitiveValueMatcher)model, baseType);
+			result = createPrimitiveValue(
+					(PPrimitiveValueMatcher)model, baseType, ownerModule);
 			break;
 		case FpbtemplatePackage.PCONTAINER_FIELD_MATCHER:
-			result = createContainerField((PContainerFieldMatcher)model, baseType);
+			result = createContainerField(
+					(PContainerFieldMatcher)model, baseType, ownerModule);
 			break;
 		case FpbtemplatePackage.PLIST_FIELD_MATCHER:
-			result = createListField((PListFieldMatcher)model, baseType);
+			result = createListField((PListFieldMatcher)model, baseType, ownerModule);
 			break;
 		case FpbtemplatePackage.PLIST_VALUE_MATCHER:
-			result = createListValue((PListValueMatcher)model, baseType);
+			result = createListValue((PListValueMatcher)model, baseType, ownerModule);
 			break;
 		case FpbtemplatePackage.PTEMPLATE_REF_MATCHER:
-			result = createTemplateRef((PTemplateRefMatcher)model, baseType);
+			result = createTemplateRef((PTemplateRefMatcher)model, baseType, ownerModule);
 			break;
 		case FpbtemplatePackage.PVALUE_REFERENCE_MATCHER:
-			result = createValueRefMatcher((PValueReferenceMatcher)model, baseType);
+			result = createValueRefMatcher(
+					(PValueReferenceMatcher)model, baseType, ownerModule);
 			break;
 		case FpbtemplatePackage.PUNARY_EXPRESSION:
-			result = createUnaryExpression((PUnaryExpression)model, baseType);
+			result = createUnaryExpression((PUnaryExpression)model, baseType, ownerModule);
 			break;
 		case FpbtemplatePackage.PSINGLE_EXPRESSION_MATCHER:
 			result = createSingleExpressionMatcher(
-						(PSingleExpressionMatcher)model, baseType);
+						(PSingleExpressionMatcher)model, baseType, ownerModule);
 			break;
 		default:
 			assert false;
@@ -230,69 +234,72 @@ public class PElementExtFactoryImpl implements PElementExtFactory {
 		return result;
 	}
 	
-	protected PMatcherExt createUnaryExpression(PUnaryExpression model, PTypeElementMeta baseType) {
-		return new PUnaryExpressionExt(model, baseType);
+	protected PMatcherExt createUnaryExpression(PUnaryExpression model, 
+			PTypeElementMeta baseType, PModuleExt ownerModule) {
+		return new PUnaryExpressionExt(model, baseType, ownerModule);
 	}
 	
 	protected PMatcherExt createSingleExpressionMatcher(PSingleExpressionMatcher model, 
-			PTypeElementMeta baseType) {
-		return new PSingleExpressionMatcherExt(model, baseType);
+			PTypeElementMeta baseType, PModuleExt ownerModule) {
+		return new PSingleExpressionMatcherExt(model, baseType, ownerModule);
 	}
 	
 	protected PMatcherExt createComplementList(PComplementListMatcher model, 
-			PTypeElementMeta baseType) {
-		PComplementListMatcherExt matcher = new PComplementListMatcherExt(model, baseType);
+			PTypeElementMeta baseType, PModuleExt ownerModule) {
+		PComplementListMatcherExt matcher = 
+			new PComplementListMatcherExt(model, baseType, ownerModule);
 		return matcher;
 	}
 	
 	protected PMatcherExt createValueList(PValueListMatcher model, 
-			PTypeElementMeta baseType) {
+			PTypeElementMeta baseType, PModuleExt ownerModule) {
 		//ValueList
-		PValueListMatcherExt matcher = new PValueListMatcherExt(model, baseType);
+		PValueListMatcherExt matcher = 
+			new PValueListMatcherExt(model, baseType, ownerModule);
 		return matcher;
 	}
 	
 	protected PMatcherExt createAny(PAnyMatcher model, 
-			PTypeElementMeta baseType) {
-		PAnyMatcherExt matcher = new PAnyMatcherExt(model, baseType);
+			PTypeElementMeta baseType, PModuleExt ownerModule) {
+		PAnyMatcherExt matcher = new PAnyMatcherExt(model, baseType, ownerModule);
 		return matcher;
 	}
 	
 	protected PMatcherExt createAnyOrOmit(PAnyOrOmitMatcher model, 
 			PTypeElementMeta baseType, 
-			PMatcherExt parentMatcher) {
+			PMatcherExt parentMatcher, PModuleExt ownerModule) {
 		assert parentMatcher != null;
 		PAnyOrOmitMatcherExt matcher = new PAnyOrOmitMatcherExt(model, baseType, 
-				parentMatcher.getMatcherMeta());
+				parentMatcher.getMatcherMeta(), ownerModule);
 		return matcher;
 	}
 	
 	protected PMatcherExt createOmit(POmitMatcher model, PTypeElementMeta baseType, 
-			PMatcherExt parentMatcher) {
+			PMatcherExt parentMatcher, PModuleExt ownerModule) {
 		assert parentMatcher != null;
 		POmitMatcherExt matcher = new POmitMatcherExt(model, baseType, 
-				parentMatcher.getMatcherMeta());
+				parentMatcher.getMatcherMeta(), ownerModule);
 		return matcher;
 	}
 
 	protected PMatcherExt createNotUsed(PNotUsedMatcher model, 
-			PTypeElementMeta baseType) {
-		PNotUsedMatcherExt matcher = new PNotUsedMatcherExt(model, baseType);
+			PTypeElementMeta baseType, PModuleExt ownerModule) {
+		PNotUsedMatcherExt matcher = new PNotUsedMatcherExt(model, baseType, ownerModule);
 		return matcher;
 	}
 	
 	protected PMatcherExt createRangeMatcher(PRangeMatcher model, 
-			PTypeElementMeta baseType) {
+			PTypeElementMeta baseType, PModuleExt ownerModule) {
 		PMatcherExt matcher = null;
 		switch(baseType.asTypeMeta().getTypeClass()) {
 		case INTEGER:
-			matcher = new PIntRangeMatcherExt(model, baseType);
+			matcher = new PIntRangeMatcherExt(model, baseType, ownerModule);
 			break;
 		case FLOAT:
-			matcher = new PFloatRangeMatcherExt(model, baseType);
+			matcher = new PFloatRangeMatcherExt(model, baseType, ownerModule);
 			break;
 		case CHARSTRING:
-			matcher = new PCharRangeMatcherExt(model, baseType);
+			matcher = new PCharRangeMatcherExt(model, baseType, ownerModule);
 			break;
 		default:
 			assert false;
@@ -301,52 +308,53 @@ public class PElementExtFactoryImpl implements PElementExtFactory {
 	}
 	
 	protected PMatcherExt createBitstring(PBitstringMatcher model, 
-			PTypeElementMeta baseType) {
-		PMatcherExt matcher = PBitstringMatcherExt.create(model, baseType);
+			PTypeElementMeta baseType, PModuleExt ownerModule) {
+		PMatcherExt matcher = PBitstringMatcherExt.create(model, baseType, ownerModule);
 		return matcher;
 	}
 	
 	protected PMatcherExt createHexstring(PHexstringMatcher model, 
-			PTypeElementMeta baseType) {
-		PMatcherExt matcher = PHexstringMatcherExt.create(model, baseType);
+			PTypeElementMeta baseType, PModuleExt ownerModule) {
+		PMatcherExt matcher = PHexstringMatcherExt.create(model, baseType, ownerModule);
 		return matcher;
 	}
 	
 	protected PMatcherExt createOctetstring(POctetstringMatcher model, 
-			PTypeElementMeta baseType) {
-		PMatcherExt matcher = POctetstringMatcherExt.create(model, baseType);
+			PTypeElementMeta baseType, PModuleExt ownerModule) {
+		PMatcherExt matcher = POctetstringMatcherExt.create(model, baseType, ownerModule);
 		return matcher;
 	}
 	
 	protected PMatcherExt createCharstring(PCharstringMatcher model, 
-			PTypeElementMeta baseType) {
-		PMatcherExt matcher = PCharstringMatcherExt.create(model, baseType);
+			PTypeElementMeta baseType, PModuleExt ownerModule) {
+		PMatcherExt matcher = PCharstringMatcherExt.create(model, baseType, ownerModule);
 		return matcher;
 	}
 	
 	protected PMatcherExt createSubSet(PSubSetMatcher model, 
-			PTypeElementMeta baseType) {
+			PTypeElementMeta baseType, PModuleExt ownerModule) {
 		if (baseType.asTypeMeta().getTypeClass() != TypeClass.SETOF) {
 			throw new IllegalArgumentException();
 		}
-		PSubsetMatcherExt matcher = new PSubsetMatcherExt(model, baseType);
+		PSubsetMatcherExt matcher = new PSubsetMatcherExt(model, baseType, ownerModule);
 		return matcher;
 	}
 	
 	protected PMatcherExt createSuperSet(PSuperSetMatcher model, 
-			PTypeElementMeta baseType) {
+			PTypeElementMeta baseType, PModuleExt ownerModule) {
 		if (baseType.asTypeMeta().getTypeClass() != TypeClass.SETOF) {
 			throw new IllegalArgumentException();
 		}
-		PSupersetMatcherExt matcher = new PSupersetMatcherExt(model, baseType);
+		PSupersetMatcherExt matcher = 
+			new PSupersetMatcherExt(model, baseType, ownerModule);
 		return matcher;
 	}
 	
 	protected PMatcherExt createPrimitiveValue(PPrimitiveValueMatcher model, 
-			PTypeElementMeta baseType) {
+			PTypeElementMeta baseType, PModuleExt ownerModule) {
 		PPrimitiveValueMatcherExt matcher;
 		try {
-			matcher = PPrimitiveValueMatcherExt.create(model, baseType);
+			matcher = PPrimitiveValueMatcherExt.create(model, baseType, ownerModule);
 		} catch (IllegalLiteralFormatException e) {
 			throw new InitMetaException(
 					baseType.getPModule(),
@@ -357,26 +365,28 @@ public class PElementExtFactoryImpl implements PElementExtFactory {
 	}
 	
 	protected PMatcherExt createContainerField(PContainerFieldMatcher model, 
-			PTypeElementMeta baseType) {
-		PContainerFieldMatcherExt matcher = new PContainerFieldMatcherExt(model, baseType);
+			PTypeElementMeta baseType, PModuleExt ownerModule) {
+		PContainerFieldMatcherExt matcher = 
+			new PContainerFieldMatcherExt(model, baseType, ownerModule);
 		return matcher;
 	}
 	
 	protected PMatcherExt createListField(PListFieldMatcher model, 
-			PTypeElementMeta baseType) {
-		PListFieldMatcherExt matcher = new PListFieldMatcherExt(model, baseType);
+			PTypeElementMeta baseType, PModuleExt ownerModule) {
+		PListFieldMatcherExt matcher = 
+			new PListFieldMatcherExt(model, baseType, ownerModule);
 		return matcher;
 	}
 	
 	protected PMatcherExt createListValue(PListValueMatcher model, 
-			PTypeElementMeta baseType) {
+			PTypeElementMeta baseType, PModuleExt ownerModule) {
 		PListValueMatcherBase matcher = null;
 		switch(baseType.asTypeMeta().getTypeClass()) {
 		case RECORDOF:
-			matcher = new PRecordOfMatcherExt(model, baseType);
+			matcher = new PRecordOfMatcherExt(model, baseType, ownerModule);
 			break;
 		case SETOF:
-			matcher = new PSetOfMatcherExt(model, baseType);
+			matcher = new PSetOfMatcherExt(model, baseType, ownerModule);
 			break;
 		default:
 			assert false;
@@ -386,15 +396,17 @@ public class PElementExtFactoryImpl implements PElementExtFactory {
 	}
 
 	protected PMatcherExt createTemplateRef(PTemplateRefMatcher model, 
-			PTypeElementMeta baseType) {
+			PTypeElementMeta baseType, PModuleExt ownerModule) {
 		//Matcher
-		PTemplateRefMatcherExt matcher = new PTemplateRefMatcherExt(model, baseType);
+		PTemplateRefMatcherExt matcher = 
+			new PTemplateRefMatcherExt(model, baseType, ownerModule);
 		return matcher;
 	}
 
 	protected PMatcherExt createValueRefMatcher(PValueReferenceMatcher model, 
-			PTypeElementMeta baseType) {
-		PValueReferenceMatcherExt matcher = new PValueReferenceMatcherExt(model, baseType);
+			PTypeElementMeta baseType, PModuleExt ownerModule) {
+		PValueReferenceMatcherExt matcher = 
+			new PValueReferenceMatcherExt(model, baseType, ownerModule);
 		return matcher;
 	}
 	
@@ -522,7 +534,7 @@ public class PElementExtFactoryImpl implements PElementExtFactory {
 
 	@Override
 	public PExpressionExt createExpression(PTypeExt basetype, PMatcher model) {
-		PMatcherExt matcher = createMatcher(basetype, model, null);
+		PMatcherExt matcher = createMatcher(basetype, model, null, basetype.getPModule());
 		PExpressionExt exp = new PExpressionExtImpl(basetype, matcher);
 		return exp;
 	}

@@ -15,6 +15,7 @@ package com.fineqt.fpb.lib.template.impl;
 
 import java.util.Map;
 
+import com.fineqt.fpb.lib.meta.PModuleExt;
 import com.fineqt.fpb.lib.meta.exception.InitMetaException;
 import com.fineqt.fpb.lib.meta.impl.PElementExtBase;
 import com.fineqt.fpb.lib.model.fpbtemplate.PExpressionMatcher;
@@ -28,8 +29,9 @@ abstract public class PExpressionMatcherExtBase extends PElementExtBase
 implements PMatcherExt {
 	protected PTypeElementMeta matcherMeta;
 
-	public PExpressionMatcherExtBase(PExpressionMatcher pmodel, PTypeElementMeta matcherMeta) {
-		super(pmodel, matcherMeta.asTypeMeta().getPModule());
+	public PExpressionMatcherExtBase(PExpressionMatcher pmodel, PTypeElementMeta matcherMeta,
+			PModuleExt ownerModule) {
+		super(pmodel, ownerModule);
 		this.matcherMeta = matcherMeta;
 	}
 	

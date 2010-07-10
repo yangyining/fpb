@@ -19,6 +19,7 @@ import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 import com.fineqt.fpb.lib.builtin.PCharstringValue;
+import com.fineqt.fpb.lib.meta.PModuleExt;
 import com.fineqt.fpb.lib.meta.exception.InitMetaException;
 import com.fineqt.fpb.lib.meta.exception.MetaException;
 import com.fineqt.fpb.lib.model.fpbtemplate.PCharstringMatcher;
@@ -49,7 +50,8 @@ public class PCharstringMatcherExt extends PSimpleMatcherExtBase {
 	 * @return
 	 * @throws IllegalLiteralFormatException
 	 */
-	public static PCharstringMatcherExt create(PCharstringMatcher model, PTypeElementMeta meta) {
+	public static PCharstringMatcherExt create(PCharstringMatcher model, 
+			PTypeElementMeta meta, PModuleExt ownerModule) {
 		String literal = model.getDesc();
 		Pattern pattern;
 		try {
@@ -58,13 +60,14 @@ public class PCharstringMatcherExt extends PSimpleMatcherExtBase {
 			throw new InitMetaException(meta.getPModule(),
 					MetaException.CODE.ILLEGAL_LITERAL_FORMAT_ERROR, e);
 		}
-		PCharstringMatcherExt matcher = new PCharstringMatcherExt(model, meta, pattern);
+		PCharstringMatcherExt matcher = 
+			new PCharstringMatcherExt(model, meta, pattern, ownerModule);
 		return matcher;
 	}
 		
 	private PCharstringMatcherExt(PCharstringMatcher model, PTypeElementMeta matcherMeta, 
-			Pattern pattern) {
-		super(model, matcherMeta);
+			Pattern pattern, PModuleExt ownerModule) {
+		super(model, matcherMeta, ownerModule);
 		stringPattern = pattern;
 	}
 

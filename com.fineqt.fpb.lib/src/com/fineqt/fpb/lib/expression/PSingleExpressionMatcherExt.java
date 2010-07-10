@@ -15,6 +15,7 @@ package com.fineqt.fpb.lib.expression;
 
 import java.util.Map;
 
+import com.fineqt.fpb.lib.meta.PModuleExt;
 import com.fineqt.fpb.lib.meta.exception.InitMetaException;
 import com.fineqt.fpb.lib.model.fpbtemplate.PSingleExpressionMatcher;
 import com.fineqt.fpb.lib.template.PMatcherExt;
@@ -28,8 +29,8 @@ public class PSingleExpressionMatcherExt extends PSimpleMatcherExtBase {
 	private PMatcherExt expressionMatcher;
 	
 	public PSingleExpressionMatcherExt(PSingleExpressionMatcher pmodel,
-			PTypeElementMeta matcherMeta) {
-		super(pmodel, matcherMeta);
+			PTypeElementMeta matcherMeta, PModuleExt ownerModule) {
+		super(pmodel, matcherMeta, ownerModule);
 	}
 
 	@Override
@@ -58,7 +59,7 @@ public class PSingleExpressionMatcherExt extends PSimpleMatcherExtBase {
 		PSingleExpressionMatcher model = (PSingleExpressionMatcher)pmodel;
 		assert model.getExpression() != null;
 		expressionMatcher = extFactory.createMatcher(matcherMeta, 
-				model.getExpression(), this);
+				model.getExpression(), this, getPModule());
 		assert expressionMatcher != null;
 	}
 

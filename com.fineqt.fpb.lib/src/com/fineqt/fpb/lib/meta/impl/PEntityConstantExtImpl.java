@@ -80,7 +80,7 @@ public class PEntityConstantExtImpl extends PConstantExtBase implements PEntityC
 		if (model.getMatcher() == null) {
 			throw new IllegalArgumentException();
 		}
-		matcher = extFactory.createMatcher(basetype, model.getMatcher(), null);
+		matcher = extFactory.createMatcher(basetype, model.getMatcher(), null, getPModule());
 		//依赖Matcher的初始化
 		matcher.init();
 		//取得常量的值

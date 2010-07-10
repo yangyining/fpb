@@ -19,6 +19,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 import com.fineqt.fpb.lib.builtin.PCharstringValue;
 import com.fineqt.fpb.lib.expression.PExpressionExt;
+import com.fineqt.fpb.lib.meta.PModuleExt;
 import com.fineqt.fpb.lib.meta.exception.InitMetaException;
 import com.fineqt.fpb.lib.meta.exception.MetaException;
 import com.fineqt.fpb.lib.model.fpbmodule.TypeClass;
@@ -36,8 +37,9 @@ public class PCharRangeMatcherExt extends PSimpleMatcherExtBase {
 	//null表示infinity
 	private Character upperBound;
 
-	public PCharRangeMatcherExt(PRangeMatcher model, PTypeElementMeta matcherMeta) {
-		super(model, matcherMeta);
+	public PCharRangeMatcherExt(PRangeMatcher model, PTypeElementMeta matcherMeta, 
+			PModuleExt ownerModule) {
+		super(model, matcherMeta, ownerModule);
 		if (matcherMeta.asTypeMeta().getTypeClass() != TypeClass.CHARSTRING) {
 			throw new IllegalArgumentException();
 		}

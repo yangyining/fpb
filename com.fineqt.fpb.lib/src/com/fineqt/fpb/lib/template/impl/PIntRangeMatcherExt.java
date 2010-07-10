@@ -20,6 +20,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 import com.fineqt.fpb.lib.builtin.PIntegerValue;
 import com.fineqt.fpb.lib.expression.PExpressionExt;
+import com.fineqt.fpb.lib.meta.PModuleExt;
 import com.fineqt.fpb.lib.meta.exception.InitMetaException;
 import com.fineqt.fpb.lib.meta.exception.MetaException;
 import com.fineqt.fpb.lib.model.fpbmodule.TypeClass;
@@ -37,8 +38,9 @@ public class PIntRangeMatcherExt extends PSimpleMatcherExtBase {
 	//null表示infinity
 	private BigInteger upperBound;
 	
-	public PIntRangeMatcherExt(PRangeMatcher model, PTypeElementMeta matcherMeta) {
-		super(model, matcherMeta);
+	public PIntRangeMatcherExt(PRangeMatcher model, PTypeElementMeta matcherMeta, 
+			PModuleExt ownerModule) {
+		super(model, matcherMeta, ownerModule);
 		if (matcherMeta.asTypeMeta().getTypeClass() != TypeClass.INTEGER) {
 			throw new IllegalArgumentException();
 		}

@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.fineqt.fpb.lib.meta.PModuleExt;
 import com.fineqt.fpb.lib.meta.exception.InitMetaException;
 import com.fineqt.fpb.lib.meta.exception.MetaException;
 import com.fineqt.fpb.lib.model.fpbtemplate.PContainerFieldMatcher;
@@ -33,8 +34,9 @@ import com.fineqt.fpb.lib.value.PTypeElementMeta;
 public class PContainerFieldMatcherExt extends PTemplateMatcherExtBase {
 	private List<Item> items = new ArrayList<Item>();
 	
-	public PContainerFieldMatcherExt(PContainerFieldMatcher model, PTypeElementMeta matcherMeta) {
-		super(model, matcherMeta);
+	public PContainerFieldMatcherExt(PContainerFieldMatcher model, 
+			PTypeElementMeta matcherMeta, PModuleExt ownerModule) {
+		super(model, matcherMeta, ownerModule);
 	}
 
 	@Override
@@ -93,7 +95,7 @@ public class PContainerFieldMatcherExt extends PTemplateMatcherExtBase {
 				}
 				//生成Item
 				PMatcherExt itemMatcher = extFactory.createMatcher(fieldMeta, modelItem.getMatcher(), 
-						this);
+						this, getPModule());
 				PContainerFieldMatcherExt.Item item = new PContainerFieldMatcherExt.Item(
 						fieldMeta);
 				item.setMatcher(itemMatcher);

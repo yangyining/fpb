@@ -23,6 +23,7 @@ import com.fineqt.fpb.lib.dump.TopTypeDumpLine;
 import com.fineqt.fpb.lib.meta.PModuleExt;
 import com.fineqt.fpb.lib.meta.context.DumpContext;
 import com.fineqt.fpb.lib.meta.context.EncodeContext;
+import com.fineqt.fpb.lib.meta.exception.MetaException;
 import com.fineqt.fpb.lib.model.fpbmodule.ByteOrder;
 import com.fineqt.fpb.lib.model.fpbmodule.PContainerType;
 import com.fineqt.fpb.lib.model.fpbmodule.PFpbTypeEV;
@@ -100,8 +101,11 @@ implements PRecordSetTypeExt {
 			int selfLength = 0;
 			for (int i = 0; i < rsValue.getFieldSize(); i++) {
 				PValue childValue = rsValue.pGetFieldByID(i);
+				if (childValue == null) {
+					throw new EncodeException(ownerTypeMeta, 
+							MetaException.CODE.NULL_VALUE_ERROR);
+				}
 				PFieldExt fieldMeta = childValue.pFieldMeta();
-				assert childValue != null;
 				assert fieldMeta != null;
 				//字段前置处理
 				preEncodeField(cxt, childValue, selfLength, fieldMeta, byteOrder);

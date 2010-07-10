@@ -15,6 +15,7 @@ package com.fineqt.fpb.lib.template.impl;
 
 import java.util.Map;
 
+import com.fineqt.fpb.lib.meta.PModuleExt;
 import com.fineqt.fpb.lib.model.fpbtemplate.PNotUsedMatcher;
 import com.fineqt.fpb.lib.template.PTemplateParIns;
 import com.fineqt.fpb.lib.template.TemplateMatchingExption;
@@ -23,8 +24,9 @@ import com.fineqt.fpb.lib.value.PTypeElementMeta;
 
 public class PNotUsedMatcherExt extends PSimpleMatcherExtBase {
 	
-	public PNotUsedMatcherExt(PNotUsedMatcher model,PTypeElementMeta matcherMeta) {
-		super(model, matcherMeta);
+	public PNotUsedMatcherExt(PNotUsedMatcher model,PTypeElementMeta matcherMeta, 
+			PModuleExt ownerModule) {
+		super(model, matcherMeta, ownerModule);
 	}
 
 	@Override

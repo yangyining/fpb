@@ -54,7 +54,8 @@ public class PListConstraintExt extends PTypeConstraintExtBase {
 	@Override
 	protected void doInit() throws InitMetaException {
 		PListConstraint model = (PListConstraint)pmodel;
-		matcher = extFactory.createMatcher(targetType, model.getMatcher(), null);
+		matcher = extFactory.createMatcher(targetType, model.getMatcher(), null, 
+				getPModule());
 		//macher只可能是ValueList
 		assert matcher instanceof PValueListMatcherExt;
 		//取得fixedValue

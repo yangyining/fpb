@@ -17,6 +17,7 @@ import java.util.Map;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 
+import com.fineqt.fpb.lib.meta.PModuleExt;
 import com.fineqt.fpb.lib.model.fpbtemplate.PPrimitiveValueMatcher;
 import com.fineqt.fpb.lib.template.PTemplateParIns;
 import com.fineqt.fpb.lib.template.TemplateMatchingExption;
@@ -33,18 +34,18 @@ public class PPrimitiveValueMatcherExt extends PExpressionMatcherExtBase {
 	private PPrimitiveValue constValue;
 	
 	public static PPrimitiveValueMatcherExt create(PPrimitiveValueMatcher pmodel, 
-			PTypeElementMeta meta) {
+			PTypeElementMeta meta, PModuleExt ownerModule) {
 		if (meta.asTypeMeta().isPrimitiveType()) {
 			PPrimitiveValue value = (PPrimitiveValue)meta.asTypeMeta().createEmptyValue();
 			value.setText(pmodel.getValueDesc());
-			return new PPrimitiveValueMatcherExt(pmodel, meta, value);
+			return new PPrimitiveValueMatcherExt(pmodel, meta, value, ownerModule);
 		}
 		throw new IllegalArgumentException(); 
 	}
 	
 	private PPrimitiveValueMatcherExt(PPrimitiveValueMatcher pmodel, PTypeElementMeta meta, 
-			PPrimitiveValue value) {
-		super(pmodel, meta);
+			PPrimitiveValue value, PModuleExt ownerModule) {
+		super(pmodel, meta, ownerModule);
 		this.constValue = value;
 	}
 

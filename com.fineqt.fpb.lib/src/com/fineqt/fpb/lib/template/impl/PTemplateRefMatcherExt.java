@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.fineqt.fpb.lib.meta.PModuleExt;
 import com.fineqt.fpb.lib.meta.exception.InitMetaException;
 import com.fineqt.fpb.lib.meta.exception.MetaException;
 import com.fineqt.fpb.lib.model.fpbtemplate.PTemplateRefMatcher;
@@ -35,8 +36,9 @@ public class PTemplateRefMatcherExt extends PSimpleMatcherExtBase {
 	private PTemplateExt templateMeta;
 	private List<ParameterCreator> parCreators = new ArrayList<ParameterCreator>();
 	
-	public PTemplateRefMatcherExt(PTemplateRefMatcher model, PTypeElementMeta matcherMeta) {
-		super(model, matcherMeta);
+	public PTemplateRefMatcherExt(PTemplateRefMatcher model, PTypeElementMeta matcherMeta,
+			PModuleExt ownerModule) {
+		super(model, matcherMeta, ownerModule);
 	}
 
 	@Override
@@ -90,7 +92,7 @@ public class PTemplateRefMatcherExt extends PSimpleMatcherExtBase {
 			PTemplateParMeta parMeta = templateMeta.getParMetas().get(i);
 			assert parModel.getMatcher() != null;
 			PMatcherExt valueMatcher = extFactory.createMatcher(getMatcherMeta(), 
-					parModel.getMatcher(), this);
+					parModel.getMatcher(), this, getPModule());
 			PTemplateRefMatcherExt.ParameterCreator creator;
 			if (parMeta.isTemplate()) {
 				creator = new TemplateParameterCreator(parMeta, valueMatcher);

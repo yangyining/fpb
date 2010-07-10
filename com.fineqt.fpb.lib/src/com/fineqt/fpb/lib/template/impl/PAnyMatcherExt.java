@@ -17,6 +17,7 @@ import java.util.Map;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 
+import com.fineqt.fpb.lib.meta.PModuleExt;
 import com.fineqt.fpb.lib.model.fpbtemplate.PAnyMatcher;
 import com.fineqt.fpb.lib.template.NotSingleValueException;
 import com.fineqt.fpb.lib.template.PTemplateParIns;
@@ -26,8 +27,9 @@ import com.fineqt.fpb.lib.value.PTypeElementMeta;
 
 public class PAnyMatcherExt extends PSimpleMatcherExtBase {
 
-	public PAnyMatcherExt(PAnyMatcher model, PTypeElementMeta matcherMeta) {
-		super(model, matcherMeta);
+	public PAnyMatcherExt(PAnyMatcher model, PTypeElementMeta matcherMeta, 
+			PModuleExt ownerModule) {
+		super(model, matcherMeta, ownerModule);
 	}
 
 	@Override

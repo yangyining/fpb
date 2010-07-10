@@ -68,7 +68,7 @@ public class PValueReferenceArgumentExt extends PValueArgumentExtBase {
 		}
 		//valueReference
 		refValueMatcher = PElementExtFactory.INSTANCE.createMatcher(refType, 
-				argModel.getValueRef(), null);
+				argModel.getValueRef(), null, getPModule());
 		assert refValueMatcher != null;
 		//父方法
 		super.doInit();

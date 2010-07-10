@@ -82,7 +82,7 @@ public interface PElementExtFactory {
 	 * @return
 	 */
 	PMatcherExt createMatcher(PTypeElementMeta baseType, PMatcher model, 
-			PMatcherExt parentMatcher) 
+			PMatcherExt parentMatcher, PModuleExt ownerModule) 
 	throws InitMetaException;
 	/**
 	 * 生成类型限制条件定义对象，并初始化。

@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.fineqt.fpb.lib.builtin.PStringValue;
+import com.fineqt.fpb.lib.meta.PModuleExt;
 import com.fineqt.fpb.lib.model.fpbtemplate.PSimpleMatcher;
 import com.fineqt.fpb.lib.template.NotSingleValueException;
 import com.fineqt.fpb.lib.template.PTemplateParIns;
@@ -32,8 +33,9 @@ public class PStringMatcherExtBase extends PSimpleMatcherExtBase {
 	//Value和Any部分的固定长度（单位成员的个数）
 	protected int fixedPartLength;
 	
-	public PStringMatcherExtBase(PSimpleMatcher model, PTypeElementMeta matcherMeta) {
-		super(model, matcherMeta);
+	public PStringMatcherExtBase(PSimpleMatcher model, PTypeElementMeta matcherMeta, 
+			PModuleExt ownerModule) {
+		super(model, matcherMeta, ownerModule);
 	}
 
 	@Override

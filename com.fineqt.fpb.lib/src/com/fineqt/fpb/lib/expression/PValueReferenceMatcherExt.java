@@ -19,6 +19,7 @@ import java.util.Map;
 
 import com.fineqt.fpb.lib.builtin.PIntegerValue;
 import com.fineqt.fpb.lib.meta.PConstantExt;
+import com.fineqt.fpb.lib.meta.PModuleExt;
 import com.fineqt.fpb.lib.meta.PModuleParExt;
 import com.fineqt.fpb.lib.meta.exception.InitMetaException;
 import com.fineqt.fpb.lib.meta.exception.MetaException;
@@ -43,8 +44,9 @@ public class PValueReferenceMatcherExt extends PExpressionMatcherExtBase {
 	private PConstantExt refConstant;
 	private PModuleParExt refModulePar;
 	
-	public PValueReferenceMatcherExt(PValueReferenceMatcher model, PTypeElementMeta matcherMeta) {
-		super(model, matcherMeta);
+	public PValueReferenceMatcherExt(PValueReferenceMatcher model, 
+			PTypeElementMeta matcherMeta, PModuleExt ownerModule) {
+		super(model, matcherMeta, ownerModule);
 		refName = model.getRefName();
 		refType = model.getRefType();
 		if (model.getFragments().size() > 0) {
@@ -53,7 +55,8 @@ public class PValueReferenceMatcherExt extends PExpressionMatcherExtBase {
 				if (frag.getFieldName() != null) {
 					fragments.add(new FieldFragment(frag.getFieldName()));
 				} else if (frag.getIndexMatcher() != null){
-					fragments.add(new IndexFragment(this, frag.getIndexMatcher()));
+					fragments.add(new IndexFragment(this, frag.getIndexMatcher(), 
+							ownerModule));
 				} else {
 					assert false;
 				}
@@ -164,6 +167,7 @@ public class PValueReferenceMatcherExt extends PExpressionMatcherExtBase {
 	@Override
 	protected void doInit() throws InitMetaException {
 		super.doInit();
+		//取得顶层
 		//依赖元素的初始化
 		switch(refType) {
 		case CONSTANT:
@@ -206,9 +210,10 @@ public class PValueReferenceMatcherExt extends PExpressionMatcherExtBase {
 	private static class IndexFragment extends FragmentExt {
 		private PMatcherExt indexMatcher;
 		
-		public IndexFragment(PValueReferenceMatcherExt owner, PMatcher matcher) {
+		public IndexFragment(PValueReferenceMatcherExt owner, PMatcher matcher, 
+				PModuleExt ownerModule) {
 			indexMatcher = extFactory.createMatcher(
-					owner.getPModule().getInteger(), matcher, null);
+					owner.getPModule().getInteger(), matcher, null, ownerModule);
 		}
 
 		@Override

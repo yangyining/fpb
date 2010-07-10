@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.fineqt.fpb.lib.meta.PModuleExt;
 import com.fineqt.fpb.lib.meta.exception.InitMetaException;
 import com.fineqt.fpb.lib.model.fpbtemplate.PListValueMatcher;
 import com.fineqt.fpb.lib.model.fpbtemplate.PMatcher;
@@ -36,8 +37,9 @@ abstract public class PListValueMatcherBase extends PTemplateMatcherExtBase {
 	//Value和Any部分的固定长度（单位成员的个数）
 	protected int fixedPartLength;
 
-	public PListValueMatcherBase(PListValueMatcher model, PTypeElementMeta matcherMeta) {
-		super(model, matcherMeta);
+	public PListValueMatcherBase(PListValueMatcher model, PTypeElementMeta matcherMeta, 
+			PModuleExt ownerModule) {
+		super(model, matcherMeta, ownerModule);
 	}
 
 	@Override
@@ -87,7 +89,7 @@ abstract public class PListValueMatcherBase extends PTemplateMatcherExtBase {
 			for (PMatcher modelItem : model.getItems()) {
 				PListTypeExt listType = (PListTypeExt)matcherMeta.asTypeMeta().getRootType();
 				PMatcherExt itemMatcher = extFactory.createMatcher(
-						listType.getItemType(), modelItem, this);
+						listType.getItemType(), modelItem, this, getPModule());
 				PElementPattern pattern;
 				if (itemMatcher instanceof PAnyMatcherExt) {
 					pattern = new PElementPattern.PAnyElementPattern();

@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.fineqt.fpb.lib.builtin.PIntegerValue;
+import com.fineqt.fpb.lib.meta.PModuleExt;
 import com.fineqt.fpb.lib.meta.exception.InitMetaException;
 import com.fineqt.fpb.lib.model.fpbmodule.TypeClass;
 import com.fineqt.fpb.lib.model.fpbtemplate.PListFieldMatcher;
@@ -35,8 +36,9 @@ public class PListFieldMatcherExt extends PTemplateMatcherExtBase {
 	private List<Item> items = new ArrayList<Item>();
 	protected LengthRestriction lengthRestriction;
 	
-	public PListFieldMatcherExt(PListFieldMatcher model, PTypeElementMeta matcherMeta) {
-		super(model, matcherMeta);
+	public PListFieldMatcherExt(PListFieldMatcher model, PTypeElementMeta matcherMeta, 
+			PModuleExt ownerModule) {
+		super(model, matcherMeta, ownerModule);
 	}
 	
 	@Override
@@ -137,7 +139,7 @@ public class PListFieldMatcherExt extends PTemplateMatcherExtBase {
 				//生成Item
 				PMatcherExt itemMatcher = extFactory.createMatcher(
 						listType.getItemType(), modelItem.getMatcher(), 
-						this);
+						this, getPModule());
 				Item item;
 				//静态Index
 				if (modelItem.getIndexMatcher() == null) {
@@ -146,7 +148,7 @@ public class PListFieldMatcherExt extends PTemplateMatcherExtBase {
 				} else {
 					PMatcherExt indexMatcher = extFactory.createMatcher(
 							getPModule().getInteger(), 
-							modelItem.getIndexMatcher(), null);
+							modelItem.getIndexMatcher(), null, getPModule());
 					item = new DynamicItem(indexMatcher);
 				}
 				item.setMatcher(itemMatcher);

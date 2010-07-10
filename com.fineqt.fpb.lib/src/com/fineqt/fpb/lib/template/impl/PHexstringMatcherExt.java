@@ -15,6 +15,7 @@ package com.fineqt.fpb.lib.template.impl;
 
 import com.fineqt.fpb.lib.builtin.BuiltinFactory;
 import com.fineqt.fpb.lib.builtin.PHexstringValue;
+import com.fineqt.fpb.lib.meta.PModuleExt;
 import com.fineqt.fpb.lib.meta.exception.InitMetaException;
 import com.fineqt.fpb.lib.meta.exception.MetaException;
 import com.fineqt.fpb.lib.model.fpbmodule.TypeClass;
@@ -31,9 +32,10 @@ public class PHexstringMatcherExt extends PStringMatcherExtBase {
 	 * @return
 	 * @throws IllegalLiteralFormatException
 	 */
-	public static PHexstringMatcherExt create(PHexstringMatcher model, PTypeElementMeta meta) {
+	public static PHexstringMatcherExt create(PHexstringMatcher model, 
+			PTypeElementMeta meta, PModuleExt ownerModule) {
 		String literal = model.getDesc();
-		PHexstringMatcherExt matcher = new PHexstringMatcherExt(model, meta);
+		PHexstringMatcherExt matcher = new PHexstringMatcherExt(model, meta, ownerModule);
 		StringBuilder partBuf = null;
 		//Parse Literal
 		for (int i = 0; i < literal.length(); i++) {
@@ -86,8 +88,9 @@ public class PHexstringMatcherExt extends PStringMatcherExtBase {
 		matcher.getElements().add(pattern);
 	}
 	
-	private PHexstringMatcherExt(PHexstringMatcher model, PTypeElementMeta matcherMeta) {
-		super(model, matcherMeta);
+	private PHexstringMatcherExt(PHexstringMatcher model, PTypeElementMeta matcherMeta, 
+			PModuleExt ownerModule) {
+		super(model, matcherMeta, ownerModule);
 		if (matcherMeta.asTypeMeta().getTypeClass() != TypeClass.HEXSTRING) {
 			throw new IllegalArgumentException();
 		}

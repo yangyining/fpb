@@ -51,14 +51,14 @@ public class ElementExtFactoryTest extends TestCase {
 		PPrimitiveValueMatcher pvMatcherM = mfactory.createPPrimitiveValueMatcher();
 		pvMatcherM.setValueDesc("123");
 		PPrimitiveValueMatcherExt pvMatcher = (PPrimitiveValueMatcherExt)factory.createMatcher(
-				module.getInteger(), pvMatcherM, null);
+				module.getInteger(), pvMatcherM, null, module);
 		assertEquals(TypeClass.INTEGER, pvMatcher.getConstValue().pTypeMeta().getTypeClass());
 		assertEquals("123", pvMatcher.getConstValue().getText());
 		//bitstring
 		PBitstringMatcher bsMatcherM = mfactory.createPBitstringMatcher();
 		bsMatcherM.setDesc("1?0*");
 		PBitstringMatcherExt bstrMatcher = (PBitstringMatcherExt)factory.createMatcher(
-				module.getBitstring(), bsMatcherM, null);
+				module.getBitstring(), bsMatcherM, null, module);
 		assertEquals(4, bstrMatcher.getElements().size());
 		assertEquals(PElementPattern.Type.Value, bstrMatcher.getElements().get(0).getType());
 		assertEquals(PElementPattern.Type.Any, bstrMatcher.getElements().get(1).getType());
@@ -69,13 +69,13 @@ public class ElementExtFactoryTest extends TestCase {
 		rangeMatcherM.setLowerBound(createPrmMatcher("100"));
 		rangeMatcherM.setUpperBound(createPrmMatcher("999"));
 		PIntRangeMatcherExt rangeMatcher = (PIntRangeMatcherExt)factory.createMatcher(
-				module.getInteger(), rangeMatcherM, null);
+				module.getInteger(), rangeMatcherM, null, module);
 		assertEquals(100, rangeMatcher.getLowerBound().intValue());
 		assertEquals(999, rangeMatcher.getUpperBound().intValue());
 		//any
 		PAnyMatcher anyMatcherM = mfactory.createPAnyMatcher();
 		PAnyMatcherExt anyMatcher = (PAnyMatcherExt)factory.createMatcher(
-				module.getInteger(), anyMatcherM, null);
+				module.getInteger(), anyMatcherM, null, module);
 		assertNotNull(anyMatcher);
 		//complement list(int 1 3-4)
 		PComplementListMatcher clMatcherM = mfactory.createPComplementListMatcher();
@@ -85,7 +85,7 @@ public class ElementExtFactoryTest extends TestCase {
 		clItem2M.setUpperBound(createPrmMatcher("4"));		
 		clMatcherM.getItems().add(clItem2M);
 		PComplementListMatcherExt clMatcher = (PComplementListMatcherExt)factory.createMatcher(
-				module.getInteger(), clMatcherM, null);
+				module.getInteger(), clMatcherM, null, module);
 		assertEquals(2, clMatcher.getItems().size());
 		assertTrue(clMatcher.getItems().get(0) instanceof PSingleExpressionMatcherExt);
 		assertTrue(clMatcher.getItems().get(1) instanceof PIntRangeMatcherExt);
@@ -97,7 +97,7 @@ public class ElementExtFactoryTest extends TestCase {
 		valItem2M.setUpperBound(createPrmMatcher("4"));		
 		valMatcherM.getItems().add(valItem2M);
 		PValueListMatcherExt valMatcher = (PValueListMatcherExt)factory.createMatcher(
-				module.getInteger(), valMatcherM, null);
+				module.getInteger(), valMatcherM, null, module);
 		assertEquals(2, valMatcher.getItems().size());
 		assertTrue(valMatcher.getItems().get(0) instanceof PSingleExpressionMatcherExt);
 		assertTrue(valMatcher.getItems().get(1) instanceof PIntRangeMatcherExt);
@@ -106,7 +106,7 @@ public class ElementExtFactoryTest extends TestCase {
 		ssMatcherM.getItems().add(createPrmMatcher("2"));
 		ssMatcherM.getItems().add(createPrmMatcher("3"));
 		PSupersetMatcherExt ssMatcher = (PSupersetMatcherExt)factory.createMatcher(
-				module.getUint16Set(), ssMatcherM, null);
+				module.getUint16Set(), ssMatcherM, null, module);
 		ssMatcher.init();
 		assertEquals(2, ssMatcher.getItems().size());
 		assertEquals("2", ((PPrimitiveValue)ssMatcher.getItems().get(0)).getText());
@@ -123,7 +123,7 @@ public class ElementExtFactoryTest extends TestCase {
 		cfItem2M.setMatcher(cfItem2MathcerM);
 		cfMatcherM.getItems().add(cfItem2M);
 		PContainerFieldMatcherExt cfMatcher = (PContainerFieldMatcherExt)factory.createMatcher(
-				module.getDataLengthHyp(), cfMatcherM, null);
+				module.getDataLengthHyp(), cfMatcherM, null, module);
 		assertEquals(2, cfMatcher.getItems().size());
 		assertEquals("totalLength", cfMatcher.getItems().get(0).getFieldMeta().getFieldName());
 		assertTrue(cfMatcher.getItems().get(0).getMatcher() instanceof PSingleExpressionMatcherExt);
@@ -141,7 +141,7 @@ public class ElementExtFactoryTest extends TestCase {
 		lfItem2M.setMatcher(lfItem2MathcerM);
 		lfMatcherM.getItems().add(lfItem2M);
 		PListFieldMatcherExt lfMatcher = (PListFieldMatcherExt)factory.createMatcher(
-				module.getUint16List(), lfMatcherM, null);
+				module.getUint16List(), lfMatcherM, null, module);
 		assertEquals(2, cfMatcher.getItems().size());
 		assertEquals(0, lfMatcher.getItems().get(0).getIndex(null));
 		assertTrue(lfMatcher.getItems().get(0).getMatcher() instanceof PSingleExpressionMatcherExt);
@@ -157,7 +157,7 @@ public class ElementExtFactoryTest extends TestCase {
 		PAnyOrOmitMatcher roItem3M = mfactory.createPAnyOrOmitMatcher();
 		roMatcherM.getItems().add(roItem3M);
 		PRecordOfMatcherExt roMatcher = (PRecordOfMatcherExt)factory.createMatcher(
-				module.getUint16List(), roMatcherM, null); 
+				module.getUint16List(), roMatcherM, null, module); 
 		assertEquals(3, roMatcher.getElements().size());
 		assertEquals(PElementPattern.Type.Value, roMatcher.getElements().get(0).getType());
 		assertEquals(PElementPattern.Type.Any, roMatcher.getElements().get(1).getType());
@@ -172,7 +172,7 @@ public class ElementExtFactoryTest extends TestCase {
 		PAnyOrOmitMatcher soItem3M = mfactory.createPAnyOrOmitMatcher();
 		soMatcherM.getItems().add(soItem3M);
 		PSetOfMatcherExt soMatcher = (PSetOfMatcherExt)factory.createMatcher(
-				module.getUint16Set(), soMatcherM, null); 
+				module.getUint16Set(), soMatcherM, null, module); 
 		assertEquals(3, soMatcher.getElements().size());
 		assertEquals(PElementPattern.Type.Value, soMatcher.getElements().get(0).getType());
 		assertEquals(PElementPattern.Type.Any, soMatcher.getElements().get(1).getType());
@@ -182,7 +182,7 @@ public class ElementExtFactoryTest extends TestCase {
 		tvrMathcerM.setRefName("par1");
 		tvrMathcerM.setRefType(ValueReferenceType.TEMPLATEPAR);
 		PValueReferenceMatcherExt tprMathcer = (PValueReferenceMatcherExt)factory.createMatcher(
-				module.getInteger(), tvrMathcerM, null);
+				module.getInteger(), tvrMathcerM, null, module);
 		assertEquals("par1", tprMathcer.getRefName());
 
 		//Template reference(省略)

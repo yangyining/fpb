@@ -16,6 +16,7 @@ package com.fineqt.fpb.lib.template.impl;
 import java.math.BigInteger;
 import java.util.Map;
 
+import com.fineqt.fpb.lib.meta.PModuleExt;
 import com.fineqt.fpb.lib.meta.exception.InitMetaException;
 import com.fineqt.fpb.lib.meta.exception.MetaException;
 import com.fineqt.fpb.lib.meta.impl.PElementExtBase;
@@ -33,8 +34,9 @@ implements PTemplateMatcherExt {
 	protected PTypeElementMeta matcherMeta;
 	private boolean ifPresent;
 	
-	public PTemplateMatcherExtBase(PTemplateMatcher pmodel, PTypeElementMeta matcherMeta) {
-		super(pmodel, matcherMeta.asTypeMeta().getPModule());
+	public PTemplateMatcherExtBase(PTemplateMatcher pmodel, PTypeElementMeta matcherMeta, 
+			PModuleExt ownerModule) {
+		super(pmodel, ownerModule);
 		this.matcherMeta = matcherMeta;
 	}
 

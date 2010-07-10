@@ -15,6 +15,7 @@ package com.fineqt.fpb.lib.template.impl;
 
 import java.util.Map;
 
+import com.fineqt.fpb.lib.meta.PModuleExt;
 import com.fineqt.fpb.lib.model.fpbtemplate.PListValueMatcher;
 import com.fineqt.fpb.lib.template.PTemplateParIns;
 import com.fineqt.fpb.lib.template.TemplateMatchingExption;
@@ -24,8 +25,9 @@ import com.fineqt.fpb.lib.value.PTypeElementMeta;
 
 public class PRecordOfMatcherExt extends PListValueMatcherBase {
 
-	public PRecordOfMatcherExt(PListValueMatcher model, PTypeElementMeta matcherMeta) {
-		super(model, matcherMeta);
+	public PRecordOfMatcherExt(PListValueMatcher model, PTypeElementMeta matcherMeta, 
+			PModuleExt ownerModule) {
+		super(model, matcherMeta, ownerModule);
 	}
 
 	@Override

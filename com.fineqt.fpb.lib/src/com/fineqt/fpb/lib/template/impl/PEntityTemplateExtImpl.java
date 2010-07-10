@@ -174,7 +174,8 @@ implements PEntityTemplateExt {
 				getParMetas().add(meta);
 			}
 			//Matcher
-			matcher = extFactory.createMatcher(basetype, model.getMatcher(), null);
+			matcher = extFactory.createMatcher(
+					basetype, model.getMatcher(), null, getPModule());
 			//依赖Matcher的初始化
 			if (matcher != null) {
 				matcher.init();

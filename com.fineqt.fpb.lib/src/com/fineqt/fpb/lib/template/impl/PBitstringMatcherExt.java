@@ -15,6 +15,7 @@ package com.fineqt.fpb.lib.template.impl;
 
 import com.fineqt.fpb.lib.builtin.BuiltinFactory;
 import com.fineqt.fpb.lib.builtin.PBitstringValue;
+import com.fineqt.fpb.lib.meta.PModuleExt;
 import com.fineqt.fpb.lib.meta.exception.InitMetaException;
 import com.fineqt.fpb.lib.meta.exception.MetaException;
 import com.fineqt.fpb.lib.model.fpbmodule.TypeClass;
@@ -30,9 +31,10 @@ public class PBitstringMatcherExt extends PStringMatcherExtBase {
 	 * @return
 	 * @throws IllegalLiteralFormatException
 	 */
-	public static PBitstringMatcherExt create(PBitstringMatcher model, PTypeElementMeta meta) {
+	public static PBitstringMatcherExt create(PBitstringMatcher model, 
+			PTypeElementMeta meta, PModuleExt ownerModule) {
 		String literal = model.getDesc();
-		PBitstringMatcherExt matcher = new PBitstringMatcherExt(model, meta);
+		PBitstringMatcherExt matcher = new PBitstringMatcherExt(model, meta, ownerModule);
 		StringBuilder partBuf = null;
 		//Parse Literal
 		for (int i = 0; i < literal.length(); i++) {
@@ -83,8 +85,9 @@ public class PBitstringMatcherExt extends PStringMatcherExtBase {
 		matcher.getElements().add(pattern);
 	}
 	
-	private PBitstringMatcherExt(PBitstringMatcher model, PTypeElementMeta matcherMeta) {
-		super(model, matcherMeta);
+	private PBitstringMatcherExt(PBitstringMatcher model, PTypeElementMeta matcherMeta, 
+			PModuleExt ownerModule) {
+		super(model, matcherMeta, ownerModule);
 		if (matcherMeta.asTypeMeta().getTypeClass() != TypeClass.BITSTRING) {
 			throw new IllegalArgumentException();
 		}

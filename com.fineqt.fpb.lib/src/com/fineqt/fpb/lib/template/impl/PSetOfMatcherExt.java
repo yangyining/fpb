@@ -18,6 +18,7 @@ import java.util.BitSet;
 import java.util.List;
 import java.util.Map;
 
+import com.fineqt.fpb.lib.meta.PModuleExt;
 import com.fineqt.fpb.lib.model.fpbtemplate.PListValueMatcher;
 import com.fineqt.fpb.lib.template.PTemplateParIns;
 import com.fineqt.fpb.lib.template.TemplateMatchingExption;
@@ -29,8 +30,9 @@ public class PSetOfMatcherExt extends PListValueMatcherBase {
 	private List<PElementPattern.PListValueElementPattern> valueElements = 
 		new ArrayList<PElementPattern.PListValueElementPattern>();
 	
-	public PSetOfMatcherExt(PListValueMatcher model, PTypeElementMeta matcherMeta) {
-		super(model, matcherMeta);
+	public PSetOfMatcherExt(PListValueMatcher model, PTypeElementMeta matcherMeta, 
+			PModuleExt ownerModule) {
+		super(model, matcherMeta, ownerModule);
 	}
 
 	@Override
