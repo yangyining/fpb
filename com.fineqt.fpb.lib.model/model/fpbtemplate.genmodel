@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/com.fineqt.fpb.lib.model/src"
+    modelPluginID="com.fineqt.fpb.lib.model" modelName="Fpbtemplate" importerID="org.eclipse.xsd.ecore.importer"
+    complianceLevel="6.0" copyrightFields="false" usedGenPackages="fpbcommon.genmodel#//fpbcommon">
+  <foreignModel>../../com.fineqt.fpb.design/schemas/fpbtemplate.xsd</foreignModel>
+  <genPackages prefix="Fpbtemplate" basePackage="com.fineqt.fpb.lib.model" resource="XML"
+      disposableProviderFactory="true" ecorePackage="fpbtemplate.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="fpbtemplate.ecore#//ValueReferenceType">
+      <genEnumLiterals ecoreEnumLiteral="fpbtemplate.ecore#//ValueReferenceType/CONSTANT"/>
+      <genEnumLiterals ecoreEnumLiteral="fpbtemplate.ecore#//ValueReferenceType/MODULEPAR"/>
+      <genEnumLiterals ecoreEnumLiteral="fpbtemplate.ecore#//ValueReferenceType/TEMPLATEPAR"/>
+    </genEnums>
+    <genDataTypes ecoreDataType="fpbtemplate.ecore#//ValueReferenceTypeObject"/>
+    <genClasses ecoreClass="fpbtemplate.ecore#//PAnyMatcher"/>
+    <genClasses ecoreClass="fpbtemplate.ecore#//PAnyOrOmitMatcher"/>
+    <genClasses ecoreClass="fpbtemplate.ecore#//PBitstringMatcher">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbtemplate.ecore#//PBitstringMatcher/desc"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbtemplate.ecore#//PCharstringMatcher">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbtemplate.ecore#//PCharstringMatcher/desc"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbtemplate.ecore#//PComplementListMatcher">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbtemplate.ecore#//PComplementListMatcher/items"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbtemplate.ecore#//PContainerFieldMatcher">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbtemplate.ecore#//PContainerFieldMatcher/items"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbtemplate.ecore#//PContainerFieldMatcherItem">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbtemplate.ecore#//PContainerFieldMatcherItem/matcher"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbtemplate.ecore#//PContainerFieldMatcherItem/fieldName"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbtemplate.ecore#//PEntityTemplate">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbtemplate.ecore#//PEntityTemplate/parameters"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbtemplate.ecore#//PEntityTemplate/matcher"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbtemplate.ecore#//PEntityTemplate/basetype"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="fpbtemplate.ecore#//PExpressionMatcher"/>
+    <genClasses ecoreClass="fpbtemplate.ecore#//PHexstringMatcher">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbtemplate.ecore#//PHexstringMatcher/desc"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbtemplate.ecore#//PImportTemplate">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbtemplate.ecore#//PImportTemplate/importedModuleName"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference fpbtemplate.ecore#//PImportTemplate/importedTemplate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbtemplate.ecore#//PImportTemplate/importedTemplateName"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbtemplate.ecore#//PListFieldMatcher">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbtemplate.ecore#//PListFieldMatcher/items"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbtemplate.ecore#//PListFieldMatcherItem">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbtemplate.ecore#//PListFieldMatcherItem/matcher"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbtemplate.ecore#//PListFieldMatcherItem/indexMatcher"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbtemplate.ecore#//PListFieldMatcherItem/index"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbtemplate.ecore#//PListValueMatcher">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbtemplate.ecore#//PListValueMatcher/items"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="fpbtemplate.ecore#//PMatcher"/>
+    <genClasses ecoreClass="fpbtemplate.ecore#//PNotUsedMatcher"/>
+    <genClasses ecoreClass="fpbtemplate.ecore#//POctetstringMatcher">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbtemplate.ecore#//POctetstringMatcher/desc"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbtemplate.ecore#//POmitMatcher"/>
+    <genClasses ecoreClass="fpbtemplate.ecore#//PPrimitiveValueMatcher">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbtemplate.ecore#//PPrimitiveValueMatcher/valueDesc"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbtemplate.ecore#//PRangeMatcher">
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference fpbtemplate.ecore#//PRangeMatcher/lowerBound"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference fpbtemplate.ecore#//PRangeMatcher/upperBound"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="fpbtemplate.ecore#//PSimpleMatcher"/>
+    <genClasses image="false" ecoreClass="fpbtemplate.ecore#//PSingleExpressionMatcher">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbtemplate.ecore#//PSingleExpressionMatcher/expression"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbtemplate.ecore#//PSubSetMatcher">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbtemplate.ecore#//PSubSetMatcher/items"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbtemplate.ecore#//PSuperSetMatcher">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbtemplate.ecore#//PSuperSetMatcher/items"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbtemplate.ecore#//PTemplate">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbtemplate.ecore#//PTemplate/templateID"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="fpbtemplate.ecore#//PTemplateMatcher">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbtemplate.ecore#//PTemplateMatcher/ifPresent"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbtemplate.ecore#//PTemplateMatcher/lengthRestriction"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbtemplate.ecore#//PTemplatePar">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbtemplate.ecore#//PTemplatePar/basetype"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbtemplate.ecore#//PTemplatePar/template"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbtemplate.ecore#//PTemplateRefMatcher">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbtemplate.ecore#//PTemplateRefMatcher/parameters"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbtemplate.ecore#//PTemplateRefMatcher/externalTemplateName"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbtemplate.ecore#//PTemplateRefMatcherPar">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbtemplate.ecore#//PTemplateRefMatcherPar/matcher"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbtemplate.ecore#//PUnaryExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbtemplate.ecore#//PUnaryExpression/primary"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbtemplate.ecore#//PUnaryExpression/operator"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbtemplate.ecore#//PValueListMatcher">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbtemplate.ecore#//PValueListMatcher/items"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbtemplate.ecore#//PValueReferenceFragment">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbtemplate.ecore#//PValueReferenceFragment/fieldName"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbtemplate.ecore#//PValueReferenceFragment/indexMatcher"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbtemplate.ecore#//PValueReferenceMatcher">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbtemplate.ecore#//PValueReferenceMatcher/fragments"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbtemplate.ecore#//PValueReferenceMatcher/refName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbtemplate.ecore#//PValueReferenceMatcher/refType"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

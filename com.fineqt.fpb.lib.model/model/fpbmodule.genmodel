@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Fine Packet Builder, copyright (C) 2007-2009 fineqt.com&#xD;&#xA;&#xD;&#xA;This program is free software; you can redistribute it and/or&#xD;&#xA;modify it under the terms of the GNU General Public License&#xD;&#xA;as published by the Free Software Foundation; either version 2&#xD;&#xA;of the License, or (at your option) any later version.&#xD;&#xA;&#xD;&#xA;This program is distributed in the hope that it will be useful, &#xD;&#xA;but WITHOUT ANY WARRANTY; without even the implied warranty of &#xD;&#xA;MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the &#xD;&#xA;GNU General Public License for more details at gnu.org."
+    modelDirectory="/com.fineqt.fpb.lib.model/src" modelPluginID="com.fineqt.fpb.lib.model"
+    modelName="Fpbmodule" importerID="org.eclipse.xsd.ecore.importer" complianceLevel="6.0"
+    copyrightFields="false" usedGenPackages="fpbcommon.genmodel#//fpbcommon fpbtemplate.genmodel#//fpbtemplate">
+  <foreignModel>../../com.fineqt.fpb.design/schemas/fpbmodule.xsd</foreignModel>
+  <genPackages prefix="Fpbmodule" basePackage="com.fineqt.fpb.lib.model" resource="XML"
+      disposableProviderFactory="true" ecorePackage="fpbmodule.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="fpbmodule.ecore#//ByteOrder">
+      <genEnumLiterals ecoreEnumLiteral="fpbmodule.ecore#//ByteOrder/NONE"/>
+      <genEnumLiterals ecoreEnumLiteral="fpbmodule.ecore#//ByteOrder/LITTLEENDIAN"/>
+      <genEnumLiterals ecoreEnumLiteral="fpbmodule.ecore#//ByteOrder/BIGENDIAN"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="fpbmodule.ecore#//EncodingType">
+      <genEnumLiterals ecoreEnumLiteral="fpbmodule.ecore#//EncodingType/NONE"/>
+      <genEnumLiterals ecoreEnumLiteral="fpbmodule.ecore#//EncodingType/FPB"/>
+      <genEnumLiterals ecoreEnumLiteral="fpbmodule.ecore#//EncodingType/ASN1"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="fpbmodule.ecore#//FlagFieldType">
+      <genEnumLiterals ecoreEnumLiteral="fpbmodule.ecore#//FlagFieldType/NONE"/>
+      <genEnumLiterals ecoreEnumLiteral="fpbmodule.ecore#//FlagFieldType/OCTET"/>
+      <genEnumLiterals ecoreEnumLiteral="fpbmodule.ecore#//FlagFieldType/OCTET2"/>
+      <genEnumLiterals ecoreEnumLiteral="fpbmodule.ecore#//FlagFieldType/OCTET4"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="fpbmodule.ecore#//ModuleElementType">
+      <genEnumLiterals ecoreEnumLiteral="fpbmodule.ecore#//ModuleElementType/TYPE"/>
+      <genEnumLiterals ecoreEnumLiteral="fpbmodule.ecore#//ModuleElementType/CONST"/>
+      <genEnumLiterals ecoreEnumLiteral="fpbmodule.ecore#//ModuleElementType/MODULEPAR"/>
+      <genEnumLiterals ecoreEnumLiteral="fpbmodule.ecore#//ModuleElementType/TEMPLATE"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="fpbmodule.ecore#//OnelineMode">
+      <genEnumLiterals ecoreEnumLiteral="fpbmodule.ecore#//OnelineMode/NONE"/>
+      <genEnumLiterals ecoreEnumLiteral="fpbmodule.ecore#//OnelineMode/CRLF"/>
+      <genEnumLiterals ecoreEnumLiteral="fpbmodule.ecore#//OnelineMode/CR"/>
+      <genEnumLiterals ecoreEnumLiteral="fpbmodule.ecore#//OnelineMode/LF"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="fpbmodule.ecore#//PadType">
+      <genEnumLiterals ecoreEnumLiteral="fpbmodule.ecore#//PadType/NO"/>
+      <genEnumLiterals ecoreEnumLiteral="fpbmodule.ecore#//PadType/OCTET"/>
+      <genEnumLiterals ecoreEnumLiteral="fpbmodule.ecore#//PadType/OCTET2"/>
+      <genEnumLiterals ecoreEnumLiteral="fpbmodule.ecore#//PadType/OCTET4"/>
+      <genEnumLiterals ecoreEnumLiteral="fpbmodule.ecore#//PadType/OCTET8"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="fpbmodule.ecore#//TypeClass">
+      <genEnumLiterals ecoreEnumLiteral="fpbmodule.ecore#//TypeClass/boolean"/>
+      <genEnumLiterals ecoreEnumLiteral="fpbmodule.ecore#//TypeClass/integer"/>
+      <genEnumLiterals ecoreEnumLiteral="fpbmodule.ecore#//TypeClass/float"/>
+      <genEnumLiterals ecoreEnumLiteral="fpbmodule.ecore#//TypeClass/objid"/>
+      <genEnumLiterals ecoreEnumLiteral="fpbmodule.ecore#//TypeClass/enumerated"/>
+      <genEnumLiterals ecoreEnumLiteral="fpbmodule.ecore#//TypeClass/octetstring"/>
+      <genEnumLiterals ecoreEnumLiteral="fpbmodule.ecore#//TypeClass/charstring"/>
+      <genEnumLiterals ecoreEnumLiteral="fpbmodule.ecore#//TypeClass/universalCharstring"/>
+      <genEnumLiterals ecoreEnumLiteral="fpbmodule.ecore#//TypeClass/bitstring"/>
+      <genEnumLiterals ecoreEnumLiteral="fpbmodule.ecore#//TypeClass/hexstring"/>
+      <genEnumLiterals ecoreEnumLiteral="fpbmodule.ecore#//TypeClass/record"/>
+      <genEnumLiterals ecoreEnumLiteral="fpbmodule.ecore#//TypeClass/set"/>
+      <genEnumLiterals ecoreEnumLiteral="fpbmodule.ecore#//TypeClass/union"/>
+      <genEnumLiterals ecoreEnumLiteral="fpbmodule.ecore#//TypeClass/recordof"/>
+      <genEnumLiterals ecoreEnumLiteral="fpbmodule.ecore#//TypeClass/setof"/>
+      <genEnumLiterals ecoreEnumLiteral="fpbmodule.ecore#//TypeClass/verdict"/>
+      <genEnumLiterals ecoreEnumLiteral="fpbmodule.ecore#//TypeClass/address"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="fpbmodule.ecore#//TypeDerivativeMode">
+      <genEnumLiterals ecoreEnumLiteral="fpbmodule.ecore#//TypeDerivativeMode/ENTITY"/>
+      <genEnumLiterals ecoreEnumLiteral="fpbmodule.ecore#//TypeDerivativeMode/SUB"/>
+      <genEnumLiterals ecoreEnumLiteral="fpbmodule.ecore#//TypeDerivativeMode/IMPORT"/>
+    </genEnums>
+    <genDataTypes ecoreDataType="fpbmodule.ecore#//ByteOrderObject"/>
+    <genDataTypes ecoreDataType="fpbmodule.ecore#//EncodingTypeObject"/>
+    <genDataTypes ecoreDataType="fpbmodule.ecore#//FlagFieldTypeObject"/>
+    <genDataTypes ecoreDataType="fpbmodule.ecore#//ModuleElementTypeObject"/>
+    <genDataTypes ecoreDataType="fpbmodule.ecore#//OnelineModeObject"/>
+    <genDataTypes ecoreDataType="fpbmodule.ecore#//PadTypeObject"/>
+    <genDataTypes ecoreDataType="fpbmodule.ecore#//TypeClassObject"/>
+    <genDataTypes ecoreDataType="fpbmodule.ecore#//TypeDerivativeModeObject"/>
+    <genClasses ecoreClass="fpbmodule.ecore#//DocumentRoot">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//DocumentRoot/mixed"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference fpbmodule.ecore#//DocumentRoot/xMLNSPrefixMap"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference fpbmodule.ecore#//DocumentRoot/xSISchemaLocation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbmodule.ecore#//DocumentRoot/pModule"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbmodule.ecore#//PAddress"/>
+    <genClasses image="false" ecoreClass="fpbmodule.ecore#//PArgument"/>
+    <genClasses ecoreClass="fpbmodule.ecore#//PArgumentGroup">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbmodule.ecore#//PArgumentGroup/arguments"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbmodule.ecore#//PBitstring"/>
+    <genClasses ecoreClass="fpbmodule.ecore#//PBoolean"/>
+    <genClasses ecoreClass="fpbmodule.ecore#//PBooleanArgument">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PBooleanArgument/desc"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbmodule.ecore#//PCharstring"/>
+    <genClasses ecoreClass="fpbmodule.ecore#//PCharstringArgument">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PCharstringArgument/desc"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbmodule.ecore#//PCompoundConstraint">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbmodule.ecore#//PCompoundConstraint/children"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbmodule.ecore#//PConditionArgument">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbmodule.ecore#//PConditionArgument/condition"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PConditionArgument/typeName"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="fpbmodule.ecore#//PConstant">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PConstant/constantID"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference fpbmodule.ecore#//PConstant/pmodule"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="fpbmodule.ecore#//PContainerType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbmodule.ecore#//PContainerType/pfields"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="fpbmodule.ecore#//PEncodedElement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbmodule.ecore#//PEncodedElement/variant"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PEncodedElement/encode"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PEncodedElement/typeEncodingDesc"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PEncodedElement/typeEncodingVariantDesc"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PEncodedElement/typeExtensionDesc"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="fpbmodule.ecore#//PEncodingVariant">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference fpbmodule.ecore#//PEncodingVariant/encodedElement"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbmodule.ecore#//PEntityConstant">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbmodule.ecore#//PEntityConstant/matcher"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PEntityConstant/baseTypeName"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbmodule.ecore#//PEntityEnumSet">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbmodule.ecore#//PEntityEnumSet/enumItems"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PEntityEnumSet/baseTypeName"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbmodule.ecore#//PEntityModulePar">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbmodule.ecore#//PEntityModulePar/matcher"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PEntityModulePar/baseTypeName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PEntityModulePar/thread"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="fpbmodule.ecore#//PEntityType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbmodule.ecore#//PEntityType/constraint"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbmodule.ecore#//PEnumerated">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbmodule.ecore#//PEnumerated/items"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbmodule.ecore#//PEnumeratedItem">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PEnumeratedItem/enumName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PEnumeratedItem/enumValue"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbmodule.ecore#//PEnumItem">
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference fpbmodule.ecore#//PEnumItem/cond"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PEnumItem/name"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbmodule.ecore#//PEnumSet">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PEnumSet/enumSetID"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference fpbmodule.ecore#//PEnumSet/pmodule"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbmodule.ecore#//PField">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PField/fieldID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PField/optional"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbmodule.ecore#//PFieldEV">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbmodule.ecore#//PFieldEV/prpList"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbmodule.ecore#//PFloat"/>
+    <genClasses ecoreClass="fpbmodule.ecore#//PFpbFieldEV"/>
+    <genClasses ecoreClass="fpbmodule.ecore#//PFpbListItemEV"/>
+    <genClasses ecoreClass="fpbmodule.ecore#//PFpbModuleEV"/>
+    <genClasses ecoreClass="fpbmodule.ecore#//PFpbTypeEV"/>
+    <genClasses ecoreClass="fpbmodule.ecore#//PHexstring"/>
+    <genClasses ecoreClass="fpbmodule.ecore#//PIdentifierArgument">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PIdentifierArgument/desc"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbmodule.ecore#//PImportConstant">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference fpbmodule.ecore#//PImportConstant/importedConstant"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PImportConstant/importedConstantName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PImportConstant/importedModuleName"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbmodule.ecore#//PImportElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PImportElement/refNameList"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PImportElement/allExcept"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PImportElement/elementType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PImportElement/fromModuleName"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference fpbmodule.ecore#//PImportElement/pmodule"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbmodule.ecore#//PImportEnumSet">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference fpbmodule.ecore#//PImportEnumSet/importedEnumSet"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PImportEnumSet/importedEnumSetName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PImportEnumSet/importedModuleName"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbmodule.ecore#//PImportModulePar">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PImportModulePar/importedModuleName"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference fpbmodule.ecore#//PImportModulePar/importedModulePar"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PImportModulePar/importedModulePartName"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbmodule.ecore#//PImportType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PImportType/importedModuleName"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference fpbmodule.ecore#//PImportType/importedType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PImportType/importedTypeName"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbmodule.ecore#//PInteger"/>
+    <genClasses ecoreClass="fpbmodule.ecore#//PIntegerArgument">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PIntegerArgument/desc"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbmodule.ecore#//PItemField">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbmodule.ecore#//PItemField/constraint"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbmodule.ecore#//PItemField/enumItems"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PItemField/enumRef"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbmodule.ecore#//PLengthConstraint">
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference fpbmodule.ecore#//PLengthConstraint/lowerBound"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference fpbmodule.ecore#//PLengthConstraint/upperBound"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbmodule.ecore#//PListArgument">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbmodule.ecore#//PListArgument/group"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbmodule.ecore#//PListConstraint">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbmodule.ecore#//PListConstraint/matcher"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbmodule.ecore#//PListItem"/>
+    <genClasses ecoreClass="fpbmodule.ecore#//PListItemEV">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbmodule.ecore#//PListItemEV/prpList"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="fpbmodule.ecore#//PListType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbmodule.ecore#//PListType/item"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbmodule.ecore#//PModule">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbmodule.ecore#//PModule/importElements"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbmodule.ecore#//PModule/types"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbmodule.ecore#//PModule/constants"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbmodule.ecore#//PModule/templates"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbmodule.ecore#//PModule/modulePars"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbmodule.ecore#//PModule/enumSets"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PModule/factoryJavaClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PModule/moduleJavaClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PModule/typeEvFactoryJavaClass"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbmodule.ecore#//PModuleEV">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbmodule.ecore#//PModuleEV/prpList"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="fpbmodule.ecore#//PModulePar">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PModulePar/moduleParID"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference fpbmodule.ecore#//PModulePar/pmodule"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbmodule.ecore#//PObjid"/>
+    <genClasses ecoreClass="fpbmodule.ecore#//POctetstring"/>
+    <genClasses ecoreClass="fpbmodule.ecore#//PPatternConstraint">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbmodule.ecore#//PPatternConstraint/matcher"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="fpbmodule.ecore#//PPrimitiveType"/>
+    <genClasses ecoreClass="fpbmodule.ecore#//PProperty">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbmodule.ecore#//PProperty/groups"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbmodule.ecore#//PPropertyList">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbmodule.ecore#//PPropertyList/properties"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbmodule.ecore#//PRecord"/>
+    <genClasses ecoreClass="fpbmodule.ecore#//PRecordOf"/>
+    <genClasses ecoreClass="fpbmodule.ecore#//PSet"/>
+    <genClasses ecoreClass="fpbmodule.ecore#//PSetOf"/>
+    <genClasses image="false" ecoreClass="fpbmodule.ecore#//PSingleArgument"/>
+    <genClasses image="false" ecoreClass="fpbmodule.ecore#//PStringType"/>
+    <genClasses ecoreClass="fpbmodule.ecore#//PSubType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbmodule.ecore#//PSubType/constraint"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference fpbmodule.ecore#//PSubType/superType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PSubType/superTypeName"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbmodule.ecore#//PType">
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PType/containerType"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PType/derivativeMode"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PType/javaClass"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PType/listType"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PType/primitiveType"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PType/typeClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PType/typeID"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference fpbmodule.ecore#//PType/pmodule"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbmodule.ecore#//PTypeConstraint"/>
+    <genClasses image="false" ecoreClass="fpbmodule.ecore#//PTypedElement">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference fpbmodule.ecore#//PTypedElement/ptype"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PTypedElement/ptypeName"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbmodule.ecore#//PTypeEV">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbmodule.ecore#//PTypeEV/prpList"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbmodule.ecore#//PTypeReferenceArgument">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PTypeReferenceArgument/typeName"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbmodule.ecore#//PUnion"/>
+    <genClasses ecoreClass="fpbmodule.ecore#//PUniversalCharstring"/>
+    <genClasses ecoreClass="fpbmodule.ecore#//PValueReferenceArgument">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbmodule.ecore#//PValueReferenceArgument/valueRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbmodule.ecore#//PValueReferenceArgument/typeName"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbmodule.ecore#//PVerdict"/>
+  </genPackages>
+</genmodel:GenModel>

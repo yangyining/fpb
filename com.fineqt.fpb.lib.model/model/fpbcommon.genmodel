@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/com.fineqt.fpb.lib.model/src"
+    modelPluginID="com.fineqt.fpb.lib.model" modelName="Fpbcommon" importerID="org.eclipse.xsd.ecore.importer"
+    complianceLevel="6.0" copyrightFields="false">
+  <foreignModel>../../com.fineqt.fpb.design/schemas/fpbcommon.xsd</foreignModel>
+  <genPackages prefix="Fpbcommon" basePackage="com.fineqt.fpb.lib.model" resource="XML"
+      disposableProviderFactory="true" ecorePackage="fpbcommon.ecore#/">
+    <genClasses ecoreClass="fpbcommon.ecore#//PAnnotation">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbcommon.ecore#//PAnnotation/details"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbcommon.ecore#//PAnnotation/source"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference fpbcommon.ecore#//PAnnotation/pModelElement"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="fpbcommon.ecore#//PModelElement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fpbcommon.ecore#//PModelElement/annotations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute fpbcommon.ecore#//PModelElement/attatchment"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="fpbcommon.ecore#//PNamedElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbcommon.ecore#//PNamedElement/name"/>
+    </genClasses>
+    <genClasses ecoreClass="fpbcommon.ecore#//PStringToStringMapEntry">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbcommon.ecore#//PStringToStringMapEntry/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fpbcommon.ecore#//PStringToStringMapEntry/value"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
