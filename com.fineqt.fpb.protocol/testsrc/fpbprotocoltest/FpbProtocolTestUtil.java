@@ -9,7 +9,7 @@ import com.fineqt.fpb.lib.comm.pcap.PcapSocketImpl;
 public class FpbProtocolTestUtil {
 	static {
 		if (isWindows()) {
-			WORKSPACE_PATH = "D:/work/scalaws/";
+			WORKSPACE_PATH = "D:/work/wsfpb/";
 		} else {
 			WORKSPACE_PATH = "/home/jm/linuxws/";
 		}
@@ -31,7 +31,7 @@ public class FpbProtocolTestUtil {
 	
 	static NetworkInterface[] ifs;
 	
-	final static int INTERFACE_INDEX = 1;
+	final static int INTERFACE_INDEX = 0;
 	
 	public static NetworkInterface getInterface() throws SocketException {
 		if (ifs == null) {

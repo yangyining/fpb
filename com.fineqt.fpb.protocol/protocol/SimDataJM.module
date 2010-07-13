@@ -26,7 +26,7 @@ module SimDataJM {
 		EtherProtocol packet,				
 		Oct2 nl2 length(2)
 	} with {
-        variant LengthRef("+recLen"); LengthMultiplier(8)
+        variant LengthRef("+recLen"); LengthMultiplier(8); LengthIncrement(56);
 	}
 	
 	type record of SimRecord SimRecordList;

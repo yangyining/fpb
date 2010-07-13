@@ -29,11 +29,11 @@ public class FpbProtocolTest {
 		TestSuite suite= new TestSuite("All JUnit Tests");
 		IFpbSystem.INSTANCE.setDebug(DEBUG);
 
-		suite.addTest(new TestSuite(CommonProtocolsTest.class));
-		suite.addTest(new TestSuite(Ipv4ProtocolsTest.class));
-		suite.addTest(new TestSuite(Ipv6ProtocolTest.class));
-		suite.addTest(new TestSuite(UdpProtocolTest.class));
-		suite.addTest(new TestSuite(TcpProtocolTest.class));
+//		suite.addTest(new TestSuite(CommonProtocolsTest.class));
+//		suite.addTest(new TestSuite(Ipv4ProtocolsTest.class));
+//		suite.addTest(new TestSuite(Ipv6ProtocolTest.class));
+//		suite.addTest(new TestSuite(UdpProtocolTest.class));
+//		suite.addTest(new TestSuite(TcpProtocolTest.class));
 //        suite.addTest(new TestSuite(HttpProtocolTest.class));
 //        suite.addTest(new TestSuite(SampleTest.class));
 		suite.addTest(new TestSuite(SimDataTest.class));
