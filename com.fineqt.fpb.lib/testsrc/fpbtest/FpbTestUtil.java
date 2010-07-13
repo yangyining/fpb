@@ -60,7 +60,7 @@ public class FpbTestUtil {
 	
 	static NetworkInterface[] ifs;
 	
-	final static int INTERFACE_INDEX = 1;
+	final static int INTERFACE_INDEX = 0;
 	
 	public static NetworkInterface getInterface() throws SocketException {
 		if (ifs == null) {
