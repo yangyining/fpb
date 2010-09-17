@@ -9,7 +9,7 @@ import com.fineqt.fpb.lib.comm.pcap.PcapSocketImpl;
 public class FpbProtocolTestUtil {
 	static {
 		if (isWindows()) {
-			WORKSPACE_PATH = "D:/work/wsfpb/";
+			WORKSPACE_PATH = "D:/work/wsfirst/";
 		} else {
 			WORKSPACE_PATH = "/home/jm/linuxws/";
 		}

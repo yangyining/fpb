@@ -2,6 +2,7 @@ package fpbprotocoltest;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -26,16 +27,20 @@ public class SimDataUtils {
 	throws EncodeException, IOException {
 		byte[] data;
 		TextBitset bitset;
-	    IModule simModule = IModuleRegistry.INSTANCE.resolveModule(moduleName);
-	    assert simModule != null; 
-		//recList
-	    IConstant cstRecList = simModule.getConstant(constName);
-	    assert cstRecList != null;
 	    @SuppressWarnings("unchecked")
-	    IListValue<IRecordSetValue> recList = (IListValue<IRecordSetValue>)cstRecList.getValue();
+		IListValue<IRecordSetValue> recList = getConstValue(moduleName,
+				constName);
 	    assert recList != null;
 //	    System.out.println(recList);
-	    //encode
+	    saveConstValue(fileName, recList);
+	}
+
+	public static void saveConstValue(String fileName,
+			IListValue<IRecordSetValue> recList) throws EncodeException,
+			FileNotFoundException, IOException {
+		byte[] data;
+		TextBitset bitset;
+		//encode
 		ser.calculate(recList);
 		data = ser.encode(recList, false);
 		bitset = new NativeTextBitset(data);
@@ -47,6 +52,18 @@ public class SimDataUtils {
 		} finally {
 			ost.close();
 		}
+	}
+
+	public static IListValue<IRecordSetValue> getConstValue(String moduleName,
+			String constName) {
+		IModule simModule = IModuleRegistry.INSTANCE.resolveModule(moduleName);
+	    assert simModule != null; 
+		//recList
+	    IConstant cstRecList = simModule.getConstant(constName);
+	    assert cstRecList != null;
+	    @SuppressWarnings("unchecked")
+	    IListValue<IRecordSetValue> recList = (IListValue<IRecordSetValue>)cstRecList.getValue();
+		return recList;
 	}
 	
 	public static IListValue<IRecordSetValue> loadSimRecordListFromFile(

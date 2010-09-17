@@ -12,7 +12,10 @@ import com.fineqt.fpb.lib.api.util.EncodeException;
 import com.fineqt.fpb.lib.api.util.IModuleRegistry;
 import com.fineqt.fpb.lib.api.util.IValueDumper;
 import com.fineqt.fpb.lib.api.util.IValueSerializer;
+import com.fineqt.fpb.lib.api.value.ICharstringValue;
+import com.fineqt.fpb.lib.api.value.IIntegerValue;
 import com.fineqt.fpb.lib.api.value.IListValue;
+import com.fineqt.fpb.lib.api.value.IOctetstringValue;
 import com.fineqt.fpb.lib.api.value.IRecordSetValue;
 import com.fineqt.fpb.lib.util.NativeTextBitset;
 import com.fineqt.fpb.lib.util.TextBitset;
@@ -20,6 +23,7 @@ import com.fineqt.fpb.protocol.ProtocolUtils;
 import com.sun.xml.internal.ws.util.ByteArrayBuffer;
 
 import junit.framework.TestCase;
+import static fpbprotocoltest.SimDataUtils.*;
 
 public class SimDataTest extends TestCase {
 	private static IValueSerializer ser = IValueSerializer.INSTANCE;
@@ -66,10 +70,24 @@ public class SimDataTest extends TestCase {
 //		IValueDumper.INSTANCE.dump(newRecList);
 		
 //	}
+	final private static String SIM_FILE = "d:/simDataFile.sim";
+	final private static String INPUT_SIM_FILE = "d:/eth_xmit.raw";
+	final private static String LN = "\r\n";
 	
-	public void testSaveToFile() throws Exception {
+	public void _testSaveToFile() throws Exception {
 		SimDataUtils.saveSimRecordListToFile("SimDataJM", "recList", "simDataFile.sim");
 		SimDataUtils.loadSimRecordListFromFile("SimDataJM", "SimRecordList", "simDataFile.sim");
 	}
+
+	public void testLoadFromFile() throws Exception {
+		SimDataUtils.loadSimRecordListFromFile("SimDataJM", "SimRecordList", INPUT_SIM_FILE);
+	}
 	
+	public void _testLongString() throws Exception {
+	    IModule simModule = IModuleRegistry.INSTANCE.resolveModule("SimDataJM");
+	    assertNotNull(simModule); 
+	    IConstant httpdata = simModule.getConstant("httpdata");
+	    ICharstringValue strValue = (ICharstringValue)httpdata.getValue();
+	    System.out.println("strValue:"+strValue.getString());
+	}
 }
