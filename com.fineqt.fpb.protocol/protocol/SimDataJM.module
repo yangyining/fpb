@@ -26,16 +26,20 @@ module SimDataJM {
 		EtherProtocol packet,				
 		Oct2 nl2 length(2)
 	} with {
-        variant LengthRef("+recLen"); LengthMultiplier(8); LengthIncrement(56);
+        variant LengthRef("+recLen"); LengthMultiplier(8);LengthIncrement(56);
 	}
 	
 	type record of SimRecord SimRecordList;
 	
-	const Oct6 c_DstAddress := '000fe22df7bd'O;
+	const Oct6 c_DstAddress := '111111111111'O;
+	const Oct6 c_SrcAddress := '222222222222'O;
 	
-	const Oct6 c_SrcAddress := '001d0903b7f6'O;
-	 
-
+	const Oct4 c_DstIP := 'C0A80001'O; //192.168.0.1
+	const Oct4 c_SrcIP := 'C0A80002'O; //192.168.0.2
+	
+	const UInt16 c_DstPort := 80; //port:80
+	const UInt16 c_SrcPort := 5000; //port:5000
+	
 	const SimRecord simRec1 := {
 			mode := "r",
 			recLen := 0,
@@ -53,7 +57,7 @@ module SimDataJM {
 	}
 		
 	const SimRecordList recList := {
-		//ARP
+		//ARP request
 		[0] := 	{
 			mode := "r",
 			recLen := 0,
@@ -69,17 +73,17 @@ module SimDataJM {
 				        hlen := 6,
 				        plen := 4,
 				        operation := 1,
-				        senderHwAddress := '001d0903b7f6'O,
-				        senderProtocolAddress := '0a680114'O, 
-				        targetHwAddress := '000000000000'O,
-				        targetProtocolAddress := '0a680115'O
+				        senderHwAddress := c_SrcAddress,
+				        senderProtocolAddress := c_SrcIP, 
+				        targetHwAddress := c_DstAddress,
+				        targetProtocolAddress := c_DstIP
 		        	}
 		        },
 				fcs := omit
 			},
 			nl2 := '0d0a'O
 		},
-		//TCP No Data
+		//TCP [SYN]
 		[1] := 	{
 			mode := "r",
 			recLen := 0,
@@ -95,7 +99,7 @@ module SimDataJM {
 					        headerLength := 0,
 					        typeOfService := '00000000'B,
 					        totalLength := 0,
-					        identification := 1,
+					        identification := 1, //kaku
 					        reserved := 0,
 					        doNotFrag := true,
 					        moreFrags := false,
@@ -103,17 +107,17 @@ module SimDataJM {
 					        timeToLive := 128,
 					        protocol := 0x06,
 					        hcs := '0000'O,
-					        sourceAddress := '0a680127'O,
-					        destinationAddress := 'cbd02568'O,
+					        sourceAddress := c_SrcIP,
+					        destinationAddress := c_DstIP,
 					        options := omit
 		        		},
 						payload := {
 							tcp := {
 								header := {
-							        sourcePort := 4968,
+							        sourcePort := 5000,
 							        destinationPort := 80,
-							        sequenceNumber := 0,
-							        ackNumber := 0,
+							        sequenceNumber := 0, //kaku
+							        ackNumber := 0, //kaku
 							        dataOffset := 0,
 							        reserved := 0,
 							        urgent := false,
@@ -167,7 +171,7 @@ module SimDataJM {
 	        },
 			nl2 := '0d0a'O
 		},
-		//TCP With Data
+		//TCP [ACK]
 		[2] := 	{
 			mode := "r",
 			recLen := 0,
@@ -183,7 +187,7 @@ module SimDataJM {
 					        headerLength := 0,
 					        typeOfService := '00000000'B,
 					        totalLength := 0,
-					        identification := 1,
+					        identification := 2, //kaku
 					        reserved := 0,
 					        doNotFrag := true,
 					        moreFrags := false,
@@ -191,24 +195,113 @@ module SimDataJM {
 					        timeToLive := 128,
 					        protocol := 0x06,
 					        hcs := '0000'O,
-					        sourceAddress := '0a680127'O,
-					        destinationAddress := 'cbd02568'O,
+					        sourceAddress := c_SrcIP,
+					        destinationAddress := c_DstIP,
 					        options := omit
 		        		},
 						payload := {
 							tcp := {
 								header := {
-							        sourcePort := 4968,
+							        sourcePort := 5000,
 							        destinationPort := 80,
-							        sequenceNumber := 0,
-							        ackNumber := 0,
+							        sequenceNumber := 1, //kaku
+							        ackNumber := 1, //kaku
 							        dataOffset := 0,
 							        reserved := 0,
 							        urgent := false,
-							        ack := false,
+							        ack := true,
 							        push := false,
 							        reset := false,
-							        syn := true,
+							        syn := false,
+							        fin := false,
+							        windowSize := 65535,
+							        checksum := '0000'O,
+							        urgentPointer := 0,
+							        options := {
+							        	[0] := {
+											maxSs := {
+												optionCode := 2,
+												optionLength := 4,
+												value := 0x05b4
+											}
+							        	},
+							        	[1] := {
+											nop := 1
+							        	},
+							        	[2] := {
+											windowScale := {
+												optionCode := 3,
+												optionLength := 3,
+												shift := 1
+											}        		
+							        	},
+							        	[3] := {
+											nop := 1
+							        	},
+							        	[4] := {
+											nop := 1
+							        	},
+							        	[5] := {
+											sackPermitted := {
+												optionCode := 4,
+												optionLength := 2
+											}
+							        	}
+							        },
+							        padding := ''O
+								},
+								payload := omit
+							}
+						}				        
+		        	}
+		        },
+		        fcs := omit
+	        },
+			nl2 := '0d0a'O
+		},		
+		//TCP With Data : "hitachi"
+		// need modify content: identification,sequenceNumber,ack，data
+		[3] := 	{
+			mode := "r",
+			recLen := 0,
+			nl1 := '0d0a'O,
+			packet := {
+				dstAddress := c_DstAddress,
+		        srcAddress := c_SrcAddress,
+		        etherType := 0x0800,
+		        payload := {
+		        	ipv4 := {
+		        		header := {
+					        version := 4,
+					        headerLength := 0,
+					        typeOfService := '00000000'B,
+					        totalLength := 0,
+					        identification := 3, //kaku
+					        reserved := 0,
+					        doNotFrag := true,
+					        moreFrags := false,
+					        fragmentOffset := 0,
+					        timeToLive := 128,
+					        protocol := 0x06,
+					        hcs := '0000'O,
+					        sourceAddress := c_SrcIP,
+					        destinationAddress := c_DstIP,
+					        options := omit
+		        		},
+						payload := {
+							tcp := {
+								header := {
+							        sourcePort := c_SrcPort,
+							        destinationPort := c_DstPort,
+							        sequenceNumber := 380, //kaku
+							        ackNumber := 1, //kaku
+							        dataOffset := 0,
+							        reserved := 0,
+							        urgent := false,
+							        ack := true,  
+							        push := true,  
+							        reset := false,
+							        syn := false,
 							        fin := false,
 							        windowSize := 65535,
 							        checksum := '0000'O,
@@ -217,8 +310,96 @@ module SimDataJM {
 							        padding := ''O
 								},
 								payload := {
-									data := '00112233'O
+									data := '474554202f696e6465782e68746d6c20485454502f312e310a486f73743a203139322e3136382e312e310a557365722d4167656e743a204d6f7a696c6c612f352e30202857696e646f77733b20553b2057696e646f7773204e5420352e313b207a682d434e3b2072763a312e392e322e3829204765636b6f2f32303130303732322046697265666f782f332e362e382028202e4e455420434c5220332e352e3330373239290a4163636570743a20746578742f68746d6c2c6170706c69636174696f6e2f7868746d6c2b786d6c2c6170706c69636174696f6e2f786d6c3b713d302e392c2a2f2a3b713d302e380a4163636570742d4c616e67756167653a207a682d636e2c7a683b713d30350a4163636570742d456e636f64696e673a20677a69702c6465666c61740a4163636570742d436861727365743a204742323331322c7574662d383b3d302e372c2a3b713d302e370a4b6565702d416c6976653a203131350a436f6e6e656374696f6e3a206b6565702d616c6976650a'O 
 								}
+							}
+						}				        
+		        	}
+		        },
+		        fcs := omit
+	        },
+			nl2 := '0d0a'O
+		},
+		//TCP [ACK]
+		[4] := 	{
+			mode := "r",
+			recLen := 0,
+			nl1 := '0d0a'O,
+			packet := {
+				dstAddress := c_DstAddress,
+		        srcAddress := c_SrcAddress,
+		        etherType := 0x0800,
+		        payload := {
+		        	ipv4 := {
+		        		header := {
+					        version := 4,
+					        headerLength := 0,
+					        typeOfService := '00000000'B,
+					        totalLength := 0,
+					        identification := 4, //kaku
+					        reserved := 0,
+					        doNotFrag := true,
+					        moreFrags := false,
+					        fragmentOffset := 0,
+					        timeToLive := 128,
+					        protocol := 0x06,
+					        hcs := '0000'O,
+					        sourceAddress := c_SrcIP,
+					        destinationAddress := c_DstIP,
+					        options := omit
+		        		},
+						payload := {
+							tcp := {
+								header := {
+							        sourcePort := 5000,
+							        destinationPort := 80,
+							        sequenceNumber := 380, //kaku
+							        ackNumber := 84, //kaku
+							        dataOffset := 0,
+							        reserved := 0,
+							        urgent := false,
+							        ack := true,
+							        push := false,
+							        reset := false,
+							        syn := false,
+							        fin := false,
+							        windowSize := 65535,
+							        checksum := '0000'O,
+							        urgentPointer := 0,
+							        options := {
+							        	[0] := {
+											maxSs := {
+												optionCode := 2,
+												optionLength := 4,
+												value := 0x05b4
+											}
+							        	},
+							        	[1] := {
+											nop := 1
+							        	},
+							        	[2] := {
+											windowScale := {
+												optionCode := 3,
+												optionLength := 3,
+												shift := 1
+											}        		
+							        	},
+							        	[3] := {
+											nop := 1
+							        	},
+							        	[4] := {
+											nop := 1
+							        	},
+							        	[5] := {
+											sackPermitted := {
+												optionCode := 4,
+												optionLength := 2
+											}
+							        	}
+							        },
+							        padding := ''O
+								},
+								payload := omit
 							}
 						}				        
 		        	}
@@ -228,7 +409,6 @@ module SimDataJM {
 			nl2 := '0d0a'O
 		}
 	}
-	
 } with {
     encode "FPB"
     variant ByteOrder(BIG_ENDIAN)
